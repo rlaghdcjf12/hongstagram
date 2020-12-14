@@ -1,3 +1,5 @@
 Virtual_Environment/
 
 db.sqlite3
+
+*.pyc

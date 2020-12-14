@@ -54,7 +54,12 @@ const addNoteEpic = (action$, state$) => {
 
 const initialState = {
   noteInput: "",
-  notes: []
+  notes: [],
+  // 에러 관련 state 등록.
+  error: {
+    triggered: false,
+    message: ""
+  }
 };
 
 export const notes = (state = initialState, action) => {
@@ -69,7 +74,11 @@ export const notes = (state = initialState, action) => {
       return {
         ...state,
         notes: [note].concat(state.notes),
-        noteInput: ""
+        noteInput: "",
+        error: {
+          triggered: false,
+          message: "",
+        }
       };
     case ADD_NOTE_FAILURE:
       return {
