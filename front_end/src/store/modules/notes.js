@@ -94,5 +94,5 @@ export const notes = (state = initialState, action) => {
 };
 
 export const notesEpics = {
-  addNoteEpic
+  addNoteEpic,
 };
