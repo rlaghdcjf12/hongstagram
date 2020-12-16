@@ -160,16 +160,16 @@ const initialState = {
             message: ""
           }
         };
-      case REGISTER_SUCCESS:
-        return {
-          ...state,
-          logged: true,
-          userInfo: {
-            id: action.payload.user.id,
-            username: action.payload.user.username,
-            token: action.payload.token
-          }
-        };
+        case REGISTER_SUCCESS:
+          return {
+            ...state,
+            logged: true,
+            userInfo: {
+              id: action.payload.user.id,
+              username: action.payload.user.username,
+              token: action.payload.token
+            }
+          };
       case REGISTER_FAILURE:
         switch (action.payload.status) {
           case 400:

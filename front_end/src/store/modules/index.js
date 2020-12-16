@@ -6,6 +6,7 @@ import { combineEpics } from "redux-observable";
 export const rootReducers = combineReducers({ notes, auth });
 export const rootEpics = combineEpics(
   notesEpics.addNoteEpic,
+  notesEpics.getNotesEpic,
   authEpics.loginEpic,
   authEpics.registerEpic
 );

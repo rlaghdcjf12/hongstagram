@@ -9,6 +9,12 @@ const ADD_NOTE = "notes/ADD_NOTE";
 const ADD_NOTE_SUCCESS = "notes/ADD_NOTE_SUCCESS";
 const ADD_NOTE_FAILURE = "notes/ADD_NOTE_FAILURE";
 
+const GET_NOTES = "notes/GET_NOTES";
+const GET_NOTES_SUCCESS = "notes/GET_NOTES_SUCCESS";
+const GET_NOTES_FAILURE = "notes/GET_NOTES_FAILURE";
+
+const TOGGLE_NOTE = "notes/TOGGLE_NOTE";
+
 export const changeNoteInput = ({ value }) => ({
   type: CHANGE_NOTE_INPUT,
   payload: { value }
@@ -29,6 +35,54 @@ export const addNoteFailure = error => ({
     error
   }
 });
+
+export const getNotes = () => ({
+  type: GET_NOTES
+});
+export const getNotesSuccess = ({notes}) => ({
+  type: GET_NOTES_SUCCESS,
+  payload: {
+    notes
+  }
+});
+export const getNotesFailure = error => ({
+  type: GET_NOTES_FAILURE,
+  payload: {
+    error
+  }
+});
+
+export const toggleNote = ({ id, text }) => ({
+  type: TOGGLE_NOTE,
+  payload: {
+    id,
+    text
+  }
+});
+
+const getNotesEpic = (action$, state$) => {
+  return action$.pipe(
+    ofType(GET_NOTES),
+    withLatestFrom(state$),
+    mergeMap(([action, state]) => {
+      return ajax
+        .get(`/api/notes/`)
+        .pipe(
+          map(response => {
+            const notes = response.response;
+            return getNotesSuccess({notes});
+          }),
+          catchError(error =>
+            of({
+              type: GET_NOTES_FAILURE,
+              payload: error,
+              error: true
+            })
+          )
+        );
+    })
+  );
+};
 
 const addNoteEpic = (action$, state$) => {
   return action$.pipe(
@@ -55,15 +109,32 @@ const addNoteEpic = (action$, state$) => {
 const initialState = {
   noteInput: "",
   notes: [],
-  // 에러 관련 state 등록.
   error: {
     triggered: false,
     message: ""
+  },
+  // 수정하는 노트아이템을 표시하는 state 추가.
+  editing: {
+    id: null,
+    text: ""
   }
 };
 
 export const notes = (state = initialState, action) => {
   switch (action.type) {
+    case GET_NOTES_SUCCESS:
+      return {
+        ...state,
+        notes: action.payload.notes
+      };
+    case GET_NOTES_FAILURE:
+      return {
+        ...state,
+        error: {
+          triggered: true,
+          message: "Error! Please Try Again!"
+        }
+      };
     case CHANGE_NOTE_INPUT:
       return {
         ...state,
@@ -88,6 +159,14 @@ export const notes = (state = initialState, action) => {
           message: "Error! Please Try With Unempty Note"
         }
       };
+    case TOGGLE_NOTE:
+      return {
+        ...state,
+        editing: {
+          id: parseInt(action.payload.id, 10),
+          note: action.payload.text
+        }
+      };
     default:
       return state;
   }
@@ -95,4 +174,5 @@ export const notes = (state = initialState, action) => {
 
 export const notesEpics = {
   addNoteEpic,
+  getNotesEpic,
 };
