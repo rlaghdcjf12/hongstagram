@@ -146,7 +146,8 @@ const addNoteEpic = (action$, state$) => {
       return ajax
         .post(
           `/api/notes/`,
-          { text: state.notes.noteInput },
+          { text: state.notes.noteInput,
+            owner: JSON.parse(localStorage.getItem("userInfo")).id },
           {
             "Content-Type": "application/json",
             Authorization: `token ${token}`
@@ -182,7 +183,8 @@ const updateNoteEpic = (action$, state$) => {
         .patch(
           `/api/notes/${state.notes.editing.id}/`,
           {
-            text: state.notes.editing.text
+            text: state.notes.editing.text,
+            owner: JSON.parse(localStorage.getItem("userInfo")).id
           },
           {
             "Content-Type": "application/json",
