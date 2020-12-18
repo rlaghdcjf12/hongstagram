@@ -1,9 +1,9 @@
 import React from "react";
-import Header from "./Header";
+import HeaderContainer from "../../containers/HeaderContainer";
 
 const MainStructure = ({ children }) => (
   <div>
-    <Header />
+    <HeaderContainer />
     <main>{children}</main>
   </div>
 );

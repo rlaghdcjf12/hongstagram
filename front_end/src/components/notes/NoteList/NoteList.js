@@ -1,17 +1,30 @@
 import React from "react";
 import styles from "./NoteList.scss";
 import classNames from "classnames/bind";
-import NoteItem from "../../../components/notes/NoteItem";
+import NoteItem from "../NoteItem";
 
 const cx = classNames.bind(styles);
 
-const NoteList = ({ notes, editing, onToggle }) => {
+const NoteList = ({
+  notes,
+  editing,
+  onToggle,
+  onChange,
+  onUpdate,
+  onDelete
+}) => {
   const noteList = notes.map((note, i) => {
-    return <NoteItem 
-             note={note} 
-             key={note.id} 
-             editing={editing}
-             onToggle={onToggle} />;
+    return (
+      <NoteItem
+        note={note}
+        key={note.id}
+        editing={editing}
+        onToggle={onToggle}
+        onChange={onChange}
+        onUpdate={onUpdate}
+        onDelete={onDelete}
+      />
+    );
   });
   return (
     <div className={cx("note-list")}>

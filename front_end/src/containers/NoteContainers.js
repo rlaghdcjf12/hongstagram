@@ -7,9 +7,9 @@ import NoteList from "../components/notes/NoteList/NoteList";
 import * as noteActions from "../store/modules/notes";
 
 export class NoteContainer extends Component {
-  handleChange = ({ value }) => {
+  handleChange = ({ value }, isEditing) => {
     const { changeNoteInput } = this.props;
-    changeNoteInput({ value });
+    changeNoteInput({ value }, isEditing);
   };
 
   addNote = () => {
@@ -26,10 +26,20 @@ export class NoteContainer extends Component {
     getNotes();
   };
 
+  updateNote = () => {
+    const { updateNote } = this.props;
+    updateNote();
+  };
+
+  deleteNote = ({ id }) => {
+    const { deleteNote } = this.props;
+    deleteNote({ id });
+  };
+
   // 토글하는 함수 추가
   handleToggle = ({ id, text }) => {
     const { toggleNote, editing } = this.props;
-    // 이미 에디팅 중이면 한번 더 토글시 초기화
+  // 이미 에디팅 중이면 한번 더 토글시 초기화
     if (editing.id === id) {
       toggleNote({ id: null, text: "" });
     } else {
@@ -40,7 +50,13 @@ export class NoteContainer extends Component {
 
   render() {
     const { noteInput, error, notes, editing } = this.props;
-    const { handleChange, addNote, handleToggle } = this;
+    const {
+      handleChange,
+      addNote,
+      handleToggle,
+      updateNote,
+      deleteNote
+    } = this;
     return (
       <div>
         <NoteWrapper>
@@ -50,10 +66,14 @@ export class NoteContainer extends Component {
             onAdd={addNote}
             error={error}
           />
-          <NoteList 
-              notes={notes} 
-              editing={editing} 
-              onToggle={handleToggle} />
+          <NoteList
+            notes={notes}
+            editing={editing}
+            onToggle={handleToggle}
+            onChange={handleChange}
+            onUpdate={updateNote}
+            onDelete={deleteNote}
+          />
         </NoteWrapper>
       </div>
     );
@@ -64,14 +84,13 @@ const mapStateToProps = state => ({
   noteInput: state.notes.noteInput,
   notes: state.notes.notes,
   error: state.notes.error,
-  // editing state 추가
   editing: state.notes.editing
 });
 
 const mapDispatchToProps = dispatch => {
   return {
-    changeNoteInput: ({ value }) => {
-      dispatch(noteActions.changeNoteInput({ value }));
+    changeNoteInput: ({ value }, isEditing) => {
+      dispatch(noteActions.changeNoteInput({ value }, isEditing));
     },
     addNote: () => {
       dispatch(noteActions.addNote());
@@ -79,9 +98,15 @@ const mapDispatchToProps = dispatch => {
     getNotes: () => {
       dispatch(noteActions.getNotes());
     },
-    // toggle 함수 추가
     toggleNote: ({ id, text }) => {
       dispatch(noteActions.toggleNote({ id, text }));
+    },
+    updateNote: () => {
+      dispatch(noteActions.updateNote());
+    },
+    // 추가
+    deleteNote: ({ id }) => {
+      dispatch(noteActions.deleteNote({ id }));
     }
   };
 };

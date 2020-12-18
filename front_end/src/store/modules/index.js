@@ -7,6 +7,10 @@ export const rootReducers = combineReducers({ notes, auth });
 export const rootEpics = combineEpics(
   notesEpics.addNoteEpic,
   notesEpics.getNotesEpic,
+  notesEpics.updateNoteEpic,
+  notesEpics.deleteNoteEpic,
   authEpics.loginEpic,
-  authEpics.registerEpic
+  authEpics.registerEpic,
+  authEpics.checkUserEpic,
+  authEpics.logoutEpic
 );

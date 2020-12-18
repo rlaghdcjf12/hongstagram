@@ -3,8 +3,12 @@ from .models import Notes
 from django.contrib.auth.models import User
 from django.contrib.auth import authenticate
 
-# 회원가입 시리얼라이저
+class NoteSerializer(serializers.ModelSerializer):
+    class Meta:
+        model = Notes
+        fields = ("id", "text")
 
+# 회원가입 시리얼라이저
 class CreateUserSerializer(serializers.ModelSerializer):
     class Meta:
         model = User
@@ -19,7 +23,6 @@ class CreateUserSerializer(serializers.ModelSerializer):
 
 
 # 접속 유지중인지 확인할 시리얼라이저
-
 class UserSerializer(serializers.ModelSerializer):
     class Meta:
         model = User
@@ -27,7 +30,6 @@ class UserSerializer(serializers.ModelSerializer):
 
 
 # 로그인 시리얼라이저 
-
 class LoginUserSerializer(serializers.Serializer):
     username = serializers.CharField()
     password = serializers.CharField()
@@ -37,9 +39,3 @@ class LoginUserSerializer(serializers.Serializer):
         if user and user.is_active:
             return user
         raise serializers.ValidationError("Unable to log in with provided credentials.")
-
-
-class NoteSerializer(serializers.ModelSerializer):
-    class Meta:
-        model = Notes
-        fields = ("id", "text")
