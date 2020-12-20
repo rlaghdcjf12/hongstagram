@@ -1,12 +1,13 @@
 @import "../../../styles/utils.scss";
 
-.noteWrapper {
-  margin: 0 auto;
+.authWrapper {
+  margin: 32px auto;
 
   display: flex;
   flex-direction: column;
 
-  width: 1024px;
+  width: 875px;
+  height: 800px;
   @include media("<medium") {
     width: 95%;
   }

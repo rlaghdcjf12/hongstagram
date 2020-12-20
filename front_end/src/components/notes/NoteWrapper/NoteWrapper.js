@@ -5,7 +5,7 @@ import classNames from "classnames/bind";
 const cx = classNames.bind(styles);
 
 const NoteWrapper = ({ children }) => (
-  <div className={cx("wrapper")}>{children}</div>
+  <div className={cx("noteWrapper")}>{children}</div>
 );
 
 export default NoteWrapper;

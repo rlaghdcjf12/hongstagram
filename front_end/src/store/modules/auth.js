@@ -287,7 +287,7 @@ export const auth = (state = initialState, action) => {
             ...state,
             error: {
               triggered: true,
-              message: "WRONG USERNAME OR PASSWORD"
+              message: "아이디 또는 비밀번호가 잘못되었습니다."
             }
           };
         case 500:
@@ -295,7 +295,7 @@ export const auth = (state = initialState, action) => {
             ...state,
             error: {
               triggered: true,
-              message: "TOO SHORT USERNAME OR PASSWORD"
+              message: "아이디 또는 비밀번호가 너무 짧습니다."
             }
           };
         default:
@@ -320,7 +320,7 @@ export const auth = (state = initialState, action) => {
             ...state,
             error: {
               triggered: true,
-              message: "WRONG USERNAME OR PASSWORD"
+              message: "잘못된 비밀번호입니다. 다시 확인해주세요."
             }
           };
         case 500:
@@ -328,7 +328,7 @@ export const auth = (state = initialState, action) => {
             ...state,
             error: {
               triggered: true,
-              message: "PLEASE TRY AGAIN"
+              message: "다시 입력바랍니다."
             }
           };
         default:
@@ -351,7 +351,7 @@ export const auth = (state = initialState, action) => {
           ...state,
           error: {
             triggered: true,
-            message: "LOGOUT ERROR, PLEASE TRY AGAIN"
+            message: "로그아웃이 실패했습니다. 다시 로그아웃해주세요."
           }
         };
       case CHECK_USER_SUCCESS:
@@ -359,15 +359,26 @@ export const auth = (state = initialState, action) => {
           ...state
         };
       case CHECK_USER_FAILURE:
-        return {
-          ...state,
-          logged: false,
-          userInfo: {
-            id: null,
-            username: "",
-            token: null
+        switch (action.payload.status) {
+          case 401:
+            return {
+              ...state,
+              error: {
+                triggered: true,
+                message: "세션이 만료되었습니다."
+              }
+            };
+          default:
+            return {
+              ...state,
+              logged: false,
+              userInfo: {
+                id: null,
+                username: "",
+                token: null
+              }
+            };
           }
-        };
       case SET_USER_TEMP:
         return {
           ...state,
