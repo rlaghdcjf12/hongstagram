@@ -27,6 +27,9 @@ export class BaseContainer extends Component {
         username: userInfo.username,
         token: userInfo.token
       });
+      if(userInfo.token === undefined && !this.props.logged){
+        history.push("/auth/login");
+      }
       return;
     }
 

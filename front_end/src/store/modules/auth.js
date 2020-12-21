@@ -171,6 +171,10 @@ const logoutEpic = (action$, state$) => {
       const token = localStorage.getItem("userInfo")
         ? JSON.parse(localStorage.getItem("userInfo")).token
         : null;
+      if(JSON.parse(localStorage.getItem("userInfo")).token === undefined) {
+        localStorage.removeItem("userInfo");
+        return logoutSuccess();
+      }
       return ajax
         .post(
           `/api/auth/logout/`,
@@ -311,6 +315,10 @@ export const auth = (state = initialState, action) => {
           id: action.payload.user.id,
           username: action.payload.user.username,
           token: action.payload.token
+        },
+        error: {
+          triggered: false,
+          message: ""
         }
       };
     case LOGIN_FAILURE:
@@ -365,7 +373,7 @@ export const auth = (state = initialState, action) => {
               ...state,
               error: {
                 triggered: true,
-                message: "세션이 만료되었습니다."
+                message: ""
               }
             };
           default:
@@ -380,15 +388,26 @@ export const auth = (state = initialState, action) => {
             };
           }
       case SET_USER_TEMP:
-        return {
-          ...state,
-          logged: true,
-          userInfo: {
-            id: action.payload.id,
-            username: action.payload.username,
-            token: action.payload.token
-          }
-        };
+        if(JSON.parse(localStorage.getItem("userInfo")).token !== undefined) {
+          return {
+            ...state,
+            logged: true,
+            userInfo: {
+              id: action.payload.id,
+              username: action.payload.username,
+              token: action.payload.token
+            }
+          };
+        }
+        else {
+          return {
+            ...state,
+            logged: false,
+            userInfo: {
+            }
+          };
+        }
+        
     default:
       return state;
   }

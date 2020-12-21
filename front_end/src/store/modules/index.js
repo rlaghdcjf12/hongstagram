@@ -9,6 +9,7 @@ export const rootEpics = combineEpics(
   notesEpics.getNotesEpic,
   notesEpics.updateNoteEpic,
   notesEpics.deleteNoteEpic,
+  notesEpics.getMoreNotesEpic,
   authEpics.loginEpic,
   authEpics.registerEpic,
   authEpics.checkUserEpic,

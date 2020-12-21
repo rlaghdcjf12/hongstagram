@@ -19,6 +19,13 @@ export class NoteContainer extends Component {
 
   componentDidMount() {
     this.getNotes();
+    // 스크롤링 이벤트 추가
+    window.addEventListener("scroll", this.handleScroll);
+  }
+
+  componentWillUnmount() {
+    // 언마운트 될때에, 스크롤링 이벤트 제거
+    window.removeEventListener("scroll", this.handleScroll);
   }
 
   getNotes = () => {
@@ -45,6 +52,20 @@ export class NoteContainer extends Component {
     } else {
       // 아니면 에디팅 표시.
       toggleNote({ id, text });
+    }
+  };
+
+  handleScroll = () => {
+    const { innerHeight } = window;
+    const { scrollHeight } = document.body;
+    const scrollTop =
+      (document.documentElement && document.documentElement.scrollTop) ||
+      document.body.scrollTop;
+    if (scrollHeight - innerHeight - scrollTop < 100) {
+      if (!this.props.isLoading && !this.props.isLast) {
+        const lastId = this.props.notes[this.props.notes.length - 1].id;
+        this.props.getMoreNotes({ lastId });
+      }
     }
   };
 
@@ -84,7 +105,10 @@ const mapStateToProps = state => ({
   noteInput: state.notes.noteInput,
   notes: state.notes.notes,
   error: state.notes.error,
-  editing: state.notes.editing
+  editing: state.notes.editing,
+  // 아래 추가.
+  isLast: state.notes.isLast,
+  isLoading: state.notes.isLoading
 });
 
 const mapDispatchToProps = dispatch => {
@@ -104,9 +128,12 @@ const mapDispatchToProps = dispatch => {
     updateNote: () => {
       dispatch(noteActions.updateNote());
     },
-    // 추가
     deleteNote: ({ id }) => {
       dispatch(noteActions.deleteNote({ id }));
+    },
+    // 아래 추가.
+    getMoreNotes: ({lastId}) => {
+      dispatch(noteActions.getMoreNotes({lastId}));
     }
   };
 };
