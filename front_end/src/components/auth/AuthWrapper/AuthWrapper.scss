@@ -1,15 +1,17 @@
 @import "../../../styles/utils.scss";
 
 .authWrapper {
-  margin: 32px auto;
+  position: absolute;
+  justify-content: center;
+  top: 0;
+  width: 100%;
+  height: 100%;
 
   display: flex;
   flex-direction: column;
 
-  width: 875px;
-  height: 800px;
   @include media("<medium") {
-    width: 95%;
+    width: 100%;
   }
 
   padding-top: 1rem;
