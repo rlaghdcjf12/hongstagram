@@ -3,8 +3,9 @@ import { connect } from "react-redux";
 import InsertForm from "../components/notes/InsertForm";
 import NoteWrapper from "../components/notes/NoteWrapper";
 import NoteList from "../components/notes/NoteList/NoteList";
-
+import LoadingView from "../components/notes/LoadingView";
 import * as noteActions from "../store/modules/notes";
+import * as authActions from "../store/modules/auth";
 
 export class NoteContainer extends Component {
   handleChange = ({ value }, isEditing) => {
@@ -18,6 +19,7 @@ export class NoteContainer extends Component {
   };
 
   componentDidMount() {
+    this.props.initializeError();
     this.getNotes();
     // 스크롤링 이벤트 추가
     window.addEventListener("scroll", this.handleScroll);
@@ -39,8 +41,24 @@ export class NoteContainer extends Component {
   };
 
   deleteNote = ({ id }) => {
-    const { deleteNote } = this.props;
-    deleteNote({ id });
+    const { deleteNote, getMoreNotes } = this.props;
+    if (!this.props.isLoading) {
+      deleteNote({ id });
+    }
+  
+    const scrollHeight =
+      (document.documentElement && document.documentElement.scrollHeight) ||
+      document.body.scrollHeight;
+    const clientHeight =
+      (document.documentElement && document.documentElement.clientHeight) ||
+      document.body.clientHeight;
+    const offsetFlag = scrollHeight - clientHeight < 100;
+    if (offsetFlag) {
+      const lastId = this.props.notes[this.props.notes.length - 1].id;
+      if (!this.props.isLast) {
+        getMoreNotes({ lastId });
+      }
+    }
   };
 
   // 토글하는 함수 추가
@@ -58,19 +76,20 @@ export class NoteContainer extends Component {
   handleScroll = () => {
     const { innerHeight } = window;
     const { scrollHeight } = document.body;
+    const { getMoreNotes } = this.props;
     const scrollTop =
       (document.documentElement && document.documentElement.scrollTop) ||
       document.body.scrollTop;
     if (scrollHeight - innerHeight - scrollTop < 100) {
       if (!this.props.isLoading && !this.props.isLast) {
         const lastId = this.props.notes[this.props.notes.length - 1].id;
-        this.props.getMoreNotes({ lastId });
+        getMoreNotes({ lastId });
       }
     }
   };
 
   render() {
-    const { noteInput, error, notes, editing } = this.props;
+    const { noteInput, error, notes, editing, isLoading } = this.props;
     const {
       handleChange,
       addNote,
@@ -95,6 +114,7 @@ export class NoteContainer extends Component {
             onUpdate={updateNote}
             onDelete={deleteNote}
           />
+          <LoadingView isLoading={isLoading} />
         </NoteWrapper>
       </div>
     );
@@ -106,7 +126,6 @@ const mapStateToProps = state => ({
   notes: state.notes.notes,
   error: state.notes.error,
   editing: state.notes.editing,
-  // 아래 추가.
   isLast: state.notes.isLast,
   isLoading: state.notes.isLoading
 });
@@ -131,9 +150,11 @@ const mapDispatchToProps = dispatch => {
     deleteNote: ({ id }) => {
       dispatch(noteActions.deleteNote({ id }));
     },
-    // 아래 추가.
     getMoreNotes: ({lastId}) => {
       dispatch(noteActions.getMoreNotes({lastId}));
+    },
+    initializeError: () => {
+      dispatch(authActions.initializeError());
     }
   };
 };

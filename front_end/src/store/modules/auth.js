@@ -168,13 +168,8 @@ const logoutEpic = (action$, state$) => {
     ofType(LOGOUT),
     withLatestFrom(state$),
     mergeMap(([action, state]) => {
-      const token = localStorage.getItem("userInfo")
-        ? JSON.parse(localStorage.getItem("userInfo")).token
-        : null;
-      if(JSON.parse(localStorage.getItem("userInfo")).token === undefined) {
-        localStorage.removeItem("userInfo");
-        return logoutSuccess();
-      }
+      const userInfo = JSON.parse(localStorage.getItem("userInfo"));
+      const token = userInfo.token;
       return ajax
         .post(
           `/api/auth/logout/`,
@@ -208,9 +203,8 @@ const checkUserEpic = (action$, state$) => {
     ofType(CHECK_USER),
     withLatestFrom(state$),
     mergeMap(([action, state]) => {
-      const token = localStorage.getItem("userInfo")
-        ? JSON.parse(localStorage.getItem("userInfo")).token
-        : null;
+      const userInfo = JSON.parse(localStorage.getItem("userInfo"));
+      const token = userInfo.token;
       return ajax
         .get(`/api/auth/user/`, {
           "Content-Type": "application/json",
@@ -373,7 +367,7 @@ export const auth = (state = initialState, action) => {
               ...state,
               error: {
                 triggered: true,
-                message: ""
+                message: "세션이 만료되었습니다."
               }
             };
           default:
@@ -388,26 +382,12 @@ export const auth = (state = initialState, action) => {
             };
           }
       case SET_USER_TEMP:
-        if(JSON.parse(localStorage.getItem("userInfo")).token !== undefined) {
-          return {
-            ...state,
-            logged: true,
-            userInfo: {
-              id: action.payload.id,
-              username: action.payload.username,
-              token: action.payload.token
-            }
-          };
-        }
-        else {
-          return {
-            ...state,
-            logged: false,
-            userInfo: {
-            }
-          };
-        }
-        
+        return {
+          ...state,
+          logged: false,
+          userInfo: {
+          }
+        };
     default:
       return state;
   }

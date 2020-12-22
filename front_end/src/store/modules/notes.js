@@ -64,7 +64,7 @@ export const getNotesFailure = error => ({
   }
 });
 
-export const getMoreNotes = lastId => ({
+export const getMoreNotes = ({lastId}) => ({
   type: GET_MORE_NOTES,
   payload: {
     lastId
@@ -165,7 +165,7 @@ const getMoreNotesEpic = (action$, state$) => {
   return action$.pipe(
     ofType(GET_MORE_NOTES),
     // 0.75초간의 딜레이를 줍니다.
-    delay(750),
+    delay(1500),
     withLatestFrom(state$),
     mergeMap(([action, state]) => {
       const token = localStorage.getItem("userInfo")

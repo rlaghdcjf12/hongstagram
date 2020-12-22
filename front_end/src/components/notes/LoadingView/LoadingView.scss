@@ -1,13 +1,9 @@
 @import "../../../styles/utils.scss";
 
-.noteWrapper {
-  margin: 0 auto;
-
-
+.loading-view {
   display: flex;
-  flex-direction: column;
-
-  width: 95%;
+  justify-content: center;
+  align-items: center;
 
   padding-top: 1rem;
   padding-bottom: 1rem;

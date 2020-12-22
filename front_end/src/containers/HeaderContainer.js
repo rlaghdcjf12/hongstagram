@@ -6,8 +6,15 @@ import * as authActions from "../store/modules/auth";
 export class HeaderContainer extends Component {
   handleLogout = () => {
     const { logout } = this.props;
-    logout();
+    const userInfo = JSON.parse(localStorage.getItem("userInfo"))
+    if(userInfo && userInfo.token === undefined){
+      console.log("gagagaga");
+      localStorage.removeItem("userInfo");
+      window.location.href = "/auth/login";
+    }
+    else logout();
   };
+
   render() {
     const { handleLogout } = this;
     return <Header onLogout={handleLogout} />;
