@@ -33,8 +33,8 @@ export class AuthContainer extends Component {
 
   initialize = () => {
     const { initializeInput, initializeError } = this.props;
-    initializeError();
     initializeInput();
+    initializeError();
   };
 
   handleChangeInput = ({ name, value }) => {

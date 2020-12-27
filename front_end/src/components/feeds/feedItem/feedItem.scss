@@ -1,0 +1,20 @@
+@import "../../../styles/utils.scss";
+
+.feed-item {
+  display: flex;
+  align-items: center;
+  height: 3rem;
+  background: $oc-gray-5;
+
+  padding-left: 1rem;
+  padding-right: 1rem;
+
+  cursor: pointer;
+
+  .feed {
+    color: white;
+
+    font-weight: 600;
+    font-size: 1.25rem;
+  }
+}

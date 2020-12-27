@@ -135,14 +135,12 @@ const getNotesEpic = (action$, state$) => {
     withLatestFrom(state$),
     mergeMap(([action, state]) => {
       // localStorage의 userInfo를 JSON.parse를 통해 string을 JSON화 시킨후 token값만 가져옵니다.
-      const token = localStorage.getItem("userInfo")
-        ? JSON.parse(localStorage.getItem("userInfo")).token
-        : null;
+      const userInfo = JSON.parse(localStorage.getItem("userInfo"));
       // 헤더에 Authroization을 토큰값과 함께 넣어줍니다.
       return ajax
         .get(`/api/notes/`, {
           "Content-Type": "application/json",
-          Authorization: `token ${token}`
+          Authorization: `token ${userInfo.token}`
         })
         .pipe(
           map(response => {

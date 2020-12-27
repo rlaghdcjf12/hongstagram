@@ -169,7 +169,6 @@ const logoutEpic = (action$, state$) => {
     withLatestFrom(state$),
     mergeMap(([action, state]) => {
       const userInfo = JSON.parse(localStorage.getItem("userInfo"));
-      const token = userInfo.token;
       return ajax
         .post(
           `/api/auth/logout/`,
@@ -177,7 +176,7 @@ const logoutEpic = (action$, state$) => {
           {},
           {
             "Content-Type": "application/json",
-            Authorization: `token ${token}`
+            Authorization: `token ${userInfo.token}`
           }
         )
         .pipe(
@@ -204,11 +203,10 @@ const checkUserEpic = (action$, state$) => {
     withLatestFrom(state$),
     mergeMap(([action, state]) => {
       const userInfo = JSON.parse(localStorage.getItem("userInfo"));
-      const token = userInfo.token;
       return ajax
         .get(`/api/auth/user/`, {
           "Content-Type": "application/json",
-          Authorization: `token ${token}`
+          Authorization: `token ${userInfo.token}`
         })
         .pipe(
           map(response => {
@@ -229,7 +227,7 @@ const checkUserEpic = (action$, state$) => {
 const initialState = {
   form: {
     username: "",
-    password: ""
+    password: "",
   },
   error: {
     triggered: false,
@@ -384,8 +382,11 @@ export const auth = (state = initialState, action) => {
       case SET_USER_TEMP:
         return {
           ...state,
-          logged: false,
+          logged: true,
           userInfo: {
+            id: action.payload.id,
+            username: action.payload.username,
+            token: action.payload.token
           }
         };
     default:

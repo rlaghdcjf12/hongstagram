@@ -57,8 +57,8 @@ const mapDispatchToProps = dispatch => {
     checkUser: () => {
       dispatch(authActions.checkUser());
     },
-    setUserTemp: ({ id, username }) => {
-      dispatch(authActions.setUserTemp({ id, username }));
+    setUserTemp: ({ id, username, token }) => {
+      dispatch(authActions.setUserTemp({ id, username, token }));
     }
   };
 };

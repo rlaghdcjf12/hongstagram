@@ -8,11 +8,13 @@ const cx = classNames.bind(styles);
 
 const Header = ({ onLogout }) => (
   <div className={cx("header")}>
-    <Link to={"/"} className={cx("logo")}>
-      Hongstagram
-    </Link>
-    <div className={cx("logout")}>
-      <MdLock onClick={onLogout} />
+    <div className={cx("header-contents")}>
+      <Link to={"/"} className={cx("logo")}>
+        Hongstagram
+      </Link>
+      <div className={cx("logout")}>
+        <MdLock onClick={onLogout} />
+      </div>
     </div>
   </div>
 );

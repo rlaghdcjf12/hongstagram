@@ -36,11 +36,13 @@ const AuthForm = ({
       }
     }
   };
+
   return (
     <div className={cx("auth-set")}>
       <div className={cx("auth-form")}>
         <div className={cx("title")}>Hongstagram</div>
-        <div className={cx("line-wrapper")}>
+        <div className={cx("inputWrapper", username === "" ? "" : "up")}>
+          {username === "" ?  (<div></div>) : (<div className={cx("placeholder")}>전화번호, 사용자 이름 또는 이메일</div>)}
           <input
             type="text"
             name="username"
@@ -50,7 +52,8 @@ const AuthForm = ({
             placeholder="전화번호, 사용자 이름 또는 이메일"
           />
         </div>
-        <div className={cx("line-wrapper")}>
+        <div className={cx("inputWrapper", password === "" ? "" : "up")}>
+          {password === "" ?  (<div></div>) : (<span className={cx("placeholder")}>비밀번호</span>)}
           <input
             type="password"
             name="password"
@@ -60,12 +63,13 @@ const AuthForm = ({
             placeholder="비밀번호"
           />
         </div>
+        
         {kind === "register" ? (
           <div className={cx("auth-button")} onClick={onRegister}>
             가입하기
           </div>
         ) : (
-          <div className={cx("auth-button")} onClick={onLogin}>
+          <div className={cx("auth-button", username !== "" && password !== "" ? "possible" : "")} onClick={username !== "" && password !== "" ? onLogin : ""}>
             로그인
           </div>
         )}

@@ -1,43 +1,28 @@
 @import "../../../styles/utils.scss";
 
 .not-found {
-  background: $oc-violet-7;
+  width: 100%;
+  height: 169px;
+  padding: 40px;
 
-  display: flex;
+  background: $hong-gray-bg;
+
   justify-content: center;
   align-items: center;
+  text-align: center;
 
-  height: 100vh;
-  .description {
-    color: white;
-    font-size: 2rem;
+  .top-message {
+    font-size: 14.5px;
+  }
 
-    @include media("<medium") {
-      font-size: 1.5rem;
-      margin-left: 1rem;
-      margin-right: 1rem;
-    }
-    .go-back {
-      display: flex;
-      justify-content: center;
-      margin-top: 1rem;
-      color: white;
-      font-weight: 700;
+  .bottom-message {
+    margin-top: 40px;
+    margin-bottom: 20px;
 
-      border: 1px solid white;
-      border-radius: 2px;
+    font-size: 16px;
 
-      cursor: pointer;
-
-      user-select: none;
-
-      &:hover {
-        background: $oc-violet-6;
-      }
-
-      &:active {
-        background: $oc-violet-7;
-      }
+    a {
+      color: #00376B;
     }
   }
 }

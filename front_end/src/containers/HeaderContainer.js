@@ -8,7 +8,6 @@ export class HeaderContainer extends Component {
     const { logout } = this.props;
     const userInfo = JSON.parse(localStorage.getItem("userInfo"))
     if(userInfo && userInfo.token === undefined){
-      console.log("gagagaga");
       localStorage.removeItem("userInfo");
       window.location.href = "/auth/login";
     }

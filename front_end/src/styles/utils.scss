@@ -3,7 +3,20 @@
 
 $breakpoints: (
   small: 320px,
-  medium: 768px,
+  medium: 875px,
   large: 1024px,
   wide: 1400px
 );
+
+$hong-gray-bg: #FAFAFA;
+$hong-gray-border: #DBDBDB;
+$hong-gray-text:#8E8E8E;
+
+@mixin fullsize{
+  width: 100%;
+  height: 100%;
+}
+
+@mixin hong-border($size:1px) {
+  border: $size solid $hong-gray-border;
+}

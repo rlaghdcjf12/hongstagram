@@ -1,37 +1,43 @@
 @import "../../../styles/utils.scss";
+@import url('https://fonts.googleapis.com/css2?family=Norican&display=swap');
 
 .header {
   position: fixed;
   top: 0px;
-  left: 0;
   width: 100%;
-  background: $oc-violet-6;
-  height: 5rem;
+  height: 54px;
 
-  display: flex;
-  align-items: center;
+  background: white;
+  border-bottom: 1px solid $hong-gray-border;
 
-  .logo {
-    color: white;
+  .header-contents {
+    position: relative;
+    width: 975px;
+    height: 54px;
+    padding: 0 20px;
+    margin: auto;
 
-    font-weight: 800;
-    font-size: 1.5rem;
+    display: flex;
+    align-items: center;
+    
+    color: black;
 
-    cursor: pointer;
-
-    margin-left: 1rem;
-
-    user-select: none;
+    .logo {
+      font-family: 'Norican', cursive;
+      font-weight: 800;
+      font-size: 24px;
+      
+      cursor: pointer;
+    }
+  
+    .logout {
+      margin-left: auto;
+  
+      font-weight: 800;
+      font-size: 32px;
+      
+      cursor: pointer;
+    }
   }
-
-  .logout {
-    margin-left: auto;
-    margin-right: 1rem;
-    color: white;
-
-    font-weight: 800;
-    font-size: 2rem;
-
-    cursor: pointer;
-  }
+  
 }

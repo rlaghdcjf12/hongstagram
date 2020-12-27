@@ -2,97 +2,100 @@
 @import url('https://fonts.googleapis.com/css2?family=Norican&display=swap');
 
 .auth-set {
-  min-height: 500px;
   margin: auto;
   text-align: center;
+  
+  @include media("<medium") {
+    width: 100%;
+  }
 
   .auth-form {
-    background-color: white;
-    position: relative;
-  
-    border: 1px solid #DBDBDB;
-    border-radius: 3px;
     width: 350px;
+    background-color: white;
+  
+    @include hong-border;
+    border-radius: 3px;
     min-height: 380px;
   
-    @include media("<medium") {
-      width: 100%;
-      top: 0%;
-    }
-  
-    padding: 1rem;
+    padding: 16px 0;
+
     .title {
       text-align: center;
       font-family: 'Norican', cursive;
   
-      margin: 22px auto 22px;
+      margin: 6px auto 38px;
       font-size: 36px;
-      font-weight: 700;
+      font-weight: 800;
       user-select: none;
     }
   
     .error {
-      margin: 10px;
-      display: flex;
-      justify-content: center;
+      margin: 15px auto;
       .message {
-        font-weight: 500;
         font-size: 14px;
         color: #ED4956;
       }
     }
   
-    .line-wrapper {
-      display: flex;
-      flex-direction: column;
+    .inputWrapper {
+      width: 268px;
+      height: 38px;
+      padding: 8px;
+      margin: 0 auto;
+      text-align:left;
+
+      @include hong-border;
+      border-radius: 2px;
+
+      font-size: 12px;
+      background-color: $hong-gray-bg;
       margin-bottom: 6px;
-  
-      .input-title {
-        font-size: 1.6rem;
-        font-weight: 600;
-        margin-bottom: 1rem;
+
+      &.up{
+        transition: font-size 0.2s;
+        font-size: 10px;
+        color: $hong-gray-text;
+        padding-top: 2px;
+        padding-left: 10px;
       }
-  
+      
       input {
-        width: 288px;
-        height: 3rem;
+        width: 253px;
+        background-color: $hong-gray-bg;
+        border: none;
         outline: none;
-        border: 1px solid #DBDBDB;
-        border-radius: 2px;
-        font-size: 12px;
-        padding: 0.5rem;
-        margin: 0 auto 0 auto;
-        background-color: #FAFAFA;
       }
-      input::placeholder{
-        color: #8E8E8E;
+
+      &:focus {
+        border: 1px solid black;
       }
     }
   
     .auth-button {
-      width:288px;
+      width:268px;
       height: 30px;
-      background: #0095F6;
+      background: #95d4fd;
   
-      margin: 14px ;
+      margin: 14px auto;
       border-radius: 5px;
       padding: 5px 9px 5px 9px;
   
       color: white;
       font-size: 1.0rem;
   
-      cursor: pointer;
       user-select: none;
   
-      &:active {
-        background: #3F48CC;
+      &.possible {
+        background: #0095F6;
+        user-select: initial;
+        cursor: pointer;
       }
     }
 
     .or_box {
       display: flex;
       width: 288px;
-      margin: 15px auto 15px auto;
+      margin: 15px auto;
       padding: 0 15px 0 15px;
       color: #8E8E8E;
 
@@ -110,7 +113,7 @@
 
     .fb_box {
       width: 288px;
-      margin: 10px auto;
+      margin: 15px auto;
 
       color: #385185;
       font-weight: 600;
@@ -122,7 +125,7 @@
     }
 
     .pw_forget_box {
-      margin: 10px auto;
+      margin: 15px auto 0 auto;
 
       font-size: 13px;
       color: #385185;
@@ -171,7 +174,7 @@
     height: 105px;
 
     .app_text {
-      padding: 10px 10px;
+      padding: 15px;
     }
 
     .app_button_list {

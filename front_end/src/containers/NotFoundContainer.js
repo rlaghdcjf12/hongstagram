@@ -4,13 +4,8 @@ import NotFound from "../components/common/NotFound";
 import { withRouter } from "react-router-dom";
 
 export class NotFoundContainer extends Component {
-  handleGoBack = () => {
-    const { history } = this.props;
-    history.goBack();
-  };
   render() {
-    const { handleGoBack } = this;
-    return <NotFound onGoBack={handleGoBack} />;
+    return <NotFound />;
   }
 }
 
