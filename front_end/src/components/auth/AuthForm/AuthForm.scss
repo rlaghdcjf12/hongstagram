@@ -84,11 +84,13 @@
       font-size: 1.0rem;
   
       user-select: none;
+      pointer-events: none; 
   
       &.possible {
         background: #0095F6;
         user-select: initial;
         cursor: pointer;
+        pointer-events:all; 
       }
     }
 

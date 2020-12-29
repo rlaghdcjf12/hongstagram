@@ -27,7 +27,7 @@ const FeedList = ( {feeds} ) => {
     const feedList = feeds.map((feed, i) => {
         return (
           <FeedItem
-            note={feed}
+            feed={feed}
             key={feed.id}
           />
         );

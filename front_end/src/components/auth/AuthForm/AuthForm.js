@@ -69,7 +69,7 @@ const AuthForm = ({
             가입하기
           </div>
         ) : (
-          <div className={cx("auth-button", username !== "" && password !== "" ? "possible" : "")} onClick={username !== "" && password !== "" ? onLogin : ""}>
+          <div className={cx("auth-button", username !== "" && password !== "" ? "possible" : "")} onClick={onLogin}>
             로그인
           </div>
         )}

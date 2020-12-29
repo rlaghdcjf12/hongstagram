@@ -27,7 +27,7 @@ export class FeedContainer extends Component {
 }
 
 const mapStateToProps = state => ({
-  feeds: state.feeds,
+  feeds: state.feeds.feeds,
 });
 
 const mapDispatchToProps = dispatch => {
