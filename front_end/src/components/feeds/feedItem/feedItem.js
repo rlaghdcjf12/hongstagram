@@ -3,8 +3,8 @@ import styles from "./feedItem.scss";
 import classNames from "classnames/bind";
 import like_img from '../../../image/like.jpg';
 import comment_img from '../../../image/comment.jpg';
-import message_img from '../../../image/message.jpg';
 import share_img from '../../../image/share.jpg';
+import save_img from '../../../image/save.jpg';
 
 const cx = classNames.bind(styles);
 
@@ -17,11 +17,15 @@ const FeedItem = ({
           <div className={cx("profile-imagebox")}>
             <img className={cx("profile-image")} src="https://placeimg.com/32/32/people"  alt="profile image"/>
           </div>
-          <div className={cx("profile-text")}>
-            <div className={cx("profile-name")}>Hong</div>
-            {/* <div className={cx("feed-place")}>서울</div> */}
+          <div className={cx("header-text")}>
+          {feed.place !== 'undefined' ? <div className={cx("profile-text")}>
+              <div className={cx("profile-name")}>Hong</div>
+              <div className={cx("feed-place")}>{feed.place}</div>
+            </div> : <div className={cx("profile-nameonly")}>
+              <div className={cx("profile-name")}>Hong</div>
+            </div>}
+            <div className={cx("feed-add")}>&middot;&middot;&middot;</div>
           </div>
-          <div className={cx("feed-add")}>&middot;&middot;&middot;</div>
         </div>
         <div className={cx("feed-images")}>
           <img src="https://placeimg.com/600/600/nature" alt="feed image"/>
@@ -30,8 +34,8 @@ const FeedItem = ({
           <div className={cx("buttonbox")}>
             <span className={cx("like")}><img src={like_img} alt="like"></img></span>
             <span className={cx("comment")}><img src={comment_img} alt="comment"></img></span>
-            <span className={cx("message")}><img src={message_img} alt="message"></img></span>
             <span className={cx("share")}><img src={share_img} alt="share"></img></span>
+            <span className={cx("save")}><img src={save_img} alt="save"></img></span>
           </div>
           <div className={cx("likes_count")}>좋아요 18개</div>
           <div className={cx("feed-text")}>
