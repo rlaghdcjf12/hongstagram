@@ -9,7 +9,7 @@ const cx = classNames.bind(styles);
 const Header = ({ onLogout }) => (
   <div className={cx("header")}>
     <div className={cx("header-contents")}>
-      <Link to={"/"} className={cx("logo")}>
+      <Link to={"/Timeline"} className={cx("logo")}>
         Hongstagram
       </Link>
       <div className={cx("logout")}>

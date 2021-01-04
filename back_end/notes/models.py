@@ -1,5 +1,5 @@
 from django.db import models
-from django.contrib.auth.models import User
+from back_end.myUser.models import User
 
 
 class Notes(models.Model):

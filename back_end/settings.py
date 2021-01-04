@@ -31,6 +31,9 @@ ALLOWED_HOSTS = []
 # Application definition
 
 INSTALLED_APPS = [
+    'rest_framework',
+    'knox',
+    'corsheaders',
     'django.contrib.admin',
     'django.contrib.auth',
     'django.contrib.contenttypes',
@@ -39,9 +42,7 @@ INSTALLED_APPS = [
     'django.contrib.staticfiles',
     'back_end.feeds',
     'back_end.notes',
-    'rest_framework',
-    'knox',
-    'corsheaders'
+    'back_end.myUser',
 ]
 
 MIDDLEWARE = [
@@ -60,8 +61,8 @@ CORS_ORIGIN_ALLOW_ALL = False
 CORS_ORIGIN_WHITELIST = (
        'http://127.0.0.1:3000',    #React 도메인
        'http://127.0.0.1:8000',    #Django 도메인
-       'localhost:3000',    #React 도메인
-       'localhost:8000',    #Django 도메인
+       'https://localhost:3000',    #React 도메인
+       'https://localhost:8000',    #Django 도메인
 )
 
 ROOT_URLCONF = 'back_end.urls'
@@ -95,6 +96,7 @@ DATABASES = {
     }
 }
 
+AUTH_USER_MODEL = 'myUser.User'
 
 # Password validation
 # https://docs.djangoproject.com/en/3.1/ref/settings/#auth-password-validators
