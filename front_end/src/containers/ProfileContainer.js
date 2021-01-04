@@ -1,6 +1,9 @@
 import React, { Component } from "react";
 import { connect } from "react-redux";
 import ProfileWrapper from "../components/profile/ProfileWrapper";
+import MyInfo from "../components/profile/MyInfo";
+import MyStory from "../components/profile/MyStory";
+import MyFeed from "../components/profile/MyFeed";
 import * as authActions from "../store/modules/auth";
 import * as feedActions from "../store/modules/feeds";
 
@@ -21,13 +24,13 @@ export class ProfileContainer extends Component {
   };
 
   render() {
-    const { feeds } = this.props;
+    const { feeds, name } = this.props;
     return (
       <div>
-        <MyInfo />
+        <MyInfo name={name} />
         <MyStory />
         <ProfileWrapper>
-          <FeedList feeds={feeds}/>
+          <MyFeed feeds={feeds}/>
         </ProfileWrapper>
       </div>
     );
@@ -36,6 +39,7 @@ export class ProfileContainer extends Component {
 
 const mapStateToProps = state => ({
   feeds: state.feeds.feeds,
+  name: state.auth.name,
 });
 
 const mapDispatchToProps = dispatch => {
@@ -49,4 +53,4 @@ const mapDispatchToProps = dispatch => {
 export default connect(
   mapStateToProps,
   mapDispatchToProps
-)(FeedContainer);
+)(ProfileContainer);

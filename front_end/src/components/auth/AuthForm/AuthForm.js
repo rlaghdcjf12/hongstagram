@@ -43,18 +43,18 @@ const AuthForm = ({
     <div className={cx("auth-set")}>
       <div className={cx("auth-form")}>
         <div className={cx("title")}>Hongstagram</div>
-        <div className={cx("inputWrapper", username === "" ? "" : "up")}>
-          {kind === "register" ?  (<div></div>) : (
-            <input type="email" name="email" value={email} onChange={handleChange} onKeyPress={handleKeyPress} placeholder="이메일 주소"></input>)}
-        </div>
-          {kind === "register" ?  (<div></div>) : (
-          <div className={cx("inputWrapper", username === "" ? "" : "up")}>
+        {kind === "login" ?  (<div></div>) : (
+          <div className={cx("inputWrapper", email === "" ? "" : "up")}>
+            {email === "" ?  (<div></div>) : (<div className={cx("placeholder")}>이메일 주소</div>)}
+            <input type="email" name="email" value={email} onChange={handleChange} onKeyPress={handleKeyPress} placeholder="이메일 주소"></input>
+          </div>)}
+        {kind === "login" ?  (<div></div>) : (
+          <div className={cx("inputWrapper", name === "" ? "" : "up")}>
+          {email === "" ?  (<div></div>) : (<div className={cx("placeholder")}>성명</div>)}
             <input type="name" name="name" value={name} onChange={handleChange} onKeyPress={handleKeyPress} placeholder="성명"></input>
           </div>)}
-        
         <div className={cx("inputWrapper", username === "" ? "" : "up")}>
-          {kind === "register" && username === "" ?  (<div></div>) : (<div className={cx("placeholder")}>사용자 이름</div>)}
-          {kind === "login" && username === "" ?  (<div></div>) : (<div className={cx("placeholder")}>전화번호, 사용자 이름 또는 이메일</div>)}
+          {username === "" ?  (<div></div>) : (<div className={cx("placeholder")}>{kind === "register" ? "사용자 이름" : "전화번호, 사용자 이름 또는 이메일"}</div>)}
           <input
             type="text"
             name="username"
