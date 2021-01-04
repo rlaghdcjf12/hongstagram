@@ -26,6 +26,8 @@ const CHECK_USER_FAILURE = "auth/CHECK_USER_FAILURE";
 
 const SET_USER_TEMP = "auth/SET_USER_TEMP";
 
+const GET_MY_INFO = "auth/GET_MY_INFO";
+
 export const initializeInput = () => ({
   type: INITIALIZE_INPUT
 });
@@ -114,6 +116,10 @@ export const setUserTemp = ({ id, username, token }) => ({
     username,
     token
   }
+});
+
+export const getMyInfo = () => ({
+  type: GET_MY_INFO
 });
 
 
@@ -228,6 +234,8 @@ const initialState = {
   form: {
     username: "",
     password: "",
+    name: "",
+    email: "",
   },
   error: {
     triggered: false,
@@ -383,6 +391,15 @@ export const auth = (state = initialState, action) => {
         return {
           ...state,
           logged: true,
+          userInfo: {
+            id: action.payload.id,
+            username: action.payload.username,
+            token: action.payload.token
+          }
+        };
+      case GET_MY_INFO:
+        return {
+          ...state,
           userInfo: {
             id: action.payload.id,
             username: action.payload.username,

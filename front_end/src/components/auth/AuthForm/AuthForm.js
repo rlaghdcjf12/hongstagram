@@ -11,6 +11,8 @@ const cx = classNames.bind(styles);
 const AuthForm = ({
   kind,
   onChangeInput,
+  email,
+  name,
   username,
   password,
   onLogin,
@@ -42,14 +44,24 @@ const AuthForm = ({
       <div className={cx("auth-form")}>
         <div className={cx("title")}>Hongstagram</div>
         <div className={cx("inputWrapper", username === "" ? "" : "up")}>
-          {username === "" ?  (<div></div>) : (<div className={cx("placeholder")}>전화번호, 사용자 이름 또는 이메일</div>)}
+          {kind === "register" ?  (<div></div>) : (
+            <input type="email" name="email" value={email} onChange={handleChange} onKeyPress={handleKeyPress} placeholder="이메일 주소"></input>)}
+        </div>
+          {kind === "register" ?  (<div></div>) : (
+          <div className={cx("inputWrapper", username === "" ? "" : "up")}>
+            <input type="name" name="name" value={name} onChange={handleChange} onKeyPress={handleKeyPress} placeholder="성명"></input>
+          </div>)}
+        
+        <div className={cx("inputWrapper", username === "" ? "" : "up")}>
+          {kind === "register" && username === "" ?  (<div></div>) : (<div className={cx("placeholder")}>사용자 이름</div>)}
+          {kind === "login" && username === "" ?  (<div></div>) : (<div className={cx("placeholder")}>전화번호, 사용자 이름 또는 이메일</div>)}
           <input
             type="text"
             name="username"
             value={username}
             onChange={handleChange}
             onKeyPress={handleKeyPress}
-            placeholder="전화번호, 사용자 이름 또는 이메일"
+            placeholder={kind ==="register" ? "사용자 이름" : "전화번호, 사용자 이름 또는 이메일"}
           />
         </div>
         <div className={cx("inputWrapper", password === "" ? "" : "up")}>

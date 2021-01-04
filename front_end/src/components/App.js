@@ -1,6 +1,6 @@
 import React, { Component} from "react";
 import { Switch, Route} from "react-router-dom";
-import { Main, Auth, TimeLine, NotFound } from "../pages";
+import { Main, Auth, TimeLine, Profile, NotFound } from "../pages";
 import BaseContainer from "../containers/BaseContainer";
 
 class App extends Component {
@@ -12,6 +12,7 @@ class App extends Component {
           <Route path="/" exact={true} component={Main}></Route>
           <Route path="/auth/:kind" exact={true} component={Auth}></Route>
           <Route path="/TimeLine" exact={true} component={TimeLine}></Route>
+          <Route path="/Profile" exact={true} component={Profile}></Route>
           <Route component={NotFound}></Route>
         </Switch>
       </div>

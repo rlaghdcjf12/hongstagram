@@ -15,7 +15,7 @@ const FeedItem = ({
     <div className={cx("feed-item")}>
         <div className={cx("feed-header")}>
           <div className={cx("profile-imagebox")}>
-            <img className={cx("profile-image")} src="https://placeimg.com/32/32/people"  alt="profile image"/>
+            <img className={cx("profile-image")} src="https://placeimg.com/32/32/people"  alt="profile"/>
           </div>
           <div className={cx("header-text")}>
           {feed.place !== 'undefined' ? <div className={cx("profile-text")}>
@@ -28,7 +28,7 @@ const FeedItem = ({
           </div>
         </div>
         <div className={cx("feed-images")}>
-          <img src="https://placeimg.com/600/600/nature" alt="feed image"/>
+          <img src="https://placeimg.com/600/600/nature" alt="feed"/>
         </div>
         <div className={cx("feed-contents")}>
           <div className={cx("buttonbox")}>
@@ -37,7 +37,7 @@ const FeedItem = ({
             <span className={cx("share")}><img src={share_img} alt="share"></img></span>
             <span className={cx("save")}><img src={save_img} alt="save"></img></span>
           </div>
-          <div className={cx("likes_count")}>좋아요 18개</div>
+          <div className={cx("likes_count")}>좋아요 367개</div>
           <div className={cx("feed-text")}>
             <b>Hong&nbsp;</b>
             <div> {feed.text}</div>

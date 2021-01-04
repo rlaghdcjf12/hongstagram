@@ -41,6 +41,7 @@ INSTALLED_APPS = [
     'back_end.notes',
     'rest_framework',
     'knox',
+    'corsheaders'
 ]
 
 MIDDLEWARE = [
@@ -51,7 +52,17 @@ MIDDLEWARE = [
     'django.contrib.auth.middleware.AuthenticationMiddleware',
     'django.contrib.messages.middleware.MessageMiddleware',
     'django.middleware.clickjacking.XFrameOptionsMiddleware',
+    'corsheaders.middleware.CorsMiddleware'
 ]
+
+CORS_ORIGIN_ALLOW_ALL = False
+
+CORS_ORIGIN_WHITELIST = (
+       'http://127.0.0.1:3000',    #React 도메인
+       'http://127.0.0.1:8000',    #Django 도메인
+       'localhost:3000',    #React 도메인
+       'localhost:8000',    #Django 도메인
+)
 
 ROOT_URLCONF = 'back_end.urls'
 
