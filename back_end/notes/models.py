@@ -1,7 +1,6 @@
 from django.db import models
 from back_end.myUser.models import User
 
-
 class Notes(models.Model):
     objects = models.Manager()
     text = models.CharField(max_length=255)

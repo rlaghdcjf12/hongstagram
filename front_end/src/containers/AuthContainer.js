@@ -1,6 +1,6 @@
 import React, { Component } from "react";
 import { connect } from "react-redux";
-import AuthForm from "../components/auth/AuthForm";
+import {LoginForm, RegisterForm} from "../components/auth/AuthForm";
 import { withRouter } from "react-router-dom";
 import * as authActions from "../store/modules/auth";
 
@@ -52,23 +52,33 @@ export class AuthContainer extends Component {
     register();
   };
   render() {
-    const { kind, username, password, error } = this.props;
+    const { kind, email, nickname, username, password, error } = this.props;
     const { handleChangeInput, handleLogin, handleRegister } = this;
     return (
-      <AuthForm
-        kind={kind}
-        username={username}
-        password={password}
-        onChangeInput={handleChangeInput}
-        onLogin={handleLogin}
-        onRegister={handleRegister}
-        error={error}
-      />
+        kind === "login" ? 
+          <LoginForm
+            username={username}
+            password={password}
+            onChangeInput={handleChangeInput}
+            onLogin={handleLogin}
+            error={error}
+          /> : 
+          <RegisterForm
+            email={email}
+            nickname={nickname}
+            username={username}
+            password={password}
+            onChangeInput={handleChangeInput}
+            onRegister={handleRegister}
+            error={error}
+          />
     );
   }
 }
 
 const mapStateToProps = state => ({
+  nickname: state.auth.form.nickname,
+  email: state.auth.form.email,
   username: state.auth.form.username,
   password: state.auth.form.password,
   userInfo: state.auth.userInfo,

@@ -128,8 +128,8 @@ const registerEpic = (action$, state$) => {
     ofType(REGISTER),
     withLatestFrom(state$),
     mergeMap(([action, state]) => {
-      const { username, password } = state.auth.form;
-      return ajax.post(`/api/auth/register/`, { username, password }).pipe(
+      const { nickname, email, username, password } = state.auth.form;
+      return ajax.post(`/api/auth/register/`, { nickname, email, username, password }).pipe(
         map(response => {
           const { user, token } = response.response;
           return registerSuccess({ user, token });
@@ -234,7 +234,7 @@ const initialState = {
   form: {
     username: "",
     password: "",
-    name: "",
+    nickname: "",
     email: "",
   },
   error: {
@@ -255,8 +255,10 @@ export const auth = (state = initialState, action) => {
       return {
         ...state,
         form: {
+          nickname: "",
+          email: "",
           username: "",
-          password: ""
+          password: "",
         }
       };
     case INITIALIZE_ERROR:
@@ -291,15 +293,7 @@ export const auth = (state = initialState, action) => {
             ...state,
             error: {
               triggered: true,
-              message: "아이디 또는 비밀번호가 잘못되었습니다."
-            }
-          };
-        case 500:
-          return {
-            ...state,
-            error: {
-              triggered: true,
-              message: "아이디 또는 비밀번호가 너무 짧습니다."
+              message: "입력하신 정보가 잘못되었습니다."
             }
           };
         default:
@@ -328,7 +322,7 @@ export const auth = (state = initialState, action) => {
             ...state,
             error: {
               triggered: true,
-              message: "잘못된 비밀번호입니다. 다시 확인해주세요."
+              message: "잘못된 정보가 입력되었습니다. 다시 확인해주세요."
             }
           };
         case 500:

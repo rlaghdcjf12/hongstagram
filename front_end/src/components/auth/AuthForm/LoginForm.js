@@ -8,15 +8,11 @@ import as_img from '../../../image/appstore.png';
 
 const cx = classNames.bind(styles);
 
-const AuthForm = ({
-  kind,
+const LoginForm = ({
   onChangeInput,
-  email,
-  name,
   username,
   password,
   onLogin,
-  onRegister,
   error
 }) => {
   const handleChange = e => {
@@ -26,16 +22,8 @@ const AuthForm = ({
 
   const handleKeyPress = e => {
     if (e.key === "Enter") {
-      switch (kind) {
-        case "register":
-          onRegister();
-          return;
-        case "login":
-          onLogin();
-          return;
-        default:
-          return;
-      }
+      onLogin();
+        return;
     }
   };
 
@@ -43,25 +31,15 @@ const AuthForm = ({
     <div className={cx("auth-set")}>
       <div className={cx("auth-form")}>
         <div className={cx("title")}>Hongstagram</div>
-        {kind === "login" ?  (<div></div>) : (
-          <div className={cx("inputWrapper", email === "" ? "" : "up")}>
-            {email === "" ?  (<div></div>) : (<div className={cx("placeholder")}>이메일 주소</div>)}
-            <input type="email" name="email" value={email} onChange={handleChange} onKeyPress={handleKeyPress} placeholder="이메일 주소"></input>
-          </div>)}
-        {kind === "login" ?  (<div></div>) : (
-          <div className={cx("inputWrapper", name === "" ? "" : "up")}>
-          {email === "" ?  (<div></div>) : (<div className={cx("placeholder")}>성명</div>)}
-            <input type="name" name="name" value={name} onChange={handleChange} onKeyPress={handleKeyPress} placeholder="성명"></input>
-          </div>)}
         <div className={cx("inputWrapper", username === "" ? "" : "up")}>
-          {username === "" ?  (<div></div>) : (<div className={cx("placeholder")}>{kind === "register" ? "사용자 이름" : "전화번호, 사용자 이름 또는 이메일"}</div>)}
+          {username === "" ?  (<div></div>) : (<div className={cx("placeholder")}>전화번호, 사용자 이름 또는 이메일</div>)}
           <input
             type="text"
             name="username"
             value={username}
             onChange={handleChange}
             onKeyPress={handleKeyPress}
-            placeholder={kind ==="register" ? "사용자 이름" : "전화번호, 사용자 이름 또는 이메일"}
+            placeholder="전화번호, 사용자 이름 또는 이메일"
           />
         </div>
         <div className={cx("inputWrapper", password === "" ? "" : "up")}>
@@ -75,24 +53,16 @@ const AuthForm = ({
             placeholder="비밀번호"
           />
         </div>
-        
-        {kind === "register" ? (
-          <div className={cx("auth-button")} onClick={onRegister}>
-            가입하기
-          </div>
-        ) : (
-          <div className={cx("auth-button", username !== "" && password !== "" ? "possible" : "")} onClick={onLogin}>
-            로그인
-          </div>
-        )}
+        <div className={cx("auth-button", username !== "" && password !== "" ? "possible" : "")} onClick={onLogin}>
+          로그인
+        </div>
         <div className={cx("or_box")}>
           <div className={cx("or_line")} />
           <div className={cx("or")}>또는</div>
           <div className={cx("or_line")} />
         </div>
         <div className={cx("fb_box")}>
-          <img src={fb_img} alt="facebook"/>
-          &nbsp;Facebook으로 로그인
+          <img src={fb_img} alt="facebook"/>&nbsp;Facebook으로 로그인
         </div>
         <div className={cx("error")}>
           {error.triggered && (
@@ -104,21 +74,12 @@ const AuthForm = ({
         </div>
       </div>
       <div className={cx("transition_box")}>
-        {kind === "register" ? (
-          <div className={cx("link_box")}>
-          <span className={cx("description")}>계정이 있으신가요?  </span>
-          <Link to={`/auth/login`} className={cx("link")}>
-            로그인
+        <div className={cx("link_box")}>
+          <span className={cx("description")}>계정이 없으신가요?  </span>
+          <Link to={`/auth/register`} className={cx("link")}>
+            가입하기
           </Link>
         </div>
-        ) : (
-          <div className={cx("link_box")}>
-            <span className={cx("description")}>계정이 없으신가요?  </span>
-            <Link to={`/auth/register`} className={cx("link")}>
-              가입하기
-            </Link>
-          </div>
-        )}
       </div>
       <div className={cx("app_box")}>
         <div className={cx("app_text")}>앱을 다운로드하세요.</div>
@@ -131,4 +92,4 @@ const AuthForm = ({
   );
 };
 
-export default AuthForm;
+export default LoginForm;

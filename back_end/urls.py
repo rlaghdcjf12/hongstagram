@@ -18,10 +18,19 @@ from django.urls import path, include
 
 from .notes import urls as notes_url
 from .feeds import urls as feeds_url
+from .myUser import urls as myUser_url
+from . import settings
 
 urlpatterns = [
     path("admin/", admin.site.urls),
     path("api/", include(notes_url)),
     path("api/", include(feeds_url)),
+    path("api/", include(myUser_url)),
     path("api/auth", include("knox.urls")),
 ]
+
+if settings.DEBUG: 
+    import debug_toolbar 
+    urlpatterns += [ 
+        path("__debug__/", include(debug_toolbar.urls)), 
+    ]
