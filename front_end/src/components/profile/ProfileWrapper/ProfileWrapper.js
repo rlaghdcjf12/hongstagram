@@ -5,7 +5,7 @@ import classNames from "classnames/bind";
 const cx = classNames.bind(styles);
 
 const ProfileWrapper = ({ children }) => (
-  <div className={cx("feedWrapper")}>{children}</div>
+  <div className={cx("profileWrapper")}>{children}</div>
 );
 
 export default ProfileWrapper;

@@ -1,10 +1,12 @@
 from django.shortcuts import render
 from rest_framework import viewsets, permissions, generics, status
 from rest_framework.response import Response
+from .models import User
 from .serializers import (
     CreateUserSerializer,
     UserSerializer,
     LoginUserSerializer,
+    MyInfoSerializer,
 )
 from knox.models import AuthToken
 
@@ -53,3 +55,15 @@ class UserAPI(generics.RetrieveAPIView):
 
     def get_object(self):
         return self.request.user
+        
+class MyInfoViewSet(viewsets.ModelViewSet):
+    # permission_classes = [permissions.IsAuthenticated, ]
+    serializer_class = MyInfoSerializer
+
+    print("@ user : 123")
+    def get_queryset(self):
+        # return Feeds.objects.filter(owner=self.request.user).order_by("-created_at")
+        return User.objects.filter(username=self.request.user)
+
+    def perform_create(self, serializer):
+        serializer.save()

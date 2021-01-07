@@ -15,6 +15,11 @@ const Header = ({ onLogout }) => (
       <div className={cx("logout")}>
         <MdLock onClick={onLogout} />
       </div>
+      <div className={cx("menu-profile")}>
+        <Link to={"/profile"}>
+          <img src="https://placeimg.com/150/150/people" alt="menu-profile" />
+        </Link>
+      </div>
     </div>
   </div>
 );

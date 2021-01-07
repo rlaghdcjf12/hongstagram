@@ -27,6 +27,8 @@ const CHECK_USER_FAILURE = "auth/CHECK_USER_FAILURE";
 const SET_USER_TEMP = "auth/SET_USER_TEMP";
 
 const GET_MY_INFO = "auth/GET_MY_INFO";
+const GET_MY_INFO_SUCCESS = "auth/GET_MY_INFO_SUCCESS";
+const GET_MY_INFO_FAILURE = "auth/GET_MY_INFO_FAILURE";
 
 export const initializeInput = () => ({
   type: INITIALIZE_INPUT
@@ -122,6 +124,19 @@ export const getMyInfo = () => ({
   type: GET_MY_INFO
 });
 
+export const getMyInfoSuccess = ({myInfo}) => ({
+  type: GET_MY_INFO_SUCCESS,
+  payload: {
+    myInfo
+  }
+});
+
+export const getMyInfoFailure = error => ({
+  type: GET_MY_INFO_FAILURE,
+  payload: {
+    error
+  }
+});
 
 const registerEpic = (action$, state$) => {
   return action$.pipe(
@@ -230,6 +245,35 @@ const checkUserEpic = (action$, state$) => {
   );
 };
 
+const getMyInfoEpic = (action$, state$) => {
+  return action$.pipe(
+    ofType(GET_MY_INFO),
+    withLatestFrom(state$),
+    mergeMap(([action, state]) => {
+      const userInfo = JSON.parse(localStorage.getItem("userInfo"));
+      const url = "/api/myInfo/" + userInfo.id;
+      return ajax
+        .get(url, {
+          "Content-Type": "application/json",
+          Authorization: `token ${userInfo.token}`
+        })
+        .pipe(
+          map(response => {
+            const myInfo = response.response;
+            return getMyInfoSuccess({ myInfo });
+          }),
+          catchError(error =>
+            of({
+              type: GET_MY_INFO_FAILURE,
+              payload: error,
+              error: true
+            })
+          )
+        );
+    })
+  );
+};
+
 const initialState = {
   form: {
     username: "",
@@ -246,6 +290,12 @@ const initialState = {
     id: null,
     username: "",
     token: null
+  },
+  myInfo: {
+    username: "",
+    nickname: "",
+    profileImage: "",
+    introduce: "",
   }
 };
   
@@ -391,13 +441,27 @@ export const auth = (state = initialState, action) => {
             token: action.payload.token
           }
         };
-      case GET_MY_INFO:
+      case GET_MY_INFO_SUCCESS:
         return {
           ...state,
-          userInfo: {
-            id: action.payload.id,
-            username: action.payload.username,
-            token: action.payload.token
+          logged: true,
+          myInfo: {
+            username: action.payload.myInfo.username,
+            nickname: action.payload.myInfo.nickname,
+            profileImage: action.payload.myInfo.profileImage,
+            introduce: action.payload.myInfo.introduce,
+          },
+          error: {
+            triggered: false,
+            message: ""
+          }
+        };
+      case GET_MY_INFO_FAILURE:
+        return {
+          ...state,
+          error: {
+            triggered: true,
+            message: "Error! Please Try Again!"
           }
         };
     default:
@@ -409,5 +473,6 @@ export const authEpics = {
   registerEpic, 
   loginEpic, 
   checkUserEpic,
-  logoutEpic
+  logoutEpic,
+  getMyInfoEpic
 };

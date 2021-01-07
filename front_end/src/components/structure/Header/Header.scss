@@ -39,6 +39,21 @@
       
       cursor: pointer;
     }
+
+    .menu-profile {
+      width: 28px;
+      height: 28px;
+      
+      margin-left: 22px;
+      padding: 3px;
+
+      img {
+        width: 22px;
+        height: 22px;
+        border-radius: 50%;
+        
+      }
+    }
   }
   
 }
