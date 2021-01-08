@@ -4,6 +4,10 @@ import Header from "../components/structure/Header";
 import * as authActions from "../store/modules/auth";
 
 export class HeaderContainer extends Component {
+  componentDidMount() {
+    this.getMyInfo();
+  }
+
   handleLogout = () => {
     const { logout } = this.props;
     const userInfo = JSON.parse(localStorage.getItem("userInfo"))
@@ -14,18 +18,29 @@ export class HeaderContainer extends Component {
     else logout();
   };
 
+  getMyInfo = () => {
+    const { getMyInfo } = this.props;
+    getMyInfo();
+  };
+
   render() {
     const { handleLogout } = this;
-    return <Header onLogout={handleLogout} />;
+    const { profileImage } = this.props;
+    return <Header profileImage={profileImage} onLogout={handleLogout} />;
   }
 }
 
-const mapStateToProps = state => ({});
+const mapStateToProps = state => ({
+  profileImage: state.auth.myInfo.profileImage,
+});
 
 const mapDispatchToProps = dispatch => {
   return {
     logout: () => {
       dispatch(authActions.logout());
+    },
+    getMyInfo: () => {
+      dispatch(authActions.getMyInfo());
     }
   };
 };

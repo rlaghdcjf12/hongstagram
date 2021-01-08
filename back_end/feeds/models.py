@@ -5,7 +5,8 @@ from django.contrib.auth.models import User
 class Feeds(models.Model):
     objects = models.Manager()
     place = models.CharField(max_length=255)
-    image = models.ImageField(upload_to="%Y/%m/%d")
+
+    image = models.ImageField(upload_to="front_end/public/image/feeds/")
     text = models.CharField(max_length=255)
     # owner = models.ForeignKey(
     #     User, related_name="feeds", on_delete=models.CASCADE, null=True

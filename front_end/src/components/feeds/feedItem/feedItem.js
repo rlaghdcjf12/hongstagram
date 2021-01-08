@@ -11,6 +11,8 @@ const cx = classNames.bind(styles);
 const FeedItem = ({
   feed
 }) => {
+  const imgUrl = feed.image.replace("http://localhost:8000/front_end/public","")
+
   return (
     <div className={cx("feed-item")}>
         <div className={cx("feed-header")}>
@@ -28,7 +30,7 @@ const FeedItem = ({
           </div>
         </div>
         <div className={cx("feed-images")}>
-          <img src="https://placeimg.com/600/600/nature" alt="feed"/>
+          <img src={imgUrl} alt="feed"/>
         </div>
         <div className={cx("feed-contents")}>
           <div className={cx("buttonbox")}>

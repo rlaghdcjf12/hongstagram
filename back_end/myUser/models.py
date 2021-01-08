@@ -38,7 +38,7 @@ class User(AbstractBaseUser):
     sex = models.CharField(max_length=255, null=True)
     introduce = models.TextField(null=True)
     
-    profileImage = models.ImageField(upload_to= "image/profile/%Y%M%D", null=True)
+    profileImage = models.ImageField(upload_to= "front_end/public/image/profile/", null=True)
     email = models.EmailField(verbose_name='email',max_length=255,unique=True)
 
     is_active = models.BooleanField(default=True)
