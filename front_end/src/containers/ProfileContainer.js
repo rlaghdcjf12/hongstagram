@@ -24,8 +24,13 @@ export class ProfileContainer extends Component {
     getMyInfo();
   };
 
+  changeProfileTab = (num) => {
+    const { changeProfileTab } = this.props;
+    changeProfileTab(num);
+  }
+
   render() {
-    const { feeds, username, nickname, profileImage, introduce } = this.props;
+    const { feeds, username, nickname, profileImage, introduce, menuNum, changeProfileTab} = this.props;
     return (
       <ProfileWrapper>
         <MyInfo 
@@ -34,7 +39,7 @@ export class ProfileContainer extends Component {
           profileImage={profileImage}
           introduce={introduce}/>
         <MyStory />
-        <MyFeedWrapper>
+        <MyFeedWrapper menuNum={menuNum} changeProfileTab={changeProfileTab}>
           <MyFeed feeds={feeds} />
         </MyFeedWrapper>
       </ProfileWrapper>
@@ -48,6 +53,7 @@ const mapStateToProps = state => ({
   nickname: state.auth.myInfo.nickname,
   profileImage : state.auth.myInfo.profileImage,
   introduce: state.auth.myInfo.introduce,
+  menuNum: state.feeds.menuNum,
 });
 
 const mapDispatchToProps = dispatch => {
@@ -57,6 +63,9 @@ const mapDispatchToProps = dispatch => {
     },
     getMyInfo: () => {
       dispatch(authActions.getMyInfo());
+    },
+    changeProfileTab: ({menuNum}) => {
+      dispatch(feedActions.changeProfileTab({menuNum}));
     }
   };
 };

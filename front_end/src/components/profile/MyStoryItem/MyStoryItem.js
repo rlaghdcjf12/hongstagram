@@ -9,7 +9,10 @@ const MyStoryItem = ({
 }) => {
   return (
     <div className={cx("myStory-item")}>
-      story.image
+      <div className={cx("storyImage")}>
+        <img src="https://placeimg.com/77/77/people" alt="Story"/>
+      </div>
+      <div className={cx("storyTitle")}>스토리 1</div>
     </div>
   );
   

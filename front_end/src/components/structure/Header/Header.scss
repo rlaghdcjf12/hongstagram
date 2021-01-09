@@ -23,37 +23,64 @@
     
     color: black;
 
-    .logo {
-      font-family: 'Norican', cursive;
-      font-weight: 800;
-      font-size: 24px;
-      
-      cursor: pointer;
-    }
-  
-    .logout {
-      margin-left: auto;
-  
-      font-weight: 800;
-      font-size: 32px;
-      
-      cursor: pointer;
-    }
-
-    .menu-profile {
-      width: 28px;
-      height: 28px;
-      
-      margin-left: 22px;
-      padding: 3px;
-
-      img {
-        width: 22px;
-        height: 22px;
-        border-radius: 50%;
+    .left_icons{
+      .logo {
+        font-family: 'Norican', cursive;
+        font-weight: 800;
+        font-size: 24px;
         
+        cursor: pointer;
       }
     }
+
+    .center_searchbar{
+      
+    }
+
+    .right_icons{
+      position: relative;
+      top: -2px;
+      height: 25px;
+      margin-left: auto;
+      display: flex;
+
+      cursor: pointer;
+
+      .home {
+        margin-left: 22px;
+        font-weight: 800;
+        font-size: 25px;
+      }
+
+      .logout {
+        margin-left: 22px;
+        font-weight: 800;
+        font-size: 25px;
+      }
+
+      .menu-profile {
+        width: 28px;
+        height: 28px;
+        
+        margin-left: 22px;
+        padding: 1.5px;
+  
+        img {
+          width: 25px;
+          height: 25px;
+          border-radius: 50%;
+          
+        }
+      }
+    }
+
+    
+
+    
+  
+    
+
+    
   }
   
 }

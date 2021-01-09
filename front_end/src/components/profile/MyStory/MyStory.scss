@@ -1,44 +1,9 @@
 @import "../../../styles/utils.scss";
 @import url('https://fonts.googleapis.com/css2?family=Norican&display=swap');
 
-.header {
-  position: fixed;
-  top: 0px;
+.storyBox {
   width: 100%;
-  height: 54px;
-  z-index: 100;
+  padding-left: 34px;
+  margin-bottom: 44px;
 
-  background: white;
-  border-bottom: 1px solid $hong-gray-border;
-
-  .header-contents {
-    position: relative;
-    width: 975px;
-    height: 54px;
-    padding: 0 20px;
-    margin: auto;
-
-    display: flex;
-    align-items: center;
-    
-    color: black;
-
-    .logo {
-      font-family: 'Norican', cursive;
-      font-weight: 800;
-      font-size: 24px;
-      
-      cursor: pointer;
-    }
-  
-    .logout {
-      margin-left: auto;
-  
-      font-weight: 800;
-      font-size: 32px;
-      
-      cursor: pointer;
-    }
-  }
-  
 }

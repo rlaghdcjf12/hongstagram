@@ -1,44 +1,34 @@
 @import "../../../styles/utils.scss";
 @import url('https://fonts.googleapis.com/css2?family=Norican&display=swap');
 
-.header {
-  position: fixed;
-  top: 0px;
-  width: 100%;
-  height: 54px;
-  z-index: 100;
+.myStory-item {
+  width: 115px;
+  height: 100%;
+  padding: 10px 15px;
 
-  background: white;
-  border-bottom: 1px solid $hong-gray-border;
-
-  .header-contents {
-    position: relative;
-    width: 975px;
-    height: 54px;
-    padding: 0 20px;
+  .storyImage{
+    width: 87px;
+    height: 87px;
     margin: auto;
 
-    display: flex;
-    align-items: center;
-    
-    color: black;
+    img {
+      width: 77px;
+      height: 77px;
 
-    .logo {
-      font-family: 'Norican', cursive;
-      font-weight: 800;
-      font-size: 24px;
-      
-      cursor: pointer;
+      margin: 5px;
+      @include hong-border;
+      border-radius: 50%;
     }
-  
-    .logout {
-      margin-left: auto;
-  
-      font-weight: 800;
-      font-size: 32px;
-      
-      cursor: pointer;
-    }
+
   }
+
+  .storyTitle{
+    padding-top: 15px;
+    font-size: 14px;
+    font-weight: 600;
+    text-align: center;
+
+  }
+
   
 }

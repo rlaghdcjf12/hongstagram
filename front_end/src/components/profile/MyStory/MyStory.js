@@ -3,7 +3,7 @@ import styles from "./MyStory.scss";
 import classNames from "classnames/bind";
 import MyStoryItem from "../MyStoryItem";
 
-// const cx = classNames.bind(styles);
+const cx = classNames.bind(styles);
 
 // const MyStory = ( {story} ) => {
 //   const storyList = story.map((story, i) => {
@@ -20,7 +20,11 @@ import MyStoryItem from "../MyStoryItem";
 // };
 
 const MyStory = () => {
-return <div>mystory</div>
-}
+return (
+        <div className={cx("storyBox")}>
+            <MyStoryItem />
+        </div>
+    );
+};
 
 export default MyStory;
