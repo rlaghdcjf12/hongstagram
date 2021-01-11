@@ -12,6 +12,7 @@ const FeedItem = ({
   feed
 }) => {
   const imgUrl = feed.image.replace("http://localhost:8000/front_end/public","")
+  
 
   return (
     <div className={cx("feed-item")}>

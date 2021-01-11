@@ -8,7 +8,9 @@ import { IoHomeOutline, IoHomeSharp } from "react-icons/io5";
 const cx = classNames.bind(styles);
 
 const Header = ({ onLogout, profileImage }) => {
-  const imgUrl = profileImage.replace("http://localhost:8000/front_end/public","")
+
+  var imgUrl = null;
+  if(profileImage !== null) imgUrl = profileImage.replace("http://localhost:8000/front_end/public","")
   return (
     <div className={cx("header")}>
       <div className={cx("header-contents")}>
@@ -30,7 +32,10 @@ const Header = ({ onLogout, profileImage }) => {
           </div>
           <div className={cx("menu-profile")}>
             <Link to={"/profile"}>
-              <img src={imgUrl} alt="menu-profile" />
+                {imgUrl !== null ? 
+                  <img src={imgUrl} alt="profile"/>
+                  : <img src={require("../../../image/default-profile.jpg").default} alt="profile"/>
+                }
             </Link>
           </div>
         </div>
