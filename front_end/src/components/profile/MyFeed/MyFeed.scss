@@ -1,17 +1,6 @@
 @import "../../../styles/utils.scss";
 
 .myFeed-list {
-    .title {
-      border-bottom: 1px solid $oc-gray-5;
-      padding-bottom: 0.75rem;
+  display: flex;
   
-      font-size: 1.25rem;
-      font-weight: 500;
-  
-      margin-bottom: 1rem;
-    }
-  
-    .feed-item + .feed-item {
-      margin-top: 1rem;
-    }
   }

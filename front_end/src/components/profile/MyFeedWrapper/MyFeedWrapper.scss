@@ -4,7 +4,7 @@
   width: 100%;
   padding: auto;
 
-  border-top: 1px solid $oc-gray-5;
+  border-top: 1px solid $hong-gray-border;
 
 
   font-size: 14px;
@@ -16,19 +16,10 @@
     display: flex;
 
     cursor: pointer;
+  }
 
-    .myFeedContents {
-      width: 67px;
-      height: 53px;
-  
-      margin-left: 25px;
-      margin-right: 25px;
-      padding: 18px 0;
-    }
-
-    .active {
-      font-weight: 600;
-    }
+  .myFeedContents {
+    display: flex;
   }
   
 }

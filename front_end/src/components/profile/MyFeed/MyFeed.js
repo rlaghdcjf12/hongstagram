@@ -16,6 +16,7 @@ const MyFeed = ( {feeds} ) => {
     });
   return (
       <div className={cx("myFeed-list")}>
+        
           {feedList}
       </div>
   );

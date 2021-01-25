@@ -24,9 +24,9 @@ export class ProfileContainer extends Component {
     getMyInfo();
   };
 
-  changeProfileTab = (num) => {
+  changeProfileTab = (menuNum) => {
     const { changeProfileTab } = this.props;
-    changeProfileTab(num);
+    changeProfileTab(menuNum);
   }
 
   render() {
@@ -40,7 +40,7 @@ export class ProfileContainer extends Component {
           introduce={introduce}/>
         <MyStory />
         <MyFeedWrapper menuNum={menuNum} changeProfileTab={changeProfileTab}>
-          <MyFeed feeds={feeds} />
+            {menuNum === "0" ? <MyFeed feeds={feeds} /> : <div></div>}
         </MyFeedWrapper>
       </ProfileWrapper>
     );
