@@ -6,14 +6,19 @@ import {MdSettings} from "react-icons/md"
 const cx = classNames.bind(styles);
 
 const MyInfo = ( {username, nickname, profileImage, introduce} ) => {
-  const imgUrl = profileImage.replace("http://localhost:8000/front_end/public","")
+  
+  var imgUrl = null;
+  if(profileImage !== null) imgUrl = profileImage.replace("http://localhost:8000/front_end/public","")
   return(
     <div className={cx("myInfoWrapper")}>
       <div className={cx("myInfoBox")}>
           <div className={cx("mainBox")}>
             <div className={cx("imageBox")}>
               <div className={cx("profile-image")}>
-                <img src={imgUrl} alt="profile"/>
+                {imgUrl !== null ? 
+                  <img src={imgUrl} alt="profile"/>
+                  : <img src={require("../../../image/default-profile.jpg").default} alt="profile"/>
+                }
               </div>
             </div>
             {/* <div className={cx("infoBox")}>
