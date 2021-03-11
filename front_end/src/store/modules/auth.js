@@ -30,6 +30,8 @@ const GET_MY_INFO = "auth/GET_MY_INFO";
 const GET_MY_INFO_SUCCESS = "auth/GET_MY_INFO_SUCCESS";
 const GET_MY_INFO_FAILURE = "auth/GET_MY_INFO_FAILURE";
 
+const PROFILE_DROPDOWN = "auth/PROFILE_DROPDOWN";
+
 export const initializeInput = () => ({
   type: INITIALIZE_INPUT
 });
@@ -135,6 +137,13 @@ export const getMyInfoFailure = error => ({
   type: GET_MY_INFO_FAILURE,
   payload: {
     error
+  }
+});
+
+export const profileDropdown = ({dropDownFlag}) => ({
+  type: PROFILE_DROPDOWN,
+  payload: {
+    dropDownFlag
   }
 });
 
@@ -296,6 +305,9 @@ const initialState = {
     nickname: "",
     profileImage: "",
     introduce: "",
+  },
+  featureFlag: {
+    dropDownFlag: "closed"
   }
 };
   
@@ -461,7 +473,14 @@ export const auth = (state = initialState, action) => {
           ...state,
           error: {
             triggered: true,
-            message: "Error! Please Try Again!"
+            message: "Error! Please try Again get my info!"
+          }
+        };
+      case PROFILE_DROPDOWN:
+        return {
+          ...state,
+          featureFlag: {
+            dropDownFlag: action.payload.dropDownFlag
           }
         };
     default:
@@ -474,5 +493,5 @@ export const authEpics = {
   loginEpic, 
   checkUserEpic,
   logoutEpic,
-  getMyInfoEpic
+  getMyInfoEpic,
 };
