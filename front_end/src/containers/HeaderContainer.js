@@ -25,7 +25,7 @@ export class HeaderContainer extends Component {
 
   profileDropdown = ({dropDownFlag}) => {
     const { profileDropdown } = this.props;
-    if(dropDownFlag == "closed") profileDropdown({dropDownFlag :"open"});
+    if(dropDownFlag === "closed") profileDropdown({dropDownFlag :"open"});
     else profileDropdown({dropDownFlag : "closed"});
   }
 

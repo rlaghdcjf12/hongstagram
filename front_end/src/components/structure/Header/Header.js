@@ -2,8 +2,10 @@ import React from "react";
 import styles from "./Header.scss";
 import classNames from "classnames/bind";
 import { Link } from "react-router-dom";
-import { MdLock } from "react-icons/md";
-import { IoHomeOutline, IoHomeSharp } from "react-icons/io5";
+import { IoHomeOutline, IoHomeSharp, IoBookmarkOutline, IoSettingsOutline } from "react-icons/io5";
+import { VscAccount } from "react-icons/vsc"
+import { HiOutlineRefresh } from "react-icons/hi"
+
 
 const cx = classNames.bind(styles);
 
@@ -30,9 +32,6 @@ const Header = ({ onLogout, profileDropdown, profileImage, dropDownFlag }) => {
               {window.location.href === "http://" + window.location.host + "/Timeline" ? <IoHomeSharp/> : <IoHomeOutline/>}
             </Link>
           </div>
-          <div className={cx("logout")}>
-            <MdLock onClick={onLogout} />
-          </div>
           <div className={cx("menu-profile")} onClick={Dropdown}>
             {imgUrl !== null ? 
               <img src={imgUrl} alt="profile"/>
@@ -44,8 +43,17 @@ const Header = ({ onLogout, profileDropdown, profileImage, dropDownFlag }) => {
             </Link> */}
           </div>
           <div className={cx("dropdown_position")}>
-          <div className={cx("dropdown_menu", dropDownFlag === "open" ? "hidden" : "")}></div>
-              <div></div>
+            <div className={cx("dropdown_menu", dropDownFlag === "open" ? "" : "hidden")}>
+              <ul>
+                <li>
+                  <Link to={"/Profile"}><span><VscAccount/></span> &nbsp;프로필</Link>
+                </li>
+                <li><span className={cx("font-bold")}><IoBookmarkOutline/></span> &nbsp;저장됨</li>
+                <li><span className={cx("font-bold")}><IoSettingsOutline/></span> &nbsp;설정</li>
+                <li><span className={cx("font-bold")}><HiOutlineRefresh/></span> &nbsp;계정 전환</li>
+                <li className={cx("last_menu")} onClick={onLogout}> 로그아웃</li>
+              </ul>
+            </div>
           </div>
         </div>
       </div>
