@@ -43,7 +43,7 @@ const Header = ({ onLogout, profileDropdown, profileImage, dropDownFlag }) => {
             </Link> */}
           </div>
           <div className={cx("dropdown_position")}>
-            <div className={cx("dropdown_menu", dropDownFlag === "open" ? "" : "hidden")}>
+            <div className={cx("dropdown_menu", dropDownFlag === "open" ? "" : "hidden")} onClick={Dropdown}>
               <ul>
                 <li>
                   <Link to={"/Profile"}><span><VscAccount/></span> &nbsp;프로필</Link>
