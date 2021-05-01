@@ -37,7 +37,8 @@ export class ProfileContainer extends Component {
           username={username}
           nickname={nickname}
           profileImage={profileImage}
-          introduce={introduce}/>
+          introduce={introduce}
+          feeds={feeds}/>
         <MyStory />
         <MyFeedWrapper menuNum={menuNum} changeProfileTab={changeProfileTab}>
             {menuNum === "0" ? <MyFeed feeds={feeds} /> : <div></div>}

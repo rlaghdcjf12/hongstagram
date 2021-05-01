@@ -11,8 +11,8 @@ class FeedViewSet(viewsets.ModelViewSet):
     serializer_class = FeedSerializer
 
     def get_queryset(self):
-        # return Feeds.objects.filter(owner=self.request.user).order_by("-created_at")
-        return Feeds.objects.all().order_by("-created_at")
+        return Feeds.objects.filter(owner=self.request.user).order_by("-created_at")
+        # return Feeds.objects.all().order_by("-created_at")
 
     def perform_create(self, serializer):
         serializer.save()

@@ -5,7 +5,7 @@ import {MdSettings} from "react-icons/md"
 
 const cx = classNames.bind(styles);
 
-const MyInfo = ( {username, nickname, profileImage, introduce} ) => {
+const MyInfo = ( {username, nickname, profileImage, introduce, feeds} ) => {
   
   var imgUrl = null;
   if(profileImage !== null) imgUrl = profileImage.replace("http://localhost:8000/front_end/public","")
@@ -35,7 +35,7 @@ const MyInfo = ( {username, nickname, profileImage, introduce} ) => {
             <ul className={cx("InfoOuterBox")}>
               <li className={cx("infoInnerBox")}>
                 <span className={cx("infoTitle")}>게시물
-                  <span className={cx("infoContents")}> 4</span>
+                  <span className={cx("infoContents")}> {feeds.length}</span>
                 </span>
               </li>
               <li className={cx("infoInnerBox")}>
