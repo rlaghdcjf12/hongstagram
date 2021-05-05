@@ -29,8 +29,15 @@ export class ProfileContainer extends Component {
     changeProfileTab(menuNum);
   }
 
+  openFeedModal = ({openFeedModalNum}) => {
+    const {openFeedModal} = this.props;
+    openFeedModal(openFeedModalNum);
+  }
+
   render() {
-    const { feeds, username, nickname, profileImage, introduce, menuNum, changeProfileTab} = this.props;
+    const { 
+      feeds, username, nickname, profileImage, introduce, menuNum, changeProfileTab, 
+      openFeedModal, openFeedModalNum } = this.props;
     return (
       <ProfileWrapper>
         <MyInfo 
@@ -41,7 +48,7 @@ export class ProfileContainer extends Component {
           feeds={feeds}/>
         <MyStory />
         <MyFeedWrapper menuNum={menuNum} changeProfileTab={changeProfileTab}>
-            {menuNum === "0" ? <MyFeed feeds={feeds} /> : <div></div>}
+            {menuNum === "0" ? <MyFeed feeds={feeds} openFeedModalNum={openFeedModalNum} openFeedModal={openFeedModal}/> : <div></div>}
         </MyFeedWrapper>
       </ProfileWrapper>
     );
@@ -55,6 +62,7 @@ const mapStateToProps = state => ({
   profileImage : state.auth.myInfo.profileImage,
   introduce: state.auth.myInfo.introduce,
   menuNum: state.feeds.menuNum,
+  openFeedModalNum: state.feeds.openFeedModalNum
 });
 
 const mapDispatchToProps = dispatch => {
@@ -67,6 +75,9 @@ const mapDispatchToProps = dispatch => {
     },
     changeProfileTab: ({menuNum}) => {
       dispatch(feedActions.changeProfileTab({menuNum}));
+    },
+    openFeedModal: ({openFeedModalNum}) => {
+      dispatch(feedActions.openFeedModal({openFeedModalNum}));
     }
   };
 };

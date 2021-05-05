@@ -7,7 +7,6 @@ const cx = classNames.bind(styles);
 const MyFeedTab = ({ menuNum, id, changeProfileTab, children }) => {
 
   const changeTab = () => {
-    console.log("click : " + id);
     changeProfileTab({ menuNum: id });
   };
 

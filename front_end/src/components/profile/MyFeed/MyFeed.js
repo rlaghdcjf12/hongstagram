@@ -4,26 +4,26 @@ import classNames from "classnames/bind";
 import MyFeedItem from "../MyFeedItem";
 
 const cx = classNames.bind(styles);
-const click = () => {
+const addFeed = () => {
   alert("please add your feed.");
 }
 
-const MyFeed = ( {feeds} ) => {
+
+const MyFeed = ( {feeds, openFeedModalNum, openFeedModal} ) => {
 
   const feedList = feeds.map((feed, i) => {
       return (
-        <div>
-          <MyFeedItem
-            feed={feed}
-            key={feed.id}
-          />
-        </div>
-        
+        <MyFeedItem
+          feed={feed}
+          key={feed.id}
+          openFeedModalNum={openFeedModalNum}
+          openFeedModal={openFeedModal}
+        />
       );
     });
   return (
       <div className={cx("myFeed-list")}>
-        <div className={cx("myFeed-add")} onClick={click}>
+        <div className={cx("myFeed-add")} onClick={addFeed}>
           <div className={cx("add_button")}>+</div>
         </div>
         {feedList}

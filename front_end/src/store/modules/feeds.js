@@ -6,6 +6,7 @@ import { ofType } from "redux-observable";
 const GET_FEEDS = "feeds/GET_FEEDS";
 const GET_FEEDS_SUCCESS = "feeds/GET_FEEDS_SUCCESS";
 const GET_FEEDS_FAILURE = "feeds/GET_FEEDS_FAILURE";
+const OPEN_FEED_MODAL = "feeds/OPEN_FEED_MODAL";
 
 const CHANGE_PROFILE_TAB = "feeds/CHANGE_PROFILE_TAB";
 
@@ -31,6 +32,13 @@ export const changeProfileTab =({menuNum}) => ({
   type: CHANGE_PROFILE_TAB,
   payload: {
     menuNum
+  }
+});
+
+export const openFeedModal = ({openFeedModalNum}) => ({
+  type: OPEN_FEED_MODAL,
+  payload: {
+    openFeedModalNum
   }
 });
 
@@ -65,6 +73,7 @@ const getFeedsEpic = (action$, state$) => {
 const initialState = {
   feeds: [],
   menuNum: "0",
+  openFeedModalNum : "0",
   error: {
     triggered: false,
     message: ""
@@ -90,6 +99,11 @@ export const feeds = (state = initialState, action) => {
       return {
         ...state,
         menuNum: action.payload.menuNum
+      };
+    case OPEN_FEED_MODAL:
+      return {
+        ...state,
+        openFeedModalNum: action.payload.openFeedModalNum
       };
     default:
       return state;
