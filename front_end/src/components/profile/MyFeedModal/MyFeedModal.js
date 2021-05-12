@@ -5,12 +5,25 @@ import MyFeedItem from "../MyFeedItem";
 
 const cx = classNames.bind(styles);
 
-const MyFeedModal = ( {feed} ) => {
+const MyFeedModal = ( {feed, openFeedModalNum} ) => {
+  const imgUrl = feed.image.replace("http://localhost:8000/front_end/public","")
 
   return (
-      <div className={cx("myFeed-list")}>
-        <div className={cx("myFeed-add")}>
-          <div className={cx("add_button")}>+</div>
+      <div className={cx("myFeedModal", openFeedModalNum == feed.id ? "" : "closed")}>
+        <div className={cx("myFeedPopUp")}>
+          <div className={cx("imageSector")}>
+            <img src={imgUrl} alt="feed"/>
+          </div>
+          <div className={cx("contentsSector")}>
+            <div className={cx("contentsSector-title")}>
+            </div>
+            <div className={cx("contentsSector-comments")}>
+            </div>
+            <div className={cx("contentsSector-details")}>
+            </div>
+            <div className={cx("contentsSector-comment_input")}>
+            </div>
+          </div>
         </div>
       </div>
   );

@@ -15,7 +15,7 @@ const MyFeedItem = ({feed, openFeedModalNum, openFeedModal}) => {
 
   return (
     <div>
-      <MyFeedModal feed={feed} />
+      <MyFeedModal feed={feed} openFeedModalNum={openFeedModalNum} />
       <div className={cx("myFeed-item")} onClick={openFeed}>
         <img src={imgUrl} alt="feed"/>
       </div>
