@@ -9,7 +9,7 @@ const addFeed = () => {
 }
 
 
-const MyFeed = ( {feeds, openFeedModalNum, openFeedModal} ) => {
+const MyFeed = ( {feeds, openFeedModalNum, openFeedModal, getFeedDetail, feedDetail} ) => {
 
   const feedList = feeds.map((feed, i) => {
       return (
@@ -18,6 +18,8 @@ const MyFeed = ( {feeds, openFeedModalNum, openFeedModal} ) => {
           key={feed.id}
           openFeedModalNum={openFeedModalNum}
           openFeedModal={openFeedModal}
+          getFeedDetail={getFeedDetail}
+          feedDetail={feedDetail}
         />
       );
     });

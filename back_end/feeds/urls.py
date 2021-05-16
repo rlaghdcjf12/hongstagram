@@ -10,4 +10,5 @@ feed_detail = FeedViewSet.as_view(
 urlpatterns = [
     url("^feeds/$", feed_list, name="feed-list"),
     url("^feeds/(?P<pk>[0-9]+)/$", feed_detail, name="feed-detail"),
+    url("^profile/feeds/(?P<pk>[0-9]+)/$", feed_detail, name="feed-detail"),
 ]

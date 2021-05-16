@@ -10,6 +10,10 @@ const OPEN_FEED_MODAL = "feeds/OPEN_FEED_MODAL";
 
 const CHANGE_PROFILE_TAB = "feeds/CHANGE_PROFILE_TAB";
 
+const GET_FEED_DETAIL = "feeds/GET_FEED_DETAIL"
+const GET_FEED_DETAIL_SUCCESS = "feeds/GET_FEED_DETAIL_SUCCESS";
+const GET_FEED_DETAIL_FAILURE = "feeds/GET_FEED_DETAIL_FAILURE"
+
 export const getFeeds = () => ({
   type: GET_FEEDS
 });
@@ -42,6 +46,27 @@ export const openFeedModal = ({openFeedModalNum}) => ({
   }
 });
 
+export const getFeedDetail = ({feedNum}) => ({
+  type: GET_FEED_DETAIL,
+  payload: {
+    feedNum
+  }
+});
+
+export const getFeedDetailSuccess = ({feedDetail}) => ({
+  type: GET_FEED_DETAIL_SUCCESS,
+  payload: {
+    feedDetail
+  }
+});
+
+export const getFeedDetailFailure = error => ({
+  type: GET_FEED_DETAIL_FAILURE,
+  payload: {
+    error
+  }
+});
+
 const getFeedsEpic = (action$, state$) => {
   return action$.pipe(
     ofType(GET_FEEDS),
@@ -70,6 +95,36 @@ const getFeedsEpic = (action$, state$) => {
   );
 };
 
+const getFeedDetailEpic = (action$, state$) => {
+  return action$.pipe(
+    ofType(GET_FEED_DETAIL),
+    withLatestFrom(state$),
+    mergeMap(([action, state]) => {
+      const userInfo = JSON.parse(localStorage.getItem("userInfo"));
+      const feedId = action.payload.feedNum;
+      console.log("feedid = " + feedId);
+      return ajax
+        .get(`/api/feeds/`+feedId, {
+          "Content-Type": "application/json",
+          Authorization: `token ${userInfo.token}`
+        })
+        .pipe(
+          map(response => {
+            const feedDetail = response.response;
+            return getFeedDetailSuccess({ feedDetail });
+          }),
+          catchError(error =>
+            of({
+              type: GET_FEED_DETAIL_FAILURE,
+              payload: error,
+              error: true
+            })
+          )
+        );
+    })
+  );
+};
+
 const initialState = {
   feeds: [],
   menuNum: "0",
@@ -77,7 +132,8 @@ const initialState = {
   error: {
     triggered: false,
     message: ""
-  }
+  },
+  feedDetail: [],
 };
 
 export const feeds = (state = initialState, action) => {
@@ -105,6 +161,21 @@ export const feeds = (state = initialState, action) => {
         ...state,
         openFeedModalNum: action.payload.openFeedModalNum
       };
+    case GET_FEED_DETAIL_SUCCESS:
+      return {
+        ...state,
+        feedDetail: {
+          feed: action.payload.feedDetail
+        }
+      };
+    case GET_FEED_DETAIL_FAILURE:
+      return {
+        ...state,
+        error: {
+          triggered: true,
+          message: "Error to get a feed details! Please Try Again!"
+        }
+      };
     default:
       return state;
   }
@@ -112,4 +183,5 @@ export const feeds = (state = initialState, action) => {
 
 export const feedsEpics = {
   getFeedsEpic,
+  getFeedDetailEpic,
 };
