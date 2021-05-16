@@ -1,10 +1,11 @@
 from django.conf.urls import url
-from .views import FeedViewSet
+from .views import FeedViewSet, ProfileFeedDetailViewSet
 
 feed_list = FeedViewSet.as_view({"get": "list", "post": "create"})
 
 feed_detail = FeedViewSet.as_view(
-    {"get": "retrieve", "patch": "partial_update", "delete": "destroy"}
+    # {"get": "retrieve", "patch": "partial_update", "delete": "destroy"}
+    {"get" : "retrieve"}
 )
 
 urlpatterns = [

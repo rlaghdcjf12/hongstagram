@@ -6,4 +6,4 @@ from django.contrib.auth import authenticate
 class FeedSerializer(serializers.ModelSerializer):
     class Meta:
         model = Feeds
-        fields = ("id", "place", "image", "text", "owner", "created_at")
+        fields = '__all__'

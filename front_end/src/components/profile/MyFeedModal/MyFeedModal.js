@@ -8,8 +8,6 @@ const cx = classNames.bind(styles);
 const MyFeedModal = ( {feed, openFeedModalNum, getFeedDetail, closeFeed} ) => {
   const imgUrl = feed.image.replace("http://localhost:8000/front_end/public","");
 
-
-
   return (
       <div id="myFeedModal" className={cx("myFeedModal", openFeedModalNum == feed.id ? "" : "closed")} onClick={closeFeed}>
         <div className={cx("myFeedPopUp")}>

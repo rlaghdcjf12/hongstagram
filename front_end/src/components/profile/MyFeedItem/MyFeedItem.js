@@ -9,7 +9,6 @@ const MyFeedItem = ({feed, openFeedModalNum, openFeedModal, getFeedDetail, feedD
   const imgUrl = feed.image.replace("http://localhost:8000/front_end/public","")
 
   const openFeed = () => {
-    console.log("feed id : " + feed.id);
     openFeedModal({openFeedModalNum: feed.id});
     getFeedDetail({feedNum: feed.id});
   }

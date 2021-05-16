@@ -162,7 +162,6 @@ const getNotesEpic = (action$, state$) => {
 const getMoreNotesEpic = (action$, state$) => {
   return action$.pipe(
     ofType(GET_MORE_NOTES),
-    // 0.75초간의 딜레이를 줍니다.
     delay(1500),
     withLatestFrom(state$),
     mergeMap(([action, state]) => {

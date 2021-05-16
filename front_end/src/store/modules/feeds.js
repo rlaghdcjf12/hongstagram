@@ -101,10 +101,9 @@ const getFeedDetailEpic = (action$, state$) => {
     withLatestFrom(state$),
     mergeMap(([action, state]) => {
       const userInfo = JSON.parse(localStorage.getItem("userInfo"));
-      const feedId = action.payload.feedNum;
-      console.log("feedid = " + feedId);
       return ajax
-        .get(`/api/feeds/`+feedId, {
+        .get(`/api/profile/feeds/${action.payload.feedNum}/`,
+        {
           "Content-Type": "application/json",
           Authorization: `token ${userInfo.token}`
         })
