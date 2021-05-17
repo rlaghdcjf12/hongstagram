@@ -49,31 +49,73 @@
         width: 100%;
         height: 100%;
         background-color: white;
+
+        display: flex;
       }
 
       .contentsSector-title{
         height: 72px;
         padding: 16px;
-        background-color: red;
 
         display: flex;
 
         .title-imageBox{
-          width: 42px;
-          height: 42px;
+          width: 32px;
+          height: 32px;
 
-          background-color: gray;
+          img{
+            width: 32px;
+            height: 32px;
+            margin: 5px;
+            border-radius: 50%;
+          }
         }
 
-        .title-nameBox{
+        .title-textBox{
+          margin-left: 14px;
           width: 100%;
           height: 100%;
+
+          .title-textBox-name{
+            font-weight: 600;
+          }
+
         }
       }
       .contentsSector-body{
         height: 368px;
         padding: 16px 16px;
-        background-color: orange;
+
+        .contentsSector-description{
+          display: flex;
+
+          .body-imageBox{
+            width: 32px;
+            height: 32px;
+
+            margin-left: 1px;
+
+            img{
+              width: 32px;
+              height: 32px;
+              margin: 5px;
+              border-radius: 50%;
+            }
+          }
+
+          .body-textBox{
+            margin-left: 14px;
+            width: 100%;
+            height: 100%;
+
+            font-size: 16px;
+
+            .body-textBox-name{
+              font-weight: 600;
+              font-size: 14px;
+            }
+          }
+        }
       }
       .contentsSector-details{
         height: 104px;

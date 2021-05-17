@@ -1,5 +1,5 @@
 from django.conf.urls import url
-from .views import FeedViewSet, ProfileFeedDetailViewSet
+from .views import FeedViewSet, ProfileFeedDetailAPI
 
 feed_list = FeedViewSet.as_view({"get": "list", "post": "create"})
 
@@ -8,10 +8,7 @@ feed_detail = FeedViewSet.as_view(
     {"get" : "retrieve"}
 )
 
-profile_feed_detail = ProfileFeedDetailViewSet.as_view()
-# (
-#     {"get" : "retrieve"}
-# )
+profile_feed_detail = ProfileFeedDetailAPI.as_view()
 
 urlpatterns = [
     url("^feeds/$", feed_list, name="feed-list"),

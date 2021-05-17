@@ -111,7 +111,6 @@ const getFeedDetailEpic = (action$, state$) => {
         .pipe(
           map(response => {
             const { owner } = response.response;
-            console.log("owner response : ", owner)
             return getFeedDetailSuccess({ owner });
           }),
           catchError(error =>
@@ -165,7 +164,7 @@ export const feeds = (state = initialState, action) => {
     case GET_FEED_DETAIL_SUCCESS:
       return {
         ...state,
-        owner: action.payload.owner
+        owner: action.payload.owner[0]
       };
     case GET_FEED_DETAIL_FAILURE:
       return {

@@ -8,7 +8,10 @@ const cx = classNames.bind(styles);
 const MyFeedModal = ( {feed, openFeedModalNum, owner, closeFeed} ) => {
   const imgUrl = feed.image.replace("http://localhost:8000/front_end/public","");
 
-  console.log("owner js : " + owner[0]);
+  let owner_image = owner.profileImage;
+  if(owner_image !== undefined){
+    owner_image = (owner_image).replace("http://localhost:8000/front_end/public","");
+  }
 
   return (
       <div id="myFeedModal" className={cx("myFeedModal", openFeedModalNum == feed.id ? "" : "closed")} onClick={closeFeed}>
@@ -21,16 +24,22 @@ const MyFeedModal = ( {feed, openFeedModalNum, owner, closeFeed} ) => {
             <div className={cx("contentsSector-title")}>
               <div className={cx("contentsWrapper")}>
                 <div className={cx("title-imageBox")}>
+                  <img src={owner_image}></img>
                 </div>
-                <div className={cx("title-nameBox")}>
-                  {feed.place}
+                <div className={cx("title-textBox")}>
+                  <div className={cx("title-textBox-name")}>{owner.nickname}</div>
+                  <div className={cx("title-textBox-place")}>{feed.place}</div>
                 </div>
               </div>
             </div>
             <div className={cx("contentsSector-body")}>
               <div className={cx("contentsWrapper")}>
                 <div className={cx("contentsSector-description")}>
-                  {feed.text}
+                  <div className={cx("body-imageBox")}>
+                    <img src={owner_image}></img>
+                  </div>
+                  <div className={cx("body-textBox")}>
+                    <span className={cx("body-textBox-name")}>{owner.nickname}</span> {feed.text}</div>
                 </div>
                 <div className={cx("contentsSector-comments")}>
                 </div>
