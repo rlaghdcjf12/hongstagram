@@ -103,7 +103,7 @@ const getFeedDetailEpic = (action$, state$) => {
       const userInfo = JSON.parse(localStorage.getItem("userInfo"));
       console.log("feedNum : ", action.payload.feedNum)
       return ajax
-        .get(`/api/profile/feeds/${action.payload.feedNum}`,
+        .get(`/api/profile/feeds/owner/${action.payload.feedNum}`,
         {
           "Content-Type": "application/json",
           Authorization: `token ${userInfo.token}`
