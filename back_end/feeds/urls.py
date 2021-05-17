@@ -8,8 +8,13 @@ feed_detail = FeedViewSet.as_view(
     {"get" : "retrieve"}
 )
 
+profile_feed_detail = ProfileFeedDetailViewSet.as_view()
+# (
+#     {"get" : "retrieve"}
+# )
+
 urlpatterns = [
     url("^feeds/$", feed_list, name="feed-list"),
     url("^feeds/(?P<pk>[0-9]+)/$", feed_detail, name="feed-detail"),
-    url("^profile/feeds/(?P<pk>[0-9]+)/$", feed_detail, name="feed-detail"),
+    url("^profile/feeds/(?P<pk>[0-9]+)/$", profile_feed_detail, name="profile-feed_detail"),
 ]

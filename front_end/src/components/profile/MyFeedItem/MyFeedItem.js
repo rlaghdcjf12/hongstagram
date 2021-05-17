@@ -5,7 +5,7 @@ import classNames from "classnames/bind";
 
 const cx = classNames.bind(styles);
 
-const MyFeedItem = ({feed, openFeedModalNum, openFeedModal, getFeedDetail, feedDetail}) => {
+const MyFeedItem = ({feed, openFeedModalNum, openFeedModal, getFeedDetail, owner}) => {
   const imgUrl = feed.image.replace("http://localhost:8000/front_end/public","")
 
   const openFeed = () => {
@@ -21,7 +21,7 @@ const MyFeedItem = ({feed, openFeedModalNum, openFeedModal, getFeedDetail, feedD
 
   return (
     <div>
-      <MyFeedModal feed={feed} openFeedModalNum={openFeedModalNum} feedDetail={feedDetail} closeFeed={closeFeed}/>
+      <MyFeedModal feed={feed} openFeedModalNum={openFeedModalNum} owner={owner} closeFeed={closeFeed}/>
       <div className={cx("myFeed-item")} onClick={openFeed}>
         <img src={imgUrl} alt="feed"/>
       </div>

@@ -1,11 +1,10 @@
 from back_end import myUser
-from rest_framework import viewsets, permissions
+from rest_framework import serializers, generics,viewsets, permissions
 from rest_framework.response import Response
 from .models import Feeds
+from .serializers import FeedSerializer
 from ..myUser.models import User
-from .serializers import (
-    FeedSerializer,
-)
+from ..myUser.serializers import MyInfoSerializer
 from knox.models import AuthToken
 
 class FeedViewSet(viewsets.ModelViewSet):
@@ -19,16 +18,17 @@ class FeedViewSet(viewsets.ModelViewSet):
     def perform_create(self, serializer):
         serializer.save()
 
-class ProfileFeedDetailViewSet(viewsets.ModelViewSet):
-    serializer_class = FeedSerializer
+class ProfileFeedDetailViewSet(generics.RetrieveAPIView):
+    serializer_class = MyInfoSerializer
 
-    def get(self, request, **kwargs):
-        flagId = kwargs['id']
+    def get(self, request, *args, **kwargs):
+        flagId = kwargs['pk']
         # notes = Feeds.objects.filter(owner=self.request.user).filter(id__lt=flagId).order_by('-created_at')[:10]
-        feed = Feeds.objects.filter(id__lt=flagId)
-        # owner = User.objects.filter(id = feed.owner_id)
-        serializer = self.get_serializer(feed, context={"request": request})
+        feed = Feeds.objects.filter(id=flagId)
+        owner = User.objects.filter(id=feed[0].owner_id)
+        serializer = self.get_serializer(owner, many=True, context={"request": request})
         return Response({
-            "feed": serializer.data,
+            "owner": serializer.data
         })
+        # return User.objects.filter(id=flagId)
 

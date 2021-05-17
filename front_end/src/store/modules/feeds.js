@@ -53,10 +53,10 @@ export const getFeedDetail = ({feedNum}) => ({
   }
 });
 
-export const getFeedDetailSuccess = ({feedDetail}) => ({
+export const getFeedDetailSuccess = ({owner}) => ({
   type: GET_FEED_DETAIL_SUCCESS,
   payload: {
-    feedDetail
+    owner
   }
 });
 
@@ -101,16 +101,18 @@ const getFeedDetailEpic = (action$, state$) => {
     withLatestFrom(state$),
     mergeMap(([action, state]) => {
       const userInfo = JSON.parse(localStorage.getItem("userInfo"));
+      console.log("feedNum : ", action.payload.feedNum)
       return ajax
-        .get(`/api/profile/feeds/${action.payload.feedNum}/`,
+        .get(`/api/profile/feeds/${action.payload.feedNum}`,
         {
           "Content-Type": "application/json",
           Authorization: `token ${userInfo.token}`
         })
         .pipe(
           map(response => {
-            const feedDetail = response.response;
-            return getFeedDetailSuccess({ feedDetail });
+            const { owner } = response.response;
+            console.log("owner response : ", owner)
+            return getFeedDetailSuccess({ owner });
           }),
           catchError(error =>
             of({
@@ -132,7 +134,7 @@ const initialState = {
     triggered: false,
     message: ""
   },
-  feedDetail: [],
+  owner: []
 };
 
 export const feeds = (state = initialState, action) => {
@@ -163,9 +165,7 @@ export const feeds = (state = initialState, action) => {
     case GET_FEED_DETAIL_SUCCESS:
       return {
         ...state,
-        feedDetail: {
-          feed: action.payload.feedDetail
-        }
+        owner: action.payload.owner
       };
     case GET_FEED_DETAIL_FAILURE:
       return {

@@ -5,8 +5,10 @@ import MyFeedItem from "../MyFeedItem";
 
 const cx = classNames.bind(styles);
 
-const MyFeedModal = ( {feed, openFeedModalNum, getFeedDetail, closeFeed} ) => {
+const MyFeedModal = ( {feed, openFeedModalNum, owner, closeFeed} ) => {
   const imgUrl = feed.image.replace("http://localhost:8000/front_end/public","");
+
+  console.log("owner js : " + owner[0]);
 
   return (
       <div id="myFeedModal" className={cx("myFeedModal", openFeedModalNum == feed.id ? "" : "closed")} onClick={closeFeed}>
@@ -19,7 +21,6 @@ const MyFeedModal = ( {feed, openFeedModalNum, getFeedDetail, closeFeed} ) => {
             <div className={cx("contentsSector-title")}>
               <div className={cx("contentsWrapper")}>
                 <div className={cx("title-imageBox")}>
-                  {feed.owner}
                 </div>
                 <div className={cx("title-nameBox")}>
                   {feed.place}
