@@ -5,12 +5,12 @@ import classNames from "classnames/bind";
 
 const cx = classNames.bind(styles);
 
-const MyFeedItem = ({feed, openFeedModalNum, openFeedModal, getFeedDetail, owner}) => {
+const MyFeedItem = ({feed, openFeedModalNum, openFeedModal, getFeedOwner, owner}) => {
   const imgUrl = feed.image.replace("http://localhost:8000/front_end/public","")
 
   const openFeed = () => {
     openFeedModal({openFeedModalNum: feed.id});
-    getFeedDetail({feedNum: feed.id});
+    getFeedOwner({feedNum: feed.id});
   }
 
   const closeFeed = (e) => {

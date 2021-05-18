@@ -17,7 +17,7 @@ class FeedViewSet(viewsets.ModelViewSet):
     def perform_create(self, serializer):
         serializer.save()
 
-class ProfileFeedOwnerAPI(generics.RetrieveAPIView):
+class GetFeedOwnerAPI(generics.RetrieveAPIView):
     serializer_class = MyInfoSerializer
 
     def get(self, request, *args, **kwargs):

@@ -10,9 +10,13 @@ const OPEN_FEED_MODAL = "feeds/OPEN_FEED_MODAL";
 
 const CHANGE_PROFILE_TAB = "feeds/CHANGE_PROFILE_TAB";
 
-const GET_FEED_DETAIL = "feeds/GET_FEED_DETAIL"
-const GET_FEED_DETAIL_SUCCESS = "feeds/GET_FEED_DETAIL_SUCCESS";
-const GET_FEED_DETAIL_FAILURE = "feeds/GET_FEED_DETAIL_FAILURE"
+const GET_FEED_OWNER = "feeds/GET_FEED_OWNER"
+const GET_FEED_OWNER_SUCCESS = "feeds/GET_FEED_OWNER_SUCCESS";
+const GET_FEED_OWNER_FAILURE = "feeds/GET_FEED_OWNER_FAILURE";
+
+const ADD_FEED = "feeds/ADD_FEED";
+const ADD_FEED_SUCCESS = "feeds/ADD_FEED_SUCCESS";
+const ADD_FEED_FAILURE = "feeds/ADD_FEED_FAILURE";
 
 export const getFeeds = () => ({
   type: GET_FEEDS
@@ -46,22 +50,40 @@ export const openFeedModal = ({openFeedModalNum}) => ({
   }
 });
 
-export const getFeedDetail = ({feedNum}) => ({
-  type: GET_FEED_DETAIL,
+export const getFeedOwner = ({feedNum}) => ({
+  type: GET_FEED_OWNER,
   payload: {
     feedNum
   }
 });
 
-export const getFeedDetailSuccess = ({owner}) => ({
-  type: GET_FEED_DETAIL_SUCCESS,
+export const getFeedOwnerSuccess = ({owner}) => ({
+  type: GET_FEED_OWNER_SUCCESS,
   payload: {
     owner
   }
 });
 
-export const getFeedDetailFailure = error => ({
-  type: GET_FEED_DETAIL_FAILURE,
+export const getFeedOwnerFailure = error => ({
+  type: GET_FEED_OWNER_FAILURE,
+  payload: {
+    error
+  }
+});
+
+export const addFeed = () => ({
+  type: ADD_FEED
+});
+
+export const addFeedSuccess = feed => ({
+  type: ADD_FEED_SUCCESS,
+  payload: {
+    feed
+  }
+});
+
+export const addFeedFailure = error => ({
+  type: ADD_FEED_FAILURE,
   payload: {
     error
   }
@@ -95,15 +117,15 @@ const getFeedsEpic = (action$, state$) => {
   );
 };
 
-const getFeedDetailEpic = (action$, state$) => {
+const getFeedOwnerEpic = (action$, state$) => {
   return action$.pipe(
-    ofType(GET_FEED_DETAIL),
+    ofType(GET_FEED_OWNER),
     withLatestFrom(state$),
     mergeMap(([action, state]) => {
       const userInfo = JSON.parse(localStorage.getItem("userInfo"));
       console.log("feedNum : ", action.payload.feedNum)
       return ajax
-        .get(`/api/profile/feeds/owner/${action.payload.feedNum}`,
+        .get(`/api/feeds/owner/${action.payload.feedNum}`,
         {
           "Content-Type": "application/json",
           Authorization: `token ${userInfo.token}`
@@ -111,11 +133,50 @@ const getFeedDetailEpic = (action$, state$) => {
         .pipe(
           map(response => {
             const { owner } = response.response;
-            return getFeedDetailSuccess({ owner });
+            return getFeedOwnerSuccess({ owner });
           }),
           catchError(error =>
             of({
-              type: GET_FEED_DETAIL_FAILURE,
+              type: GET_FEED_OWNER_FAILURE,
+              payload: error,
+              error: true
+            })
+          )
+        );
+    })
+  );
+};
+
+const addFeedEpic = (action$, state$) => {
+  return action$.pipe(
+    ofType(ADD_FEED),
+    withLatestFrom(state$),
+    mergeMap(([action, state]) => {
+      const token = localStorage.getItem("userInfo")
+        ? JSON.parse(localStorage.getItem("userInfo")).token
+        : null;
+      return ajax
+        .post(
+          `/api/feeds/`,
+          { 
+            place: "사파리",
+            owner: JSON.parse(localStorage.getItem("userInfo")).id,
+            text: "add Feed Testing",
+            image: "20200830_210957.jpg"
+          },
+          {
+            "Content-Type": "application/json",
+            Authorization: `token ${token}`
+          }
+        )
+        .pipe(
+          map(response => {
+            const feed = response.response;
+            return addFeedSuccess(feed);
+          }),
+          catchError(error =>
+            of({
+              type: ADD_FEED_FAILURE,
               payload: error,
               error: true
             })
@@ -161,17 +222,34 @@ export const feeds = (state = initialState, action) => {
         ...state,
         openFeedModalNum: action.payload.openFeedModalNum
       };
-    case GET_FEED_DETAIL_SUCCESS:
+    case GET_FEED_OWNER_SUCCESS:
       return {
-        ...state,
-        owner: action.payload.owner[0]
+        ...state
       };
-    case GET_FEED_DETAIL_FAILURE:
+    case GET_FEED_OWNER_FAILURE:
       return {
         ...state,
         error: {
           triggered: true,
           message: "Error to get a feed details! Please Try Again!"
+        }
+      };
+    case ADD_FEED_SUCCESS:
+      const { feed } = action.payload;
+      return {
+        ...state,
+        feed: [],
+        error: {
+          triggered: false,
+          message: ""
+        }
+      };
+    case ADD_FEED_FAILURE:
+      return {
+        ...state,
+        error: {
+          triggered: true,
+          message: "Error! Please Try With Unempty Note"
         }
       };
     default:
@@ -181,5 +259,6 @@ export const feeds = (state = initialState, action) => {
 
 export const feedsEpics = {
   getFeedsEpic,
-  getFeedDetailEpic,
+  getFeedOwnerEpic,
+  addFeedEpic,
 };

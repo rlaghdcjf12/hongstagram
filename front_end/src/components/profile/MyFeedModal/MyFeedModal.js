@@ -65,7 +65,7 @@ const MyFeedModal = ( {feed, openFeedModalNum, owner, closeFeed} ) => {
                     <span className={cx("share")}><img src={share_img} alt="share"></img></span>
                     <span className={cx("save")}><img src={save_img} alt="save"></img></span>
                   </div>
-                  <div className={cx("likes_count")}><span className={cx("strong")}>수진</span>님 <span className={cx("strong")}>외 36명</span>이 좋아합니다.</div>
+                  <div className={cx("likes_count")}><span className={cx("strong")}>한슬</span>님 <span className={cx("strong")}>외 36명</span>이 좋아합니다.</div>
                   <div className={cx("feed-created")}>19시간 전</div>
                 </div>
               </div>
