@@ -1,11 +1,9 @@
-from back_end import myUser
-from rest_framework import serializers, generics,viewsets, permissions
+from back_end.myUser.models import User
+from back_end.myUser.serializers import MyInfoSerializer
+from rest_framework import generics,viewsets, permissions
 from rest_framework.response import Response
 from .models import Feeds
-from .serializers import FeedSerializer
-from ..myUser.models import User
-from ..myUser.serializers import MyInfoSerializer
-from knox.models import AuthToken
+from .serializers import FeedSerializer, AddSerializer
 
 class FeedViewSet(viewsets.ModelViewSet):
     # permission_classes = [permissions.IsAuthenticated, ]
@@ -14,8 +12,17 @@ class FeedViewSet(viewsets.ModelViewSet):
     def get_queryset(self):
         return Feeds.objects.filter(owner=self.request.user).order_by("-created_at")
 
-    def perform_create(self, serializer):
+class FeedAddAPI(generics.CreateAPIView):
+    # permission_classes = [permissions.IsAuthenticated, ]
+    serializer_class = AddSerializer
+
+    def post(self, request, *args, **kwargs):
+        serializer = self.get_serializer(data=request.data)
+        serializer.is_valid(raise_exception=True)
         serializer.save()
+        return Response({
+            "feed": serializer.data
+        })
 
 class GetFeedOwnerAPI(generics.RetrieveAPIView):
     serializer_class = MyInfoSerializer

@@ -11,7 +11,10 @@ import emo_img from '../../../image/emoticon.jpg';
 const cx = classNames.bind(styles);
 
 const MyFeedModal = ( {feed, openFeedModalNum, owner, closeFeed} ) => {
-  const imgUrl = feed.image.replace("http://localhost:8000/front_end/public","");
+  let imgUrl;
+  if(feed.image !== null){
+    imgUrl = feed.image.replace("http://localhost:8000/front_end/public","")
+  }
 
   let owner_image = owner.profileImage;
   if(owner_image !== undefined){

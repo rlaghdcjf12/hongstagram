@@ -60,7 +60,6 @@ class MyInfoViewSet(viewsets.ModelViewSet):
     # permission_classes = [permissions.IsAuthenticated, ]
     serializer_class = MyInfoSerializer
 
-    print("@ user : 123")
     def get_queryset(self):
         # return Feeds.objects.filter(owner=self.request.user).order_by("-created_at")
         return User.objects.filter(username=self.request.user)

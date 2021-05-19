@@ -128,7 +128,6 @@ const getFeedOwnerEpic = (action$, state$) => {
         .get(`/api/feeds/owner/${action.payload.feedNum}`,
         {
           "Content-Type": "application/json",
-          Authorization: `token ${userInfo.token}`
         })
         .pipe(
           map(response => {
@@ -155,23 +154,15 @@ const addFeedEpic = (action$, state$) => {
       const token = localStorage.getItem("userInfo")
         ? JSON.parse(localStorage.getItem("userInfo")).token
         : null;
+      const place = '사파리';
+      const owner = JSON.parse(localStorage.getItem("userInfo")).id;
+      const text = 'add Feed Testing';
+      const image = '';
       return ajax
-        .post(
-          `/api/feeds/`,
-          { 
-            place: "사파리",
-            owner: JSON.parse(localStorage.getItem("userInfo")).id,
-            text: "add Feed Testing",
-            image: "20200830_210957.jpg"
-          },
-          {
-            "Content-Type": "application/json",
-            Authorization: `token ${token}`
-          }
-        )
+        .post(`/api/feeds/add/`,{ place, owner, text, image })
         .pipe(
           map(response => {
-            const feed = response.response;
+            const feed = response.response.feed;
             return addFeedSuccess(feed);
           }),
           catchError(error =>
@@ -224,7 +215,8 @@ export const feeds = (state = initialState, action) => {
       };
     case GET_FEED_OWNER_SUCCESS:
       return {
-        ...state
+        ...state,
+        owner: action.payload.owner[0]
       };
     case GET_FEED_OWNER_FAILURE:
       return {
@@ -236,9 +228,10 @@ export const feeds = (state = initialState, action) => {
       };
     case ADD_FEED_SUCCESS:
       const { feed } = action.payload;
+      console.log("feed : ", feed);
       return {
         ...state,
-        feed: [],
+        feed: state.feeds.concat(feed),
         error: {
           triggered: false,
           message: ""

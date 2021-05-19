@@ -1,17 +1,19 @@
 from django.conf.urls import url
-from .views import FeedViewSet, GetFeedOwnerAPI
+from .views import FeedViewSet, GetFeedOwnerAPI, FeedAddAPI
 
-feed_list = FeedViewSet.as_view({"get": "list", "post": "create"})
-
-feed_detail = FeedViewSet.as_view(
-    # {"get": "retrieve", "patch": "partial_update", "delete": "destroy"}
-    {"get" : "retrieve"}
+feed_list = FeedViewSet.as_view(
+    {"get": "list"}
 )
 
-feed_owner = GetFeedOwnerAPI.as_view()
+feed_detail = FeedViewSet.as_view(
+    {"get" : "retrieve"}
+)
+    # {"get": "retrieve", "patch": "partial_update", "delete": "destroy"}
+
 
 urlpatterns = [
-    url("^feeds/$", feed_list, name="feed-list"),
-    url("^feeds/(?P<pk>[0-9]+)/$", feed_detail, name="feed-detail"),
-    url("^feeds/owner/(?P<pk>[0-9]+)/$", feed_owner, name="profile-feed_detail"),
+    url("^feeds/$", feed_list),
+    url("^feeds/(?P<pk>[0-9]+)/$", feed_detail),
+    url("^feeds/owner/(?P<pk>[0-9]+)/$", GetFeedOwnerAPI.as_view()),
+    url("^feeds/add/$", FeedAddAPI.as_view()),
 ]

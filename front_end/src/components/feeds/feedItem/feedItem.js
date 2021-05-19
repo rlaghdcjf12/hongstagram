@@ -8,11 +8,11 @@ import save_img from '../../../image/save.jpg';
 
 const cx = classNames.bind(styles);
 
-const FeedItem = ({
-  feed
-}) => {
-  const imgUrl = feed.image.replace("http://localhost:8000/front_end/public","")
-  
+const FeedItem = ({ feed }) => {
+  let imgUrl;
+  if(feed.image !== null){
+    imgUrl = feed.image.replace("http://localhost:8000/front_end/public","")
+  }
 
   return (
     <div className={cx("feed-item")}>

@@ -7,3 +7,8 @@ class FeedSerializer(serializers.ModelSerializer):
     class Meta:
         model = Feeds
         fields = '__all__'
+
+class AddSerializer(serializers.ModelSerializer):
+    class Meta:
+        model = Feeds
+        fields = ("id", "place", "owner", "text", "image")

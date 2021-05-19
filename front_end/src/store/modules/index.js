@@ -18,4 +18,5 @@ export const rootEpics = combineEpics(
   authEpics.getMyInfoEpic,
   feedsEpics.getFeedsEpic,
   feedsEpics.getFeedOwnerEpic,
+  feedsEpics.addFeedEpic,
 );
