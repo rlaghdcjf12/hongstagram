@@ -1,0 +1,207 @@
+@import "../../../styles/utils.scss";
+
+.myFeedModal {
+  position: fixed;
+  top: 0px;
+  left: 0px;
+  z-index: 100;
+
+  width: 100%;
+  height: 200%;
+
+  background-color: rgba(0, 0, 0, 0.151);
+
+  &.closed {
+    display: none;
+  }
+
+  .myFeedPopUp {
+    position: relative;
+    top: 10%;
+    bottom: 10%;
+    z-index: 200;
+    margin: auto;
+
+    width: 90%;
+    height: 90%;
+    max-width: 907px;
+    max-height: 600px;
+    background-color: $hong-gray-bg;
+
+    display: flex;
+    
+    .imageSector {
+      width: 600px;
+      height: 100%;
+      background-color: blue;
+
+      img {   
+        width: 100%;
+        height: 100%;
+      }
+    }
+
+    .contentsSector {
+      width: 307px;
+      height: 100%;
+
+      .contentsWrapper{
+        width: 100%;
+        height: 100%;
+        background-color: white;
+
+        display: flex;
+      }
+
+      .contentsSector-title{
+        height: 72px;
+        padding: 16px;
+        border-bottom: 1px solid $hong-gray-border;
+
+        display: flex;
+
+        .title-imageBox{
+          width: 32px;
+          height: 32px;
+
+          img{
+            width: 32px;
+            height: 32px;
+            margin: 5px;
+            border-radius: 50%;
+          }
+        }
+
+        .title-textBox{
+          margin-left: 14px;
+          width: 100%;
+          height: 100%;
+
+          .title-textBox-name{
+            font-weight: 600;
+          }
+        }
+
+        .title-menu{
+          font-size: 28px;
+        }
+      }
+      .contentsSector-body{
+        height: 382px;
+        padding: 16px 16px;
+        border-bottom: 1px solid $hong-gray-border;
+
+        .contentsSector-description{
+          display: flex;
+
+          .body-imageBox{
+            width: 32px;
+            height: 32px;
+
+            margin-left: 1px;
+
+            img{
+              width: 32px;
+              height: 32px;
+              margin: 5px;
+              border-radius: 50%;
+            }
+          }
+
+          .body-textBox{
+            margin-left: 14px;
+            width: 100%;
+            height: 100%;
+
+            font-size: 16px;
+
+            .body-textBox-name{
+              font-weight: 600;
+              font-size: 14px;
+            }
+          }
+        }
+      }
+      .contentsSector-details{
+        height: 90px;
+        padding: 4px 16px 0px;
+        border-bottom: 1px solid $hong-gray-border;
+
+        .feed-contents{
+          width: 100%;
+          height: 46px;
+          padding: 4px 0 4px 0;
+
+          .buttonbox{
+            display: flex;
+            width: 100%;
+            user-select: none;
+      
+            .save{
+              margin-left: auto;
+            }
+      
+            span{
+              width: 38px;
+              height: 38px;
+              padding: 5px;
+      
+              img {
+                width: 28px;
+                height: 28px;
+              }
+              
+            }
+          }
+
+          .likes_count{
+            margin-left: 5px;
+            height: 24px;
+
+            .strong{
+              font-weight: 600;
+            }
+          }
+
+          .feed-created{
+            margin-left: 5px;
+            font-size: 10px;
+            color: gray;
+          }
+        }
+      }
+      .contentsSector-comment_input{
+        height: 56px;
+        padding: 0px 16px;
+
+        .comment_input-emoticon_button{
+          margin: 8px 0 8px 0;
+          padding: 8px;
+          width: 40px;
+          height: 40px;
+
+          img{
+            width: 24px;
+            height: 24px;
+          }
+        }
+        .comment_input-inputbox{
+          width: 200px;
+          margin: 10px 0 8px 0;
+          padding: 8px;
+
+          color: #8E8E8E;
+        }
+        .comment_input-submitbutton{
+          width: 36px;
+          margin: 10px 0 8px 0;
+          padding: 8px 0 8px 0;
+
+          text-align: right;          
+          color: #0095F6;
+          font-weight: 600;
+        }
+      }
+    }
+  }  
+}

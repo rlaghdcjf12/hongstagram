@@ -9,7 +9,13 @@ const cx = classNames.bind(styles);
 const MyFeed = ( {feeds, openFeedModalNum, openFeedModal, getFeedOwner, owner, addFeed} ) => {
   const addFeedClick = () => {
     alert("please add your feed.");
-    addFeed();
+    
+  }
+
+  const closeFeed = (e) => {
+    if(e.target.id == "myFeedModal"){
+      openFeedModal({openFeedModalNum: 0});
+    }
   }
 
   const feedList = feeds.map((feed, i) => {
@@ -21,6 +27,7 @@ const MyFeed = ( {feeds, openFeedModalNum, openFeedModal, getFeedOwner, owner, a
           openFeedModal={openFeedModal}
           getFeedOwner={getFeedOwner}
           owner={owner}
+          closeFeed={closeFeed}
         />
       );
     });

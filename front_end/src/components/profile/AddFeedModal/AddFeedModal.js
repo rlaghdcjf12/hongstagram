@@ -1,5 +1,5 @@
 import React from "react";
-import styles from "./MyFeedModal.scss";
+import styles from "./AddFeedModal.scss";
 import classNames from "classnames/bind";
 import like_img from '../../../image/like.jpg';
 import comment_img from '../../../image/comment.jpg';
@@ -21,7 +21,7 @@ const MyFeedModal = ( {feed, openFeedModalNum, owner, closeFeed} ) => {
   }
 
   return (
-      <div id="myFeedModal" className={cx("myFeedModal", openFeedModalNum == feed.id ? "" : "closed")} onClick={closeFeed}>
+      <div id="myFeedModal" className={cx("myFeedModal", openFeedModalNum == -1 ? "" : "closed")} onClick={closeFeed}>
         <div className={cx("myFeedPopUp")}>
           <div className={cx("imageSector")}>
             <img src={imgUrl} alt="feed"/>
