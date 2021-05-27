@@ -9,22 +9,36 @@ import emo_img from '../../../image/emoticon.jpg';
 
 const cx = classNames.bind(styles);
 
-const MyFeedModal = ( {feed, openFeedModalNum, owner, closeFeed} ) => {
-  let imgUrl;
-  if(feed.image !== null){
-    imgUrl = feed.image.replace("http://localhost:8000/front_end/public","")
-  }
+const MyFeedModal = ( {openFeedModalNum, myInfo, closeFeed} ) => {
 
-  let owner_image = owner.profileImage;
+  let owner_image = myInfo.profileImage;
   if(owner_image !== undefined){
     owner_image = (owner_image).replace("http://localhost:8000/front_end/public","");
+  }
+
+  const handleFileOnChange = (e) => {
+    e.preventDefault();
+    let reader = new FileReader();
+    let file = e.target.files[0];
+    reader.onloadend = () => {
+      setState({
+        file : file,
+        previewURL : reader.result
+      })
+    }
+    reader.readAsDataURL(file);
   }
 
   return (
       <div id="myFeedModal" className={cx("myFeedModal", openFeedModalNum == -1 ? "" : "closed")} onClick={closeFeed}>
         <div className={cx("myFeedPopUp")}>
           <div className={cx("imageSector")}>
-            <img src={imgUrl} alt="feed"/>
+          <input type='file' 
+            accept='image/jpg,impge/png,image/jpeg,image/gif' 
+            name='profile_img' 
+            onChange={handleFileOnChange}>
+          </input>
+            {/* <img src={imgUrl} alt="feed"/> */}
           </div>
 
           <div className={cx("contentsSector")}>
@@ -34,10 +48,9 @@ const MyFeedModal = ( {feed, openFeedModalNum, owner, closeFeed} ) => {
                   <img src={owner_image}></img>
                 </div>
                 <div className={cx("title-textBox")}>
-                  <div className={cx("title-textBox-name")}>{owner.nickname}</div>
-                  <div className={cx("title-textBox-place")}>{feed.place}</div>
+                  <div className={cx("title-textBox-name")}>{myInfo.nickname}</div>
+                  <div className={cx("title-textBox-place")}><input placeholder="place"></input></div>
                 </div>
-                <div className={cx("title-menu")} >&middot;&middot;&middot;</div>
               </div>
             </div>
             <div className={cx("contentsSector-body")}>
@@ -47,7 +60,8 @@ const MyFeedModal = ( {feed, openFeedModalNum, owner, closeFeed} ) => {
                     <img src={owner_image}></img>
                   </div>
                   <div className={cx("body-textBox")}>
-                    <span className={cx("body-textBox-name")}>{owner.nickname}</span> {feed.text}</div>
+                    <span className={cx("body-textBox-name")}>{myInfo.nickname}</span> <input></input>
+                  </div>
                 </div>
 
                 <div className={cx("contentsSector-comments")}>
@@ -67,8 +81,8 @@ const MyFeedModal = ( {feed, openFeedModalNum, owner, closeFeed} ) => {
                     <span className={cx("share")}><img src={share_img} alt="share"></img></span>
                     <span className={cx("save")}><img src={save_img} alt="save"></img></span>
                   </div>
-                  <div className={cx("likes_count")}><span className={cx("strong")}>한슬</span>님 <span className={cx("strong")}>외 36명</span>이 좋아합니다.</div>
-                  <div className={cx("feed-created")}>19시간 전</div>
+                  <div className={cx("likes_count")}>좋아요 0개</div>
+                  <div className={cx("feed-created")}>0분 전</div>
                 </div>
               </div>
             </div>

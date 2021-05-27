@@ -46,15 +46,12 @@ export class ProfileContainer extends Component {
 
   render() {
     const { 
-      feeds, username, nickname, profileImage, introduce, menuNum, changeProfileTab, 
+      feeds, myInfo, username, nickname, profileImage, introduce, menuNum, changeProfileTab, 
       openFeedModal, openFeedModalNum, getFeedOwner, owner, addFeed } = this.props;
     return (
       <ProfileWrapper>
         <MyInfo 
-          username={username}
-          nickname={nickname}
-          profileImage={profileImage}
-          introduce={introduce}
+          myInfo={myInfo}
           feeds={feeds}/>
         <MyStory />
         <MyFeedWrapper menuNum={menuNum} changeProfileTab={changeProfileTab}>
@@ -64,6 +61,7 @@ export class ProfileContainer extends Component {
                 openFeedModalNum={openFeedModalNum} openFeedModal={openFeedModal} 
                 getFeedOwner={getFeedOwner} owner={owner}
                 addFeed={addFeed}
+                myInfo={myInfo}
               /> 
             : 
               <div></div>}
@@ -75,13 +73,15 @@ export class ProfileContainer extends Component {
 
 const mapStateToProps = state => ({
   feeds: state.feeds.feeds,
-  username: state.auth.myInfo.username,
-  nickname: state.auth.myInfo.nickname,
-  profileImage : state.auth.myInfo.profileImage,
-  introduce: state.auth.myInfo.introduce,
+  myInfo: state.auth.myInfo,
+  // username: state.auth.myInfo.username,
+  // nickname: state.auth.myInfo.nickname,
+  // profileImage : state.auth.myInfo.profileImage,
+  // introduce: state.auth.myInfo.introduce,
   menuNum: state.feeds.menuNum,
   openFeedModalNum: state.feeds.openFeedModalNum,
   owner: state.feeds.owner,
+
 });
 
 const mapDispatchToProps = dispatch => {

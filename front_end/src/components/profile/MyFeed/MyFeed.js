@@ -2,14 +2,14 @@ import React from "react";
 import styles from "./MyFeed.scss";
 import classNames from "classnames/bind";
 import MyFeedItem from "../MyFeedItem";
+import AddFeedModal from "../AddFeedModal";
 
 const cx = classNames.bind(styles);
 
 
-const MyFeed = ( {feeds, openFeedModalNum, openFeedModal, getFeedOwner, owner, addFeed} ) => {
+const MyFeed = ( {feeds, openFeedModalNum, openFeedModal, getFeedOwner, owner, addFeed, myInfo} ) => {
   const addFeedClick = () => {
-    alert("please add your feed.");
-    
+    openFeedModal({openFeedModalNum: -1});
   }
 
   const closeFeed = (e) => {
@@ -33,6 +33,7 @@ const MyFeed = ( {feeds, openFeedModalNum, openFeedModal, getFeedOwner, owner, a
     });
   return (
       <div className={cx("myFeed-list")}>
+        <AddFeedModal openFeedModalNum={openFeedModalNum} myInfo={myInfo} closeFeed={closeFeed}></AddFeedModal>
         <div className={cx("myFeed-add")} onClick={addFeedClick}>
           <div className={cx("add_button")}>+</div>
         </div>

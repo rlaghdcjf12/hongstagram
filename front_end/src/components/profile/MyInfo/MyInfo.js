@@ -5,10 +5,10 @@ import {MdSettings} from "react-icons/md"
 
 const cx = classNames.bind(styles);
 
-const MyInfo = ( {username, nickname, profileImage, introduce, feeds} ) => {
+const MyInfo = ( {myInfo, feeds} ) => {
   
   var imgUrl = null;
-  if(profileImage !== null) imgUrl = profileImage.replace("http://localhost:8000/front_end/public","")
+  if(myInfo.profileImage !== null) imgUrl = myInfo.profileImage.replace("http://localhost:8000/front_end/public","")
   return(
     <div className={cx("myInfoWrapper")}>
       <div className={cx("myInfoBox")}>
@@ -28,7 +28,7 @@ const MyInfo = ( {username, nickname, profileImage, introduce, feeds} ) => {
           </div>
           <div className={cx("subBox")}>
             <div className={cx("infoBox")}>
-              <div className={cx("nickname")}>{nickname}</div>
+              <div className={cx("nickname")}>{myInfo.nickname}</div>
               <div className={cx("profile_edit")}><a className={cx("edit_button")} href="#">프로필 편집</a></div>
               <div className={cx("profile_setting")}><MdSettings className={cx("setting_button")}/></div>
             </div>
@@ -50,8 +50,8 @@ const MyInfo = ( {username, nickname, profileImage, introduce, feeds} ) => {
               </li>
             </ul>
             <div className={cx("textBox")}>
-              <div className={cx("username")}>{username}</div>
-              <div className={cx("introduce")}>{introduce}</div>
+              <div className={cx("username")}>{myInfo.username}</div>
+              <div className={cx("introduce")}>{myInfo.introduce}</div>
             </div>
           </div>
       </div>
