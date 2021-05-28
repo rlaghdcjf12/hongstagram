@@ -16,6 +16,10 @@ const MyFeedModal = ( {openFeedModalNum, myInfo, closeFeed} ) => {
     owner_image = (owner_image).replace("http://localhost:8000/front_end/public","");
   }
 
+  const setState= ({file, previewURL}) => {
+    console.log("file : ", file, ", URL : ", previewURL);
+  }
+
   const handleFileOnChange = (e) => {
     e.preventDefault();
     let reader = new FileReader();

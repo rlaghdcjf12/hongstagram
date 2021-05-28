@@ -44,10 +44,15 @@ export class ProfileContainer extends Component {
     addFeed();
   }
 
+  imagePreview = ({file, previewURL}) => {
+    const {imagePreview} = this.props;
+    imagePreview(file, previewURL);
+  }
+
   render() {
     const { 
-      feeds, myInfo, username, nickname, profileImage, introduce, menuNum, changeProfileTab, 
-      openFeedModal, openFeedModalNum, getFeedOwner, owner, addFeed } = this.props;
+      feeds, myInfo, menuNum, changeProfileTab, 
+      openFeedModal, openFeedModalNum, getFeedOwner, owner, addFeed, imagePreview } = this.props;
     return (
       <ProfileWrapper>
         <MyInfo 
@@ -62,6 +67,7 @@ export class ProfileContainer extends Component {
                 getFeedOwner={getFeedOwner} owner={owner}
                 addFeed={addFeed}
                 myInfo={myInfo}
+                imagePreview={imagePreview}
               /> 
             : 
               <div></div>}
@@ -74,14 +80,10 @@ export class ProfileContainer extends Component {
 const mapStateToProps = state => ({
   feeds: state.feeds.feeds,
   myInfo: state.auth.myInfo,
-  // username: state.auth.myInfo.username,
-  // nickname: state.auth.myInfo.nickname,
-  // profileImage : state.auth.myInfo.profileImage,
-  // introduce: state.auth.myInfo.introduce,
   menuNum: state.feeds.menuNum,
   openFeedModalNum: state.feeds.openFeedModalNum,
   owner: state.feeds.owner,
-
+  preview: state.feeds.preview,
 });
 
 const mapDispatchToProps = dispatch => {
@@ -103,6 +105,9 @@ const mapDispatchToProps = dispatch => {
     },
     addFeed: () => {
       dispatch(feedActions.addFeed());
+    },
+    imagePreview: () => {
+      dispatch(feedActions.imagePreview());
     }
   };
 };

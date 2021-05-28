@@ -89,6 +89,10 @@ export const addFeedFailure = error => ({
   }
 });
 
+export const preview = () => ({
+  type: ADD_FEED
+});
+
 const getFeedsEpic = (action$, state$) => {
   return action$.pipe(
     ofType(GET_FEEDS),
@@ -185,7 +189,11 @@ const initialState = {
     triggered: false,
     message: ""
   },
-  owner: []
+  owner: [],
+  preview: {
+    file: "",
+    previewURL : ""
+  }
 };
 
 export const feeds = (state = initialState, action) => {
