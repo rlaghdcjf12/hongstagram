@@ -1,5 +1,7 @@
 Virtual_Environment/
-
+venv/
+.vscode/
+front_end/.eslintcache
 db.sqlite3
 
 *.pyc

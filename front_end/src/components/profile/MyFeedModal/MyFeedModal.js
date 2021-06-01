@@ -21,7 +21,7 @@ const MyFeedModal = ( {feed, openFeedModalNum, owner, closeFeed} ) => {
   }
 
   return (
-      <div id="myFeedModal" className={cx("myFeedModal", openFeedModalNum == feed.id ? "" : "closed")} onClick={closeFeed}>
+      <div id="myFeedModal" className={cx("myFeedModal", openFeedModalNum === feed.id ? "" : "closed")} onClick={closeFeed}>
         <div className={cx("myFeedPopUp")}>
           <div className={cx("imageSector")}>
             <img src={imgUrl} alt="feed"/>

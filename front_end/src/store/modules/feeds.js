@@ -18,6 +18,8 @@ const ADD_FEED = "feeds/ADD_FEED";
 const ADD_FEED_SUCCESS = "feeds/ADD_FEED_SUCCESS";
 const ADD_FEED_FAILURE = "feeds/ADD_FEED_FAILURE";
 
+const IMAGE_PREVIEW = "feeds/IMAGE_PREVIEW";
+
 export const getFeeds = () => ({
   type: GET_FEEDS
 });
@@ -89,8 +91,11 @@ export const addFeedFailure = error => ({
   }
 });
 
-export const preview = () => ({
-  type: ADD_FEED
+export const imagePreview = ({file, url}) => ({
+  type: IMAGE_PREVIEW,
+  payload: {
+    file, url
+  }
 });
 
 const getFeedsEpic = (action$, state$) => {
@@ -126,7 +131,6 @@ const getFeedOwnerEpic = (action$, state$) => {
     ofType(GET_FEED_OWNER),
     withLatestFrom(state$),
     mergeMap(([action, state]) => {
-      const userInfo = JSON.parse(localStorage.getItem("userInfo"));
       console.log("feedNum : ", action.payload.feedNum)
       return ajax
         .get(`/api/feeds/owner/${action.payload.feedNum}`,
@@ -155,9 +159,9 @@ const addFeedEpic = (action$, state$) => {
     ofType(ADD_FEED),
     withLatestFrom(state$),
     mergeMap(([action, state]) => {
-      const token = localStorage.getItem("userInfo")
-        ? JSON.parse(localStorage.getItem("userInfo")).token
-        : null;
+      // const token = localStorage.getItem("userInfo")
+      //   ? JSON.parse(localStorage.getItem("userInfo")).token
+      //   : null;
       const place = '사파리';
       const owner = JSON.parse(localStorage.getItem("userInfo")).id;
       const text = 'add Feed Testing';
@@ -253,6 +257,14 @@ export const feeds = (state = initialState, action) => {
           message: "Error! Please Try With Unempty Note"
         }
       };
+    case IMAGE_PREVIEW:
+      return {
+        ...state,
+        preview: {
+          file: action.payload.file,
+          previewURL: action.payload.url,
+        }
+      }
     default:
       return state;
   }

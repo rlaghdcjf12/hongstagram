@@ -45,7 +45,9 @@ export class ProfileContainer extends Component {
   }
 
   imagePreview = ({file, previewURL}) => {
+    console.log("[container] file : ", file, ", URL : ", previewURL);
     const {imagePreview} = this.props;
+    console.log("[container] file : ", file, ", URL : ", previewURL);
     imagePreview(file, previewURL);
   }
 

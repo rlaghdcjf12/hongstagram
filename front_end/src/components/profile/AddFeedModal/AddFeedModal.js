@@ -9,15 +9,19 @@ import emo_img from '../../../image/emoticon.jpg';
 
 const cx = classNames.bind(styles);
 
-const MyFeedModal = ( {openFeedModalNum, myInfo, closeFeed} ) => {
+const AddFeedModal = ( {openFeedModalNum, myInfo, closeFeed, imagePreview} ) => {
 
   let owner_image = myInfo.profileImage;
-  if(owner_image !== undefined){
+  if(owner_image !== null){
     owner_image = (owner_image).replace("http://localhost:8000/front_end/public","");
   }
 
   const setState= ({file, previewURL}) => {
     console.log("file : ", file, ", URL : ", previewURL);
+    imagePreview({
+      file: file,
+      url: previewURL
+    });
   }
 
   const handleFileOnChange = (e) => {
@@ -27,14 +31,14 @@ const MyFeedModal = ( {openFeedModalNum, myInfo, closeFeed} ) => {
     reader.onloadend = () => {
       setState({
         file : file,
-        previewURL : reader.result
+        url : reader.result
       })
     }
     reader.readAsDataURL(file);
   }
 
   return (
-      <div id="myFeedModal" className={cx("myFeedModal", openFeedModalNum == -1 ? "" : "closed")} onClick={closeFeed}>
+      <div id="myFeedModal" className={cx("myFeedModal", openFeedModalNum === -1 ? "" : "closed")} onClick={closeFeed}>
         <div className={cx("myFeedPopUp")}>
           <div className={cx("imageSector")}>
           <input type='file' 
@@ -103,4 +107,4 @@ const MyFeedModal = ( {openFeedModalNum, myInfo, closeFeed} ) => {
   );
 }
 
-export default MyFeedModal;
+export default AddFeedModal;
