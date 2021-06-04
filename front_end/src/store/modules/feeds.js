@@ -91,10 +91,10 @@ export const addFeedFailure = error => ({
   }
 });
 
-export const imagePreview = ({file, url}) => ({
+export const imagePreview = ({file, previewURL}) => ({
   type: IMAGE_PREVIEW,
   payload: {
-    file, url
+    file, previewURL
   }
 });
 
@@ -262,7 +262,7 @@ export const feeds = (state = initialState, action) => {
         ...state,
         preview: {
           file: action.payload.file,
-          previewURL: action.payload.url,
+          previewURL: action.payload.previewURL,
         }
       }
     default:

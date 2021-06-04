@@ -24,37 +24,11 @@ export class ProfileContainer extends Component {
     getMyInfo();
   };
 
-  changeProfileTab = (menuNum) => {
-    const { changeProfileTab } = this.props;
-    changeProfileTab(menuNum);
-  }
-
-  openFeedModal = ({openFeedModalNum}) => {
-    const {openFeedModal} = this.props;
-    openFeedModal(openFeedModalNum);
-  }
-
-  getFeedOwner = ({feedNum}) => {
-    const {getFeedOwner} = this.props;
-    getFeedOwner(feedNum);
-  }
-
-  addFeed = () => {
-    const {addFeed} = this.props;
-    addFeed();
-  }
-
-  imagePreview = ({file, previewURL}) => {
-    console.log("[container] file : ", file, ", URL : ", previewURL);
-    const {imagePreview} = this.props;
-    console.log("[container] file : ", file, ", URL : ", previewURL);
-    imagePreview(file, previewURL);
-  }
 
   render() {
     const { 
       feeds, myInfo, menuNum, changeProfileTab, 
-      openFeedModal, openFeedModalNum, getFeedOwner, owner, addFeed, imagePreview } = this.props;
+      openFeedModal, openFeedModalNum, getFeedOwner, owner, addFeed, imagePreview, preview } = this.props;
     return (
       <ProfileWrapper>
         <MyInfo 
@@ -70,6 +44,7 @@ export class ProfileContainer extends Component {
                 addFeed={addFeed}
                 myInfo={myInfo}
                 imagePreview={imagePreview}
+                preview={preview}
               /> 
             : 
               <div></div>}
@@ -108,8 +83,8 @@ const mapDispatchToProps = dispatch => {
     addFeed: () => {
       dispatch(feedActions.addFeed());
     },
-    imagePreview: () => {
-      dispatch(feedActions.imagePreview());
+    imagePreview: ({file, previewURL}) => {
+      dispatch(feedActions.imagePreview({file, previewURL}));
     }
   };
 };

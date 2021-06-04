@@ -9,7 +9,7 @@ import emo_img from '../../../image/emoticon.jpg';
 
 const cx = classNames.bind(styles);
 
-const AddFeedModal = ( {openFeedModalNum, myInfo, closeFeed, imagePreview} ) => {
+const AddFeedModal = ( {openFeedModalNum, myInfo, closeFeed, imagePreview, preview} ) => {
 
   let owner_image = myInfo.profileImage;
   if(owner_image !== null){
@@ -17,10 +17,10 @@ const AddFeedModal = ( {openFeedModalNum, myInfo, closeFeed, imagePreview} ) => 
   }
 
   const setState= ({file, previewURL}) => {
-    console.log("file : ", file, ", URL : ", previewURL);
+    console.log("[AddFeedModal] setState(...) file : ", file, ", previewURL : ", previewURL);
     imagePreview({
       file: file,
-      url: previewURL
+      previewURL: previewURL
     });
   }
 
@@ -28,10 +28,11 @@ const AddFeedModal = ( {openFeedModalNum, myInfo, closeFeed, imagePreview} ) => 
     e.preventDefault();
     let reader = new FileReader();
     let file = e.target.files[0];
+    console.log("[AddFeedModal] handleFileOnChange(...) file for upload is changed.");
     reader.onloadend = () => {
       setState({
         file : file,
-        url : reader.result
+        previewURL : reader.result
       })
     }
     reader.readAsDataURL(file);
@@ -41,14 +42,16 @@ const AddFeedModal = ( {openFeedModalNum, myInfo, closeFeed, imagePreview} ) => 
       <div id="myFeedModal" className={cx("myFeedModal", openFeedModalNum === -1 ? "" : "closed")} onClick={closeFeed}>
         <div className={cx("myFeedPopUp")}>
           <div className={cx("imageSector")}>
-          <input type='file' 
-            accept='image/jpg,impge/png,image/jpeg,image/gif' 
-            name='profile_img' 
-            onChange={handleFileOnChange}>
-          </input>
-            {/* <img src={imgUrl} alt="feed"/> */}
+            {preview.previewURL === "" ? 
+              <input type='file' 
+                accept='image/jpg,impge/png,image/jpeg,image/gif' 
+                name='profile_img' 
+                onChange={handleFileOnChange}
+                className={cx("add-button")}>
+              </input> :
+              <img src={preview.previewURL} alt="feed"/>
+            }
           </div>
-
           <div className={cx("contentsSector")}>
             <div className={cx("contentsSector-title")}>
               <div className={cx("contentsWrapper")}>
