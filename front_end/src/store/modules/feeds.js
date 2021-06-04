@@ -19,6 +19,7 @@ const ADD_FEED_SUCCESS = "feeds/ADD_FEED_SUCCESS";
 const ADD_FEED_FAILURE = "feeds/ADD_FEED_FAILURE";
 
 const IMAGE_PREVIEW = "feeds/IMAGE_PREVIEW";
+const CHANGE_INPUT = "feeds/CHANGE_INPUT";
 
 export const getFeeds = () => ({
   type: GET_FEEDS
@@ -91,10 +92,18 @@ export const addFeedFailure = error => ({
   }
 });
 
-export const imagePreview = ({file, previewURL}) => ({
+export const imagePreview = ({addFeed_previewURL}) => ({
   type: IMAGE_PREVIEW,
   payload: {
-    file, previewURL
+    addFeed_previewURL
+  }
+});
+
+export const ChangeInput = ({name, value}) => ({
+  type: CHANGE_INPUT,
+  payload: {
+    name,
+    value
   }
 });
 
@@ -187,16 +196,20 @@ const addFeedEpic = (action$, state$) => {
 
 const initialState = {
   feeds: [],
-  menuNum: "0",
-  openFeedModalNum : "0",
   error: {
     triggered: false,
     message: ""
   },
-  owner: [],
-  preview: {
-    file: "",
-    previewURL : ""
+  currentFocus: {
+    owner: [],
+    menuNum: "0",
+    openFeedModalNum : "0"
+  },
+  addFeedModal: {
+    addFeed_place: "",
+    addFeed_description: "",
+    addFeed_file: "",
+    addFeed_previewURL : ""
   }
 };
 
@@ -218,17 +231,26 @@ export const feeds = (state = initialState, action) => {
     case CHANGE_PROFILE_TAB:
       return {
         ...state,
-        menuNum: action.payload.menuNum
+        currentFocus:{
+          ...state.currentFocus,
+          menuNum: action.payload.menuNum
+        }
       };
     case OPEN_FEED_MODAL:
       return {
         ...state,
-        openFeedModalNum: action.payload.openFeedModalNum
+        currentFocus:{
+          ...state.currentFocus,
+          openFeedModalNum: action.payload.openFeedModalNum
+        }
       };
     case GET_FEED_OWNER_SUCCESS:
       return {
         ...state,
-        owner: action.payload.owner[0]
+        currentFocus:{
+          ...state.currentFocus,
+          owner: action.payload.owner[0]
+        }
       };
     case GET_FEED_OWNER_FAILURE:
       return {
@@ -260,11 +282,19 @@ export const feeds = (state = initialState, action) => {
     case IMAGE_PREVIEW:
       return {
         ...state,
-        preview: {
-          file: action.payload.file,
-          previewURL: action.payload.previewURL,
+        addFeedModal: {
+          ...state.addFeedModal,
+          addFeed_previewURL: action.payload.addFeed_previewURL,
         }
-      }
+      };
+    case CHANGE_INPUT:
+      console.log("name: ", action.payload.name, ", value: ", action.payload.value);
+      let newForm = state.addFeedModal;
+      newForm[action.payload.name] = action.payload.value;
+      return {
+        ...state,
+        addFeedModal: newForm
+      };
     default:
       return state;
   }

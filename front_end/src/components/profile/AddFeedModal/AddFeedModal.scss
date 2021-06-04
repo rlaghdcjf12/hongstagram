@@ -34,16 +34,36 @@
       width: 600px;
       height: 100%;
       background-color: white;
+      border: 1px dashed $hong-gray-text;
 
       img {   
         width: 100%;
         height: 100%;
       }
 
-      input.add-button{
-        border: none;
-        width: 200px;
-        height: 200px;
+      .inputButton-file{
+        position: relative;
+        width: 50px;
+        height: 50px;
+        margin-left: 250px;
+        top: 250px;
+
+        font-size: 50px;
+        text-align: center;
+        color: white;
+        
+        padding: 10px 32px 20px 32px;
+        border: 1px solid rgb(182, 222, 238);
+        border-radius: 100%;
+        outline: 0;
+  
+        background-color: rgb(182, 222, 238);
+
+        cursor: pointer;
+      }
+
+      input{
+        display: none;
       }
     }
 
@@ -93,7 +113,7 @@
         }
       }
       .contentsSector-body{
-        height: 382px;
+        height: 460px;
         padding: 16px 16px;
         border-bottom: 1px solid $hong-gray-border;
 
@@ -128,84 +148,24 @@
           }
         }
       }
-      .contentsSector-details{
-        height: 90px;
-        padding: 4px 16px 0px;
-        border-bottom: 1px solid $hong-gray-border;
 
-        .feed-contents{
-          width: 100%;
-          height: 46px;
-          padding: 4px 0 4px 0;
-
-          .buttonbox{
-            display: flex;
-            width: 100%;
-            user-select: none;
-      
-            .save{
-              margin-left: auto;
-            }
-      
-            span{
-              width: 38px;
-              height: 38px;
-              padding: 5px;
-      
-              img {
-                width: 28px;
-                height: 28px;
-              }
-              
-            }
-          }
-
-          .likes_count{
-            margin-left: 5px;
-            height: 24px;
-
-            .strong{
-              font-weight: 600;
-            }
-          }
-
-          .feed-created{
-            margin-left: 5px;
-            font-size: 10px;
-            color: gray;
-          }
-        }
-      }
-      .contentsSector-comment_input{
-        height: 56px;
-        padding: 0px 16px;
-
-        .comment_input-emoticon_button{
-          margin: 8px 0 8px 0;
-          padding: 8px;
-          width: 40px;
-          height: 40px;
-
-          img{
-            width: 24px;
-            height: 24px;
-          }
-        }
-        .comment_input-inputbox{
+      .contentsSector-footer{
+        
+        .add_button-submit{
           width: 200px;
-          margin: 10px 0 8px 0;
-          padding: 8px;
+          height: 50px;
+          margin: auto;
+          margin-top: 10px;
+          padding-top: 10px;
 
-          color: #8E8E8E;
-        }
-        .comment_input-submitbutton{
-          width: 36px;
-          margin: 10px 0 8px 0;
-          padding: 8px 0 8px 0;
+          color: white;
+          font-size: 20px;
+          text-align: center;
 
-          text-align: right;          
-          color: #0095F6;
-          font-weight: 600;
+          background-color: rgb(182, 222, 238);
+          border: 1px solid rgb(182, 222, 238);
+
+          cursor: pointer;
         }
       }
     }

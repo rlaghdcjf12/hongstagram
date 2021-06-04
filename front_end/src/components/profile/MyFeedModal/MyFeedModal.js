@@ -9,19 +9,19 @@ import emo_img from '../../../image/emoticon.jpg';
 
 const cx = classNames.bind(styles);
 
-const MyFeedModal = ( {feed, openFeedModalNum, owner, closeFeed} ) => {
+const MyFeedModal = ( {feed, currentFocus,closeFeed} ) => {
   let imgUrl;
   if(feed.image !== null){
     imgUrl = feed.image.replace("http://localhost:8000/front_end/public","")
   }
 
-  let owner_image = owner.profileImage;
+  let owner_image = currentFocus.owner.profileImage;
   if(owner_image !== undefined){
     owner_image = (owner_image).replace("http://localhost:8000/front_end/public","");
   }
 
   return (
-      <div id="myFeedModal" className={cx("myFeedModal", openFeedModalNum === feed.id ? "" : "closed")} onClick={closeFeed}>
+      <div id="myFeedModal" className={cx("myFeedModal", currentFocus.openFeedModalNum === feed.id ? "" : "closed")} onClick={closeFeed}>
         <div className={cx("myFeedPopUp")}>
           <div className={cx("imageSector")}>
             <img src={imgUrl} alt="feed"/>
@@ -34,7 +34,7 @@ const MyFeedModal = ( {feed, openFeedModalNum, owner, closeFeed} ) => {
                   <img src={owner_image}></img>
                 </div>
                 <div className={cx("title-textBox")}>
-                  <div className={cx("title-textBox-name")}>{owner.nickname}</div>
+                  <div className={cx("title-textBox-name")}>{currentFocus.owner.nickname}</div>
                   <div className={cx("title-textBox-place")}>{feed.place}</div>
                 </div>
                 <div className={cx("title-menu")} >&middot;&middot;&middot;</div>
@@ -47,7 +47,7 @@ const MyFeedModal = ( {feed, openFeedModalNum, owner, closeFeed} ) => {
                     <img src={owner_image}></img>
                   </div>
                   <div className={cx("body-textBox")}>
-                    <span className={cx("body-textBox-name")}>{owner.nickname}</span> {feed.text}</div>
+                    <span className={cx("body-textBox-name")}>{currentFocus.owner.nickname}</span> {feed.text}</div>
                 </div>
 
                 <div className={cx("contentsSector-comments")}>

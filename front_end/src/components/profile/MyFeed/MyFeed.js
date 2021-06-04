@@ -7,7 +7,8 @@ import AddFeedModal from "../AddFeedModal";
 const cx = classNames.bind(styles);
 
 
-const MyFeed = ( {feeds, openFeedModalNum, openFeedModal, getFeedOwner, owner, addFeed, myInfo, imagePreview, preview} ) => {
+const MyFeed = ( {feeds, openFeedModal, getFeedOwner, imagePreview, onChangeInput,
+  currentFocus, myInfo, addFeedModal, addFeed} ) => {
   const addFeedClick = () => {
     openFeedModal({openFeedModalNum: -1});
   }
@@ -15,26 +16,23 @@ const MyFeed = ( {feeds, openFeedModalNum, openFeedModal, getFeedOwner, owner, a
   const closeFeed = (e) => {
     if(e.target.id === "myFeedModal"){
       openFeedModal({openFeedModalNum: 0});
-      imagePreview({file: "", previewURL: ""})
+      imagePreview({addFeed_previewURL: ""})
     }
   }
 
   const feedList = feeds.map((feed, i) => {
       return (
         <MyFeedItem
-          feed={feed}
-          key={feed.id}
-          openFeedModalNum={openFeedModalNum}
-          openFeedModal={openFeedModal}
-          getFeedOwner={getFeedOwner}
-          owner={owner}
-          closeFeed={closeFeed}
+          feed={feed} key={feed.id}
+          openFeedModal={openFeedModal} getFeedOwner={getFeedOwner} closeFeed={closeFeed}
+          currentFocus={currentFocus}
         />
       );
     });
   return (
       <div className={cx("myFeed-list")}>
-        <AddFeedModal openFeedModalNum={openFeedModalNum} myInfo={myInfo} closeFeed={closeFeed} imagePreview={imagePreview} preview={preview}></AddFeedModal>
+        <AddFeedModal closeFeed={closeFeed} imagePreview={imagePreview} onChangeInput={onChangeInput}
+          addFeedModal={addFeedModal} currentFocus={currentFocus} myInfo={myInfo}/>
         <div className={cx("myFeed-add")} onClick={addFeedClick}>
           <div className={cx("add_button")}>+</div>
         </div>

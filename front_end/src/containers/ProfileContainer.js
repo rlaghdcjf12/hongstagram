@@ -14,6 +14,12 @@ export class ProfileContainer extends Component {
     this.getFeeds();
   }
 
+  componentDidUpdate(prevProps){
+    if (prevProps.kind !== this.props.kind) {
+      this.initialize();
+    }
+  }
+
   getFeeds = () => {
     const { getFeeds } = this.props;
     getFeeds();
@@ -24,27 +30,31 @@ export class ProfileContainer extends Component {
     getMyInfo();
   };
 
+  handleChangeInput = ({name, value}) => {
+    const { ChangeInput } = this.props;
+    ChangeInput({name, value});
+  }
 
   render() {
     const { 
-      feeds, myInfo, menuNum, changeProfileTab, 
-      openFeedModal, openFeedModalNum, getFeedOwner, owner, addFeed, imagePreview, preview } = this.props;
+      feeds,
+      changeProfileTab, openFeedModal, getFeedOwner, imagePreview, addFeed, 
+      currentFocus, myInfo, addFeedModal
+    } = this.props;
+    const {handleChangeInput} = this;
     return (
       <ProfileWrapper>
         <MyInfo 
           myInfo={myInfo}
           feeds={feeds}/>
         <MyStory />
-        <MyFeedWrapper menuNum={menuNum} changeProfileTab={changeProfileTab}>
-            {menuNum === "0" ? 
+        <MyFeedWrapper menuNum={currentFocus.menuNum} changeProfileTab={changeProfileTab}>
+            {currentFocus.menuNum === "0" ? 
               <MyFeed 
-                feeds={feeds} 
-                openFeedModalNum={openFeedModalNum} openFeedModal={openFeedModal} 
-                getFeedOwner={getFeedOwner} owner={owner}
+                feeds={feeds}
+                openFeedModal={openFeedModal} getFeedOwner={getFeedOwner} imagePreview={imagePreview} onChangeInput={handleChangeInput}
+                currentFocus={currentFocus} myInfo={myInfo} addFeedModal={addFeedModal}
                 addFeed={addFeed}
-                myInfo={myInfo}
-                imagePreview={imagePreview}
-                preview={preview}
               /> 
             : 
               <div></div>}
@@ -57,10 +67,8 @@ export class ProfileContainer extends Component {
 const mapStateToProps = state => ({
   feeds: state.feeds.feeds,
   myInfo: state.auth.myInfo,
-  menuNum: state.feeds.menuNum,
-  openFeedModalNum: state.feeds.openFeedModalNum,
-  owner: state.feeds.owner,
-  preview: state.feeds.preview,
+  currentFocus: state.feeds.currentFocus,
+  addFeedModal: state.feeds.addFeedModal,
 });
 
 const mapDispatchToProps = dispatch => {
@@ -83,8 +91,11 @@ const mapDispatchToProps = dispatch => {
     addFeed: () => {
       dispatch(feedActions.addFeed());
     },
-    imagePreview: ({file, previewURL}) => {
-      dispatch(feedActions.imagePreview({file, previewURL}));
+    imagePreview: ({addFeed_previewURL}) => {
+      dispatch(feedActions.imagePreview({addFeed_previewURL}));
+    },
+    ChangeInput: ({name, value}) => {
+      dispatch(feedActions.ChangeInput({name, value}));
     }
   };
 };

@@ -9,47 +9,49 @@ import emo_img from '../../../image/emoticon.jpg';
 
 const cx = classNames.bind(styles);
 
-const AddFeedModal = ( {openFeedModalNum, myInfo, closeFeed, imagePreview, preview} ) => {
-
+const AddFeedModal = ( {closeFeed, imagePreview, addFeedModal, currentFocus, myInfo, onChangeInput} ) => {
+  
   let owner_image = myInfo.profileImage;
   if(owner_image !== null){
     owner_image = (owner_image).replace("http://localhost:8000/front_end/public","");
   }
 
-  const setState= ({file, previewURL}) => {
-    console.log("[AddFeedModal] setState(...) file : ", file, ", previewURL : ", previewURL);
-    imagePreview({
-      file: file,
-      previewURL: previewURL
-    });
+  const setState= ({addFeed_previewURL}) => {
+    imagePreview({ addFeed_previewURL: addFeed_previewURL });
   }
-
+  
   const handleFileOnChange = (e) => {
     e.preventDefault();
     let reader = new FileReader();
     let file = e.target.files[0];
-    console.log("[AddFeedModal] handleFileOnChange(...) file for upload is changed.");
     reader.onloadend = () => {
       setState({
-        file : file,
-        previewURL : reader.result
+        //file : file,
+        addFeed_previewURL : reader.result
       })
     }
     reader.readAsDataURL(file);
   }
 
+  const textInputChange = (e) => {
+    const { name, value } = e.target;
+    onChangeInput({ name, value });
+  }
+
   return (
-      <div id="myFeedModal" className={cx("myFeedModal", openFeedModalNum === -1 ? "" : "closed")} onClick={closeFeed}>
+      <div id="myFeedModal" className={cx("myFeedModal", currentFocus.openFeedModalNum === -1 ? "" : "closed")} onClick={closeFeed}>
         <div className={cx("myFeedPopUp")}>
           <div className={cx("imageSector")}>
-            {preview.previewURL === "" ? 
-              <input type='file' 
-                accept='image/jpg,impge/png,image/jpeg,image/gif' 
-                name='profile_img' 
-                onChange={handleFileOnChange}
-                className={cx("add-button")}>
-              </input> :
-              <img src={preview.previewURL} alt="feed"/>
+            {addFeedModal.previewURL === "" ? 
+              <div>
+                <label for="profile_img" className={cx("inputButton-file")}> + </label>
+                <input type='file' 
+                  accept='image/jpg,impge/png,image/jpeg,image/gif' 
+                  id='profile_img' 
+                  onChange={handleFileOnChange}>
+                </input>
+              </div> :
+              <img src={addFeedModal.addFeed_previewURL} alt="feed"/>
             }
           </div>
           <div className={cx("contentsSector")}>
@@ -60,7 +62,14 @@ const AddFeedModal = ( {openFeedModalNum, myInfo, closeFeed, imagePreview, previ
                 </div>
                 <div className={cx("title-textBox")}>
                   <div className={cx("title-textBox-name")}>{myInfo.nickname}</div>
-                  <div className={cx("title-textBox-place")}><input placeholder="place"></input></div>
+                  <div className={cx("title-textBox-place")}>
+                    <input type="text"
+                      placeholder="장소 입력" 
+                      name="addFeed_place"
+                      value={addFeedModal.addFeed_place}
+                      onChange={textInputChange}>
+                    </input>
+                  </div>
                 </div>
               </div>
             </div>
@@ -71,38 +80,19 @@ const AddFeedModal = ( {openFeedModalNum, myInfo, closeFeed, imagePreview, previ
                     <img src={owner_image}></img>
                   </div>
                   <div className={cx("body-textBox")}>
-                    <span className={cx("body-textBox-name")}>{myInfo.nickname}</span> <input></input>
+                    <span className={cx("body-textBox-name")}>{myInfo.nickname}</span>
+                    <input type="text"
+                      placeholder="문구 입력..." 
+                      name="addFeed_description"
+                      value={addFeedModal.addFeed_description}
+                      onChange={textInputChange}>
+                    </input>
                   </div>
-                </div>
-
-                <div className={cx("contentsSector-comments")}>
-                </div>
-                <div className={cx("contentsSector-comments")}>
-                </div>
-
-              </div>
-            </div>
-            
-            <div className={cx("contentsSector-details")}>
-              <div className={cx("contentsWrapper")}>
-                <div className={cx("feed-contents")}>
-                  <div className={cx("buttonbox")}>
-                    <span className={cx("like")}><img src={like_img} alt="like"></img></span>
-                    <span className={cx("comment")}><img src={comment_img} alt="comment"></img></span>
-                    <span className={cx("share")}><img src={share_img} alt="share"></img></span>
-                    <span className={cx("save")}><img src={save_img} alt="save"></img></span>
-                  </div>
-                  <div className={cx("likes_count")}>좋아요 0개</div>
-                  <div className={cx("feed-created")}>0분 전</div>
                 </div>
               </div>
             </div>
-            <div className={cx("contentsSector-comment_input")}>
-              <div className={cx("contentsWrapper")}>
-                <div className={cx("comment_input-emoticon_button")}><img src={emo_img}></img></div>
-                <div className={cx("comment_input-inputbox")}>댓글 달기...</div>
-                <div className={cx("comment_input-submitbutton")}>게시</div>
-              </div>
+            <div className={cx("contentsSector-footer")}>
+              <div className={cx("add_button-submit")}>업 로 드</div>
             </div>
           </div>
         </div>
