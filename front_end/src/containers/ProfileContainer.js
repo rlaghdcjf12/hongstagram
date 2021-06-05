@@ -14,12 +14,6 @@ export class ProfileContainer extends Component {
     this.getFeeds();
   }
 
-  componentDidUpdate(prevProps){
-    if (prevProps.kind !== this.props.kind) {
-      this.initialize();
-    }
-  }
-
   getFeeds = () => {
     const { getFeeds } = this.props;
     getFeeds();

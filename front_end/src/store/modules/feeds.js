@@ -140,7 +140,6 @@ const getFeedOwnerEpic = (action$, state$) => {
     ofType(GET_FEED_OWNER),
     withLatestFrom(state$),
     mergeMap(([action, state]) => {
-      console.log("feedNum : ", action.payload.feedNum)
       return ajax
         .get(`/api/feeds/owner/${action.payload.feedNum}`,
         {
@@ -171,10 +170,11 @@ const addFeedEpic = (action$, state$) => {
       // const token = localStorage.getItem("userInfo")
       //   ? JSON.parse(localStorage.getItem("userInfo")).token
       //   : null;
-      const place = '사파리';
+      const place = state.feeds.addFeedModal.addFeed_place;
       const owner = JSON.parse(localStorage.getItem("userInfo")).id;
-      const text = 'add Feed Testing';
-      const image = '';
+      const text = state.feeds.addFeedModal.addFeed_description;
+      const image = state.feeds.addFeedModal.addFeed_previewURL;
+      console.log("image : ", image);
       return ajax
         .post(`/api/feeds/add/`,{ place, owner, text, image })
         .pipe(
@@ -265,7 +265,7 @@ export const feeds = (state = initialState, action) => {
       console.log("feed : ", feed);
       return {
         ...state,
-        feed: state.feeds.concat(feed),
+        feeds: state.feeds.concat(feed),
         error: {
           triggered: false,
           message: ""
@@ -293,7 +293,10 @@ export const feeds = (state = initialState, action) => {
       newForm[action.payload.name] = action.payload.value;
       return {
         ...state,
-        addFeedModal: newForm
+        addFeedModal:{
+          ...state.addFeedModal,
+          newForm
+        }
       };
     default:
       return state;

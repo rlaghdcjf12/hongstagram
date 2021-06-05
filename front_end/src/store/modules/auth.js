@@ -30,7 +30,7 @@ const GET_MY_INFO = "auth/GET_MY_INFO";
 const GET_MY_INFO_SUCCESS = "auth/GET_MY_INFO_SUCCESS";
 const GET_MY_INFO_FAILURE = "auth/GET_MY_INFO_FAILURE";
 
-const PROFILE_DROPDOWN = "auth/PROFILE_DROPDOWN";
+const PROFILE_DROPDOWN = "auth/PROFILE_DROPDOWN"; 
 
 export const initializeInput = () => ({
   type: INITIALIZE_INPUT

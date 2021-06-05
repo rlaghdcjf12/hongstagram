@@ -31,7 +31,7 @@ const MyFeed = ( {feeds, openFeedModal, getFeedOwner, imagePreview, onChangeInpu
     });
   return (
       <div className={cx("myFeed-list")}>
-        <AddFeedModal closeFeed={closeFeed} imagePreview={imagePreview} onChangeInput={onChangeInput}
+        <AddFeedModal closeFeed={closeFeed} imagePreview={imagePreview} onChangeInput={onChangeInput} addFeed={addFeed}
           addFeedModal={addFeedModal} currentFocus={currentFocus} myInfo={myInfo}/>
         <div className={cx("myFeed-add")} onClick={addFeedClick}>
           <div className={cx("add_button")}>+</div>
