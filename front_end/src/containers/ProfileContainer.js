@@ -85,8 +85,8 @@ const mapDispatchToProps = dispatch => {
     addFeed: () => {
       dispatch(feedActions.addFeed());
     },
-    imagePreview: ({addFeed_previewURL}) => {
-      dispatch(feedActions.imagePreview({addFeed_previewURL}));
+    imagePreview: ({addFeed_file, addFeed_previewURL}) => {
+      dispatch(feedActions.imagePreview({addFeed_file, addFeed_previewURL}));
     },
     ChangeInput: ({name, value}) => {
       dispatch(feedActions.ChangeInput({name, value}));

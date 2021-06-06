@@ -31,7 +31,7 @@ const MyFeedModal = ( {feed, currentFocus,closeFeed} ) => {
             <div className={cx("contentsSector-title")}>
               <div className={cx("contentsWrapper")}>
                 <div className={cx("title-imageBox")}>
-                  <img src={owner_image}></img>
+                  <img src={owner_image} alt="owner_image"></img>
                 </div>
                 <div className={cx("title-textBox")}>
                   <div className={cx("title-textBox-name")}>{currentFocus.owner.nickname}</div>
@@ -44,7 +44,7 @@ const MyFeedModal = ( {feed, currentFocus,closeFeed} ) => {
               <div className={cx("contentsWrapper")}>
                 <div className={cx("contentsSector-description")}>
                   <div className={cx("body-imageBox")}>
-                    <img src={owner_image}></img>
+                    <img src={owner_image} alt="owner_image"></img>
                   </div>
                   <div className={cx("body-textBox")}>
                     <span className={cx("body-textBox-name")}>{currentFocus.owner.nickname}</span> {feed.text}</div>
@@ -74,7 +74,7 @@ const MyFeedModal = ( {feed, currentFocus,closeFeed} ) => {
             </div>
             <div className={cx("contentsSector-comment_input")}>
               <div className={cx("contentsWrapper")}>
-                <div className={cx("comment_input-emoticon_button")}><img src={emo_img}></img></div>
+                <div className={cx("comment_input-emoticon_button")}><img src={emo_img} alt="emo_image"></img></div>
                 <div className={cx("comment_input-inputbox")}>댓글 달기...</div>
                 <div className={cx("comment_input-submitbutton")}>게시</div>
               </div>

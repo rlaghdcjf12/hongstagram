@@ -16,7 +16,10 @@ const AddFeedModal = ( {closeFeed, imagePreview, addFeed, addFeedModal, currentF
     let reader = new FileReader();
     let file = e.target.files[0];
     reader.onloadend = () => {
-      imagePreview({ addFeed_previewURL: reader.result });
+      imagePreview({ 
+        addFeed_file: file, 
+        addFeed_previewURL: reader.result 
+      });
     }
     reader.readAsDataURL(file);
   }
@@ -61,7 +64,7 @@ const AddFeedModal = ( {closeFeed, imagePreview, addFeed, addFeedModal, currentF
                 </div>
               </div>
             </div>
-            <div className={cx("contentsSector-body")}>
+            <div className={cx("contentsSector-addFeed_body")}>
               <div className={cx("contentsWrapper")}>
                 <div className={cx("contentsSector-description")}>
                   <div className={cx("body-imageBox")}>

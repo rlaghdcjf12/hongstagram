@@ -92,9 +92,10 @@ export const addFeedFailure = error => ({
   }
 });
 
-export const imagePreview = ({addFeed_previewURL}) => ({
+export const imagePreview = ({addFeed_file, addFeed_previewURL}) => ({
   type: IMAGE_PREVIEW,
   payload: {
+    addFeed_file,
     addFeed_previewURL
   }
 });
@@ -167,16 +168,22 @@ const addFeedEpic = (action$, state$) => {
     ofType(ADD_FEED),
     withLatestFrom(state$),
     mergeMap(([action, state]) => {
-      // const token = localStorage.getItem("userInfo")
-      //   ? JSON.parse(localStorage.getItem("userInfo")).token
-      //   : null;
-      const place = state.feeds.addFeedModal.addFeed_place;
-      const owner = JSON.parse(localStorage.getItem("userInfo")).id;
-      const text = state.feeds.addFeedModal.addFeed_description;
-      const image = state.feeds.addFeedModal.addFeed_previewURL;
-      console.log("image : ", image);
+      const token = localStorage.getItem("userInfo")
+        ? JSON.parse(localStorage.getItem("userInfo")).token
+        : null;
+      const formData = new FormData();
+      formData.append('csrfmiddlewaretoken', token)
+      formData.append('image', state.feeds.addFeedModal.addFeed_file);
+      formData.append('owner', JSON.parse(localStorage.getItem("userInfo")).id);
+      formData.append('place', state.feeds.addFeedModal.addFeed_place);
+      formData.append('text', state.feeds.addFeedModal.addFeed_description);
+      const config = {
+        headers: {
+            'content-type': 'multipart/form-data'
+        }
+      }
       return ajax
-        .post(`/api/feeds/add/`,{ place, owner, text, image })
+        .post(`/api/feeds/add/`, formData, config)
         .pipe(
           map(response => {
             const feed = response.response.feed;
@@ -261,8 +268,7 @@ export const feeds = (state = initialState, action) => {
         }
       };
     case ADD_FEED_SUCCESS:
-      const { feed } = action.payload;
-      console.log("feed : ", feed);
+      const { feed } = action.payload;      
       return {
         ...state,
         feeds: state.feeds.concat(feed),
@@ -284,18 +290,17 @@ export const feeds = (state = initialState, action) => {
         ...state,
         addFeedModal: {
           ...state.addFeedModal,
+          addFeed_file: action.payload.addFeed_file,
           addFeed_previewURL: action.payload.addFeed_previewURL,
         }
       };
     case CHANGE_INPUT:
       console.log("name: ", action.payload.name, ", value: ", action.payload.value);
-      let newForm = state.addFeedModal;
-      newForm[action.payload.name] = action.payload.value;
       return {
         ...state,
         addFeedModal:{
           ...state.addFeedModal,
-          newForm
+          [action.payload.name] : action.payload.value
         }
       };
     default:

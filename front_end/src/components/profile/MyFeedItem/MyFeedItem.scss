@@ -1,11 +1,12 @@
 @import "../../../styles/utils.scss";
 
 .myFeed-item {
+    width: 283px;
+    height: 283px;
+    margin: 0 14px 28px 14px;
 
     img {   
         width: 100%;
         height: 283px;
-        max-width: 283px;
-        margin: 0 14px 28px 14px;
     }
   }
