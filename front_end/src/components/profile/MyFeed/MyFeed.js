@@ -7,7 +7,7 @@ import AddFeedModal from "../AddFeedModal";
 const cx = classNames.bind(styles);
 
 
-const MyFeed = ( {feeds, openFeedModal, getFeedOwner, imagePreview, onChangeInput,
+const MyFeed = ( {feeds, openFeedModal, getFeedOwner, imagePreview, onChangeInput, openSubMenu,
   currentFocus, myInfo, addFeedModal, addFeed} ) => {
   const addFeedClick = () => {
     openFeedModal({openFeedModalNum: -1});
@@ -15,8 +15,12 @@ const MyFeed = ( {feeds, openFeedModal, getFeedOwner, imagePreview, onChangeInpu
 
   const closeFeed = (e) => {
     if(e.target.id === "myFeedModal"){
+      if(currentFocus.openFeedModalNum === -1){
+        imagePreview({addFeed_previewURL: ""});
+        onChangeInput({name: "addFeed_place", value: ""});
+        onChangeInput({name: "addFeed_description", value: ""});
+      }
       openFeedModal({openFeedModalNum: 0});
-      imagePreview({addFeed_previewURL: ""})
     }
   }
 
@@ -24,7 +28,7 @@ const MyFeed = ( {feeds, openFeedModal, getFeedOwner, imagePreview, onChangeInpu
       return (
         <MyFeedItem
           feed={feed} key={feed.id}
-          openFeedModal={openFeedModal} getFeedOwner={getFeedOwner} closeFeed={closeFeed}
+          openFeedModal={openFeedModal} getFeedOwner={getFeedOwner} closeFeed={closeFeed} openSubMenu={openSubMenu}
           currentFocus={currentFocus}
         />
       );

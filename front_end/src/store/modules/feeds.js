@@ -20,6 +20,7 @@ const ADD_FEED_FAILURE = "feeds/ADD_FEED_FAILURE";
 
 const IMAGE_PREVIEW = "feeds/IMAGE_PREVIEW";
 const CHANGE_INPUT = "feeds/CHANGE_INPUT";
+const OPEN_SUB_MENU = "feeds/OPEN_SUB_MENU";
 
 export const getFeeds = () => ({
   type: GET_FEEDS
@@ -107,6 +108,13 @@ export const ChangeInput = ({name, value}) => ({
     value
   }
 });
+
+export const openSubMenu = ({openFlag}) => ({
+  type: OPEN_SUB_MENU,
+  payload: {
+    openFlag
+  }
+})
 
 const getFeedsEpic = (action$, state$) => {
   return action$.pipe(
@@ -210,7 +218,8 @@ const initialState = {
   currentFocus: {
     owner: [],
     menuNum: "0",
-    openFeedModalNum : "0"
+    openFeedModalNum : "0",
+    SubMenuOpenFlag : "close"
   },
   addFeedModal: {
     addFeed_place: "",
@@ -295,7 +304,6 @@ export const feeds = (state = initialState, action) => {
         }
       };
     case CHANGE_INPUT:
-      console.log("name: ", action.payload.name, ", value: ", action.payload.value);
       return {
         ...state,
         addFeedModal:{
@@ -303,6 +311,15 @@ export const feeds = (state = initialState, action) => {
           [action.payload.name] : action.payload.value
         }
       };
+    case OPEN_SUB_MENU:
+      return {
+        ...state,
+        currentFocus:{
+          ...state.currentFocus,
+          SubMenuOpenFlag: action.payload.openFlag
+        }
+      }
+
     default:
       return state;
   }

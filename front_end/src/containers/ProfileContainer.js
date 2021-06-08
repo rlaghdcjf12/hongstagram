@@ -32,7 +32,7 @@ export class ProfileContainer extends Component {
   render() {
     const { 
       feeds,
-      changeProfileTab, openFeedModal, getFeedOwner, imagePreview, addFeed, 
+      changeProfileTab, openFeedModal, getFeedOwner, imagePreview, addFeed, openSubMenu,
       currentFocus, myInfo, addFeedModal
     } = this.props;
     const {handleChangeInput} = this;
@@ -47,7 +47,7 @@ export class ProfileContainer extends Component {
               <MyFeed 
                 feeds={feeds}
                 openFeedModal={openFeedModal} getFeedOwner={getFeedOwner} imagePreview={imagePreview} onChangeInput={handleChangeInput}
-                currentFocus={currentFocus} myInfo={myInfo} addFeedModal={addFeedModal}
+                currentFocus={currentFocus} myInfo={myInfo} addFeedModal={addFeedModal} openSubMenu={openSubMenu}
                 addFeed={addFeed}
               /> 
             : 
@@ -90,6 +90,9 @@ const mapDispatchToProps = dispatch => {
     },
     ChangeInput: ({name, value}) => {
       dispatch(feedActions.ChangeInput({name, value}));
+    },
+    openSubMenu: ({openFlag}) => {
+      dispatch(feedActions.openSubMenu({openFlag}));
     }
   };
 };

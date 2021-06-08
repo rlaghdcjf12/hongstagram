@@ -6,10 +6,11 @@ import comment_img from '../../../image/comment.jpg';
 import share_img from '../../../image/share.jpg';
 import save_img from '../../../image/save.jpg';
 import emo_img from '../../../image/emoticon.jpg';
+import ModalSubMenu from '../ModalSubMenu';
 
 const cx = classNames.bind(styles);
 
-const MyFeedModal = ( {feed, currentFocus,closeFeed} ) => {
+const MyFeedModal = ( {feed, currentFocus, closeFeed, openSubMenu} ) => {
   let imgUrl;
   if(feed.image !== null){
     imgUrl = feed.image.replace("http://localhost:8000/front_end/public","")
@@ -18,6 +19,20 @@ const MyFeedModal = ( {feed, currentFocus,closeFeed} ) => {
   let owner_image = currentFocus.owner.profileImage;
   if(owner_image !== undefined){
     owner_image = (owner_image).replace("http://localhost:8000/front_end/public","");
+  }
+
+  const openSubMenuModal = () => {
+    openSubMenu({openFlag: "open"});
+  }
+
+  const closeSubMenuModal = () => {
+    openSubMenu({openFlag: "close"});
+  }
+
+  const SubMenuBackgroundClick = (e) => {
+    if(e.target.id == "ModalSubMenu"){
+      closeSubMenuModal();
+    }
   }
 
   return (
@@ -37,7 +52,11 @@ const MyFeedModal = ( {feed, currentFocus,closeFeed} ) => {
                   <div className={cx("title-textBox-name")}>{currentFocus.owner.nickname}</div>
                   <div className={cx("title-textBox-place")}>{feed.place}</div>
                 </div>
-                <div className={cx("title-menu")} >&middot;&middot;&middot;</div>
+                {currentFocus.SubMenuOpenFlag === "open" ? 
+                  <ModalSubMenu closeSubMenuModal={closeSubMenuModal} SubMenuBackgroundClick={SubMenuBackgroundClick}></ModalSubMenu>
+                  : <div></div>
+                }
+                <div className={cx("title-menu")} onClick={openSubMenuModal}>&middot;&middot;&middot;</div>
               </div>
             </div>
             <div className={cx("contentsSector-body")}>
