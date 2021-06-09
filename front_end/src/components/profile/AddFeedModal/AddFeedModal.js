@@ -4,7 +4,7 @@ import classNames from "classnames/bind";
 
 const cx = classNames.bind(styles);
 
-const AddFeedModal = ( {closeFeed, imagePreview, addFeed, addFeedModal, currentFocus, myInfo, onChangeInput} ) => {
+const AddFeedModal = ( {closeFeed, imagePreview, handleAddFeed, addFeedModal, currentFocus, myInfo, onChangeInput} ) => {
   
   let owner_image = myInfo.profileImage;
   if(owner_image !== null){
@@ -83,7 +83,7 @@ const AddFeedModal = ( {closeFeed, imagePreview, addFeed, addFeedModal, currentF
               </div>
             </div>
             <div className={cx("contentsSector-footer")}>
-              <div className={cx("add_button-submit")} onClick={addFeed}>업 로 드</div>
+              <div className={cx("add_button-submit")} onClick={handleAddFeed}>업 로 드</div>
             </div>
           </div>
         </div>

@@ -21,6 +21,11 @@ const ADD_FEED_FAILURE = "feeds/ADD_FEED_FAILURE";
 const IMAGE_PREVIEW = "feeds/IMAGE_PREVIEW";
 const CHANGE_INPUT = "feeds/CHANGE_INPUT";
 const OPEN_SUB_MENU = "feeds/OPEN_SUB_MENU";
+const DELETE_POPUP = "feeds/DELETE_POPUP";
+
+const DELETE_FEED = "feeds/DELETE_FEED";
+const DELETE_FEED_SUCCESS = "feeds/DELETE_FEED_SUCCESS";
+const DELETE_FEED_FAILURE = "feeds/DELETE_FEED_FAILURE";
 
 export const getFeeds = () => ({
   type: GET_FEEDS
@@ -114,7 +119,35 @@ export const openSubMenu = ({openFlag}) => ({
   payload: {
     openFlag
   }
-})
+});
+
+export const DeletePopup = ({deletePopupFlag}) => ({
+  type: DELETE_POPUP,
+  payload: {
+    deletePopupFlag
+  }
+});
+
+export const DeleteFeed = ({id}) => ({
+  type: DELETE_FEED,
+  payload: {
+    id
+  }
+});
+
+export const deleteFeedSuccess = ({deleted_id}) => ({
+  type: DELETE_FEED_SUCCESS,
+  payload: {
+    deleted_id
+  }
+});
+
+export const deleteFeedFailure = error => ({
+  type: DELETE_FEED_FAILURE,
+  payload: {
+    error
+  }
+});
 
 const getFeedsEpic = (action$, state$) => {
   return action$.pipe(
@@ -187,7 +220,7 @@ const addFeedEpic = (action$, state$) => {
       formData.append('text', state.feeds.addFeedModal.addFeed_description);
       const config = {
         headers: {
-            'content-type': 'multipart/form-data'
+          "content-type": 'multipart/form-data',
         }
       }
       return ajax
@@ -209,6 +242,35 @@ const addFeedEpic = (action$, state$) => {
   );
 };
 
+const deleteFeedEpic = (action$, state$) => {
+  return action$.pipe(
+    ofType(DELETE_FEED),
+    withLatestFrom(state$),
+    mergeMap(([action, state]) => {
+      const token = localStorage.getItem("userInfo")
+        ? JSON.parse(localStorage.getItem("userInfo")).token
+        : null;
+      return ajax
+      .delete(`/api/feeds/${action.payload.id}/`, {
+        "Content-Type": "application/json",
+        Authorization: `token ${token}`
+      })
+      .pipe(
+        map(response => {
+          return deleteFeedSuccess({deleted_id: action.payload.id});
+        }),
+        catchError(error =>
+          of({
+            type: DELETE_FEED_FAILURE,
+            payload: error,
+            error: true
+          })
+        )
+      );
+    })
+  );
+};
+
 const initialState = {
   feeds: [],
   error: {
@@ -219,7 +281,8 @@ const initialState = {
     owner: [],
     menuNum: "0",
     openFeedModalNum : "0",
-    SubMenuOpenFlag : "close"
+    SubMenuOpenFlag : "close",
+    deletePopupFlag : "no"
   },
   addFeedModal: {
     addFeed_place: "",
@@ -277,10 +340,12 @@ export const feeds = (state = initialState, action) => {
         }
       };
     case ADD_FEED_SUCCESS:
-      const { feed } = action.payload;      
+      let newFeed = [];
+      newFeed = newFeed.concat(action.payload.feed);
+      newFeed = newFeed.concat(state.feeds);
       return {
         ...state,
-        feeds: state.feeds.concat(feed),
+        feeds: newFeed,
         error: {
           triggered: false,
           message: ""
@@ -318,8 +383,33 @@ export const feeds = (state = initialState, action) => {
           ...state.currentFocus,
           SubMenuOpenFlag: action.payload.openFlag
         }
-      }
-
+      };
+    case DELETE_POPUP:
+      return {
+        ...state,
+        currentFocus:{
+          ...state.currentFocus,
+          deletePopupFlag: action.payload.deletePopupFlag
+        }
+      };
+    case DELETE_FEED_SUCCESS:
+      return {
+        ...state,
+        feeds: state.feeds.filter(feed => feed.id !== action.payload.deleted_id),
+        error: {
+          triggered: false,
+          message: ""
+        }
+      };
+    case DELETE_FEED_FAILURE:
+      return {
+        ...state,
+        error: {
+          triggered: true,
+          message: "Error! Please Try With Unempty Note"
+        }
+      };
+    
     default:
       return state;
   }
@@ -329,4 +419,5 @@ export const feedsEpics = {
   getFeedsEpic,
   getFeedOwnerEpic,
   addFeedEpic,
+  deleteFeedEpic,
 };

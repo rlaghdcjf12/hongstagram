@@ -6,7 +6,7 @@ feed_list = FeedViewSet.as_view(
 )
 
 feed_detail = FeedViewSet.as_view(
-    {"get" : "retrieve"}
+    {"get" : "retrieve", "delete": "destroy"}
 )
     # {"get": "retrieve", "patch": "partial_update", "delete": "destroy"}
 

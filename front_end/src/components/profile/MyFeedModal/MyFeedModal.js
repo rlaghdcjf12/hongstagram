@@ -10,7 +10,7 @@ import ModalSubMenu from '../ModalSubMenu';
 
 const cx = classNames.bind(styles);
 
-const MyFeedModal = ( {feed, currentFocus, closeFeed, openSubMenu} ) => {
+const MyFeedModal = ( {feed, currentFocus, closeFeed, openSubMenu, DeletePopup, DeleteFeed, handleDelete} ) => {
   let imgUrl;
   if(feed.image !== null){
     imgUrl = feed.image.replace("http://localhost:8000/front_end/public","")
@@ -27,12 +27,18 @@ const MyFeedModal = ( {feed, currentFocus, closeFeed, openSubMenu} ) => {
 
   const closeSubMenuModal = () => {
     openSubMenu({openFlag: "close"});
+    DeletePopup({deletePopupFlag : "no"});
   }
 
   const SubMenuBackgroundClick = (e) => {
-    if(e.target.id == "ModalSubMenu"){
+    if(e.target.id === "ModalSubMenu"){
       closeSubMenuModal();
     }
+  }
+
+  const handleDeleteFeedClose = () => {
+    closeSubMenuModal();
+    handleDelete();
   }
 
   return (
@@ -53,7 +59,10 @@ const MyFeedModal = ( {feed, currentFocus, closeFeed, openSubMenu} ) => {
                   <div className={cx("title-textBox-place")}>{feed.place}</div>
                 </div>
                 {currentFocus.SubMenuOpenFlag === "open" ? 
-                  <ModalSubMenu closeSubMenuModal={closeSubMenuModal} SubMenuBackgroundClick={SubMenuBackgroundClick}></ModalSubMenu>
+                  <ModalSubMenu closeSubMenuModal={closeSubMenuModal} SubMenuBackgroundClick={SubMenuBackgroundClick}
+                    DeletePopup={DeletePopup} DeleteFeed={DeleteFeed} handleDeleteFeedClose={handleDeleteFeedClose}
+                    feed={feed} currentFocus={currentFocus}>
+                  </ModalSubMenu>
                   : <div></div>
                 }
                 <div className={cx("title-menu")} onClick={openSubMenuModal}>&middot;&middot;&middot;</div>

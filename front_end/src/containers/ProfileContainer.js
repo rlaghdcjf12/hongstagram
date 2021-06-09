@@ -32,7 +32,7 @@ export class ProfileContainer extends Component {
   render() {
     const { 
       feeds,
-      changeProfileTab, openFeedModal, getFeedOwner, imagePreview, addFeed, openSubMenu,
+      changeProfileTab, openFeedModal, getFeedOwner, imagePreview, addFeed, openSubMenu, DeletePopup, DeleteFeed,
       currentFocus, myInfo, addFeedModal
     } = this.props;
     const {handleChangeInput} = this;
@@ -47,7 +47,7 @@ export class ProfileContainer extends Component {
               <MyFeed 
                 feeds={feeds}
                 openFeedModal={openFeedModal} getFeedOwner={getFeedOwner} imagePreview={imagePreview} onChangeInput={handleChangeInput}
-                currentFocus={currentFocus} myInfo={myInfo} addFeedModal={addFeedModal} openSubMenu={openSubMenu}
+                currentFocus={currentFocus} myInfo={myInfo} addFeedModal={addFeedModal} openSubMenu={openSubMenu} DeletePopup={DeletePopup} DeleteFeed={DeleteFeed}
                 addFeed={addFeed}
               /> 
             : 
@@ -93,6 +93,12 @@ const mapDispatchToProps = dispatch => {
     },
     openSubMenu: ({openFlag}) => {
       dispatch(feedActions.openSubMenu({openFlag}));
+    },
+    DeletePopup: ({deletePopupFlag}) => {
+      dispatch(feedActions.DeletePopup({deletePopupFlag}));
+    },
+    DeleteFeed: ({id}) => {
+      dispatch(feedActions.DeleteFeed({id}));
     }
   };
 };
