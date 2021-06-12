@@ -29,7 +29,7 @@ class UserManager(BaseUserManager):
 class User(AbstractBaseUser):
     objects = UserManager()
 
-    id = models.AutoField(auto_created=True, default=1, primary_key=True, serialize=False, verbose_name='ID')
+    id = models.BigAutoField(auto_created=True, default=1, primary_key=True, serialize=False, verbose_name='ID')
     username = models.CharField(max_length=255, unique=True)
     nickname = models.CharField(max_length=255)
     webSite = models.CharField(max_length=255, null=True)
