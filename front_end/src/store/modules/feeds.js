@@ -1,14 +1,18 @@
 import { ajax } from "rxjs/observable/dom/ajax";
 import { of } from "rxjs";
-import { map, mergeMap, catchError, withLatestFrom } from "rxjs/operators";
+import { map, mergeMap, catchError, withLatestFrom, delay } from "rxjs/operators";
 import { ofType } from "redux-observable";
 
 const GET_FEEDS = "feeds/GET_FEEDS";
 const GET_FEEDS_SUCCESS = "feeds/GET_FEEDS_SUCCESS";
 const GET_FEEDS_FAILURE = "feeds/GET_FEEDS_FAILURE";
-const OPEN_FEED_MODAL = "feeds/OPEN_FEED_MODAL";
 
+const OPEN_FEED_MODAL = "feeds/OPEN_FEED_MODAL";
 const CHANGE_PROFILE_TAB = "feeds/CHANGE_PROFILE_TAB";
+
+const GET_MORE_FEEDS = "feeds/GET_MORE_FEEDS"
+const GET_MORE_FEEDS_SUCCESS = "feeds/GET_MORE_FEEDS_SUCCESS"
+const GET_MORE_FEEDS_FAILURE = "feeds/GET_MORE_FEEDS_FAILURE"
 
 const GET_FEED_OWNER = "feeds/GET_FEED_OWNER"
 const GET_FEED_OWNER_SUCCESS = "feeds/GET_FEED_OWNER_SUCCESS";
@@ -45,6 +49,13 @@ export const getFeedsFailure = error => ({
   }
 });
 
+export const openFeedModal = ({openFeedModalNum}) => ({
+  type: OPEN_FEED_MODAL,
+  payload: {
+    openFeedModalNum
+  }
+});
+
 export const changeProfileTab =({menuNum}) => ({
   type: CHANGE_PROFILE_TAB,
   payload: {
@@ -52,10 +63,25 @@ export const changeProfileTab =({menuNum}) => ({
   }
 });
 
-export const openFeedModal = ({openFeedModalNum}) => ({
-  type: OPEN_FEED_MODAL,
+export const getMoreFeeds = ({lastId}) => ({
+  type: GET_MORE_FEEDS,
   payload: {
-    openFeedModalNum
+    lastId
+  }
+});
+
+export const getMoreFeedsSuccess = ({ feeds, isLast }) => ({
+  type: GET_MORE_FEEDS_SUCCESS,
+  payload: {
+    feeds,
+    isLast
+  }
+});
+
+export const getMoreFeedsFailure = error => ({
+  type: GET_MORE_FEEDS_FAILURE,
+  payload: {
+    error
   }
 });
 
@@ -177,6 +203,36 @@ const getFeedsEpic = (action$, state$) => {
   );
 };
 
+const getMoreFeedsEpic = (action$, state$) => {
+  return action$.pipe(
+    ofType(GET_MORE_FEEDS),
+    delay(1500),
+    withLatestFrom(state$),
+    mergeMap(([action, state]) => {
+      const userInfo = JSON.parse(localStorage.getItem("userInfo"));
+      const { lastId } = action.payload;
+      return ajax
+        .get(`/api/feeds/next/${lastId}/`, {
+          "Content-Type": "application/json",
+          Authorization: `token ${userInfo.token}`
+        })
+        .pipe(
+          map(response => {
+            const { feeds, isLast } = response.response;
+            return getMoreFeedsSuccess({ feeds, isLast });
+          }),
+          catchError(error =>
+            of({
+              type: GET_MORE_FEEDS_FAILURE,
+              payload: error,
+              error: true
+            })
+          )
+        );
+    })
+  );
+};
+
 const getFeedOwnerEpic = (action$, state$) => {
   return action$.pipe(
     ofType(GET_FEED_OWNER),
@@ -273,6 +329,7 @@ const deleteFeedEpic = (action$, state$) => {
 
 const initialState = {
   feeds: [],
+  isLoading: false,
   error: {
     triggered: false,
     message: ""
@@ -307,6 +364,14 @@ export const feeds = (state = initialState, action) => {
           message: "Error! Please Try Again!"
         }
       };
+    case OPEN_FEED_MODAL:
+      return {
+        ...state,
+        currentFocus:{
+          ...state.currentFocus,
+          openFeedModalNum: action.payload.openFeedModalNum
+        }
+      };
     case CHANGE_PROFILE_TAB:
       return {
         ...state,
@@ -315,12 +380,24 @@ export const feeds = (state = initialState, action) => {
           menuNum: action.payload.menuNum
         }
       };
-    case OPEN_FEED_MODAL:
+    case GET_MORE_FEEDS:
       return {
         ...state,
-        currentFocus:{
-          ...state.currentFocus,
-          openFeedModalNum: action.payload.openFeedModalNum
+        isLoading: true
+      };
+    case GET_MORE_FEEDS_SUCCESS:
+      return {
+        ...state,
+        feeds: state.feeds.concat(action.payload.feeds),
+        isLast: action.payload.isLast,
+        isLoading: false
+      };
+    case GET_MORE_FEEDS_FAILURE:
+      return {
+        ...state,
+        error: {
+          triggered: true,
+          message: "ERROR WHILE LOAD MORE, TRY AGAIN"
         }
       };
     case GET_FEED_OWNER_SUCCESS:
@@ -417,6 +494,7 @@ export const feeds = (state = initialState, action) => {
 
 export const feedsEpics = {
   getFeedsEpic,
+  getMoreFeedsEpic,
   getFeedOwnerEpic,
   addFeedEpic,
   deleteFeedEpic,

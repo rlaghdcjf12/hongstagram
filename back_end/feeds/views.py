@@ -12,6 +12,22 @@ class FeedViewSet(viewsets.ModelViewSet):
     def get_queryset(self):
         return Feeds.objects.filter(owner=self.request.user).order_by("-created_at")
 
+class LoadMoreFeeds(generics.ListAPIView):
+    # permission_classes = [permissions.IsAuthenticated, ]
+    serializer_class = FeedSerializer
+
+    def get(self, request, *args, **kwargs):
+        flagId = kwargs['id']
+        feeds = Feeds.objects.filter(owner=self.request.user).filter(id__lt=flagId).order_by('-created_at')[:10]
+        isLast = False
+        if len(feeds) < 10:
+            isLast = True
+        serializer = self.get_serializer(feeds, many=True, context={"request": request})
+        return Response({
+            "feeds": serializer.data,
+            "isLast": isLast
+        })
+
 class FeedAddAPI(generics.CreateAPIView):
     # permission_classes = [permissions.IsAuthenticated, ]
     serializer_class = AddSerializer

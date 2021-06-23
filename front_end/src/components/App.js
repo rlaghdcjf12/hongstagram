@@ -11,9 +11,8 @@ class App extends Component {
       <div>
         <BaseContainer />
         <Switch>
-          <Route path="/" exact={true} component={Main}></Route>
+          <Route path="/" exact={true} component={TimeLine}></Route>
           <Route path="/auth/:kind" exact={true} component={Auth}></Route>
-          <Route path="/TimeLine" exact={true} component={TimeLine}></Route>
           <Route path="/Profile" exact={true} component={Profile}></Route>
           <Route component={NotFound}></Route>
         </Switch>

@@ -12,6 +12,8 @@ export class ProfileContainer extends Component {
   componentDidMount() {
     this.getMyInfo();
     this.getFeeds();
+
+    window.addEventListener("scroll", this.handleScroll);
   }
 
   getFeeds = () => {
@@ -29,11 +31,30 @@ export class ProfileContainer extends Component {
     ChangeInput({name, value});
   }
 
+  componentWillUnmount() {
+    window.removeEventListener("scroll", this.handleScroll);
+  };
+
+  handleScroll = () => {
+    const { innerHeight } = window;
+    const { scrollHeight } = document.body;
+    const { getMoreFeeds } = this.props;
+    const scrollTop =
+      (document.documentElement && document.documentElement.scrollTop) ||
+      document.body.scrollTop;
+    if (scrollHeight - innerHeight - scrollTop < 100) {
+      if (!this.props.isLoading && !this.props.isLast) {
+        const lastId = this.props.feeds[this.props.feeds.length - 1].id;
+        getMoreFeeds({ lastId });
+      }
+    }
+  };
+
   render() {
     const { 
       feeds,
       changeProfileTab, openFeedModal, getFeedOwner, imagePreview, addFeed, openSubMenu, DeletePopup, DeleteFeed,
-      currentFocus, myInfo, addFeedModal
+      currentFocus, myInfo, addFeedModal, isLoading
     } = this.props;
     const {handleChangeInput} = this;
     return (
@@ -49,7 +70,7 @@ export class ProfileContainer extends Component {
                 openFeedModal={openFeedModal} getFeedOwner={getFeedOwner} imagePreview={imagePreview} onChangeInput={handleChangeInput}
                 currentFocus={currentFocus} myInfo={myInfo} addFeedModal={addFeedModal} openSubMenu={openSubMenu} DeletePopup={DeletePopup} DeleteFeed={DeleteFeed}
                 addFeed={addFeed}
-              /> 
+              />
             : 
               <div></div>}
         </MyFeedWrapper>
@@ -63,12 +84,16 @@ const mapStateToProps = state => ({
   myInfo: state.auth.myInfo,
   currentFocus: state.feeds.currentFocus,
   addFeedModal: state.feeds.addFeedModal,
+  isLoading: state.feeds.isLoading,
 });
 
 const mapDispatchToProps = dispatch => {
   return {
     getFeeds: () => {
       dispatch(feedActions.getFeeds());
+    },
+    getMoreFeeds: ({lastId}) => {
+      dispatch(feedActions.getMoreFeeds({lastId}));
     },
     getMyInfo: () => {
       dispatch(authActions.getMyInfo());

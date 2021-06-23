@@ -1,5 +1,5 @@
 from django.conf.urls import url
-from .views import FeedViewSet, GetFeedOwnerAPI, FeedAddAPI
+from .views import FeedViewSet, GetFeedOwnerAPI, FeedAddAPI, LoadMoreFeeds
 
 feed_list = FeedViewSet.as_view(
     {"get": "list"}
@@ -16,4 +16,5 @@ urlpatterns = [
     url("^feeds/(?P<pk>[0-9]+)/$", feed_detail),
     url("^feeds/owner/(?P<pk>[0-9]+)/$", GetFeedOwnerAPI.as_view()),
     url("^feeds/add/$", FeedAddAPI.as_view()),
+    url("^feeds/next/(?P<id>[0-9]+)/$", LoadMoreFeeds.as_view()),
 ]

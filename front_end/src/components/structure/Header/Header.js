@@ -20,7 +20,7 @@ const Header = ({ onLogout, profileDropdown, profileImage, dropDownFlag }) => {
     <div className={cx("header")}>
       <div className={cx("header-contents")}>
         <div className={cx("left_icons")}>
-          <Link to={"/Timeline"} className={cx("logo")}>
+          <Link to={"/"} className={cx("logo")}>
             Hongstagram
           </Link>
         </div>
@@ -28,8 +28,8 @@ const Header = ({ onLogout, profileDropdown, profileImage, dropDownFlag }) => {
         </div>
         <div className={cx("right_icons")}>
           <div className={cx("home")}>
-            <Link to={"/Timeline"}>
-              {window.location.href === "http://" + window.location.host + "/Timeline" ? <IoHomeSharp/> : <IoHomeOutline/>}
+            <Link to={"/"}>
+              {window.location.href === "http://" + window.location.host + "/" ? <IoHomeSharp/> : <IoHomeOutline/>}
             </Link>
           </div>
           <div className={cx("menu-profile")} onClick={Dropdown}>
