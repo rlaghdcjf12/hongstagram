@@ -31,6 +31,10 @@ const DELETE_FEED = "feeds/DELETE_FEED";
 const DELETE_FEED_SUCCESS = "feeds/DELETE_FEED_SUCCESS";
 const DELETE_FEED_FAILURE = "feeds/DELETE_FEED_FAILURE";
 
+const GET_FEED_PAGE = "feeds/GET_FEED_PAGE";
+const GET_FEED_PAGE_SUCCESS = "feeds/GET_FEED_PAGE_SUCCESS";
+const GET_FEED_PAGE_FAILURE = "feeds/GET_FEED_PAGE_FAILURE";
+
 export const getFeeds = () => ({
   type: GET_FEEDS
 });
@@ -175,6 +179,27 @@ export const deleteFeedFailure = error => ({
   }
 });
 
+export const getFeedPage = feedId => ({
+  type: GET_FEED_PAGE,
+  payload: {
+    feedId
+  }
+});
+
+export const getFeedPageSuccess = feedPage => ({
+  type: GET_FEED_PAGE_SUCCESS,
+  payload: {
+    feedPage
+  }
+});
+
+export const getFeedPageFailure = error => ({
+  type: GET_FEED_PAGE_FAILURE,
+  payload: {
+    error
+  }
+});
+
 const getFeedsEpic = (action$, state$) => {
   return action$.pipe(
     ofType(GET_FEEDS),
@@ -224,6 +249,35 @@ const getMoreFeedsEpic = (action$, state$) => {
           catchError(error =>
             of({
               type: GET_MORE_FEEDS_FAILURE,
+              payload: error,
+              error: true
+            })
+          )
+        );
+    })
+  );
+};
+
+const getFeedPageEpic = (action$, state$) => {
+  return action$.pipe(
+    ofType(GET_FEED_PAGE),
+    withLatestFrom(state$),
+    mergeMap(([action, state]) => {
+      const feedId = action.payload.feedId;
+      const userInfo = JSON.parse(localStorage.getItem("userInfo"));
+      return ajax
+        .get(`/api/feeds/${feedId}`, {
+          "Content-Type": "application/json",
+          Authorization: `token ${userInfo.token}`
+        })
+        .pipe(
+          map(response => {
+            const feedPage = response.response.feedPage;
+            return getFeedPageSuccess({ feedPage });
+          }),
+          catchError(error =>
+            of({
+              type: GET_FEED_PAGE_FAILURE,
               payload: error,
               error: true
             })
@@ -335,6 +389,7 @@ const initialState = {
     message: ""
   },
   currentFocus: {
+    currentfeedPage: 0,
     owner: [],
     menuNum: "0",
     openFeedModalNum : "0",
@@ -483,10 +538,29 @@ export const feeds = (state = initialState, action) => {
         ...state,
         error: {
           triggered: true,
-          message: "Error! Please Try With Unempty Note"
+          message: "Error! Please Try With Unempty Feed"
         }
       };
-    
+    case GET_FEED_PAGE_SUCCESS:
+      return {
+        ...state,
+        currentFocus: {
+          ...state.currentFocus,
+          currentfeedPage: action.payload.feedPage.feedPage[0],
+        },
+        error: {
+          triggered: false,
+          message: ""
+        }
+      };
+    case GET_FEED_PAGE_FAILURE:
+      return {
+        ...state,
+        error: {
+          triggered: true,
+          message: "Error! Please Try With Unempty Feed Page"
+        }
+      };
     default:
       return state;
   }
@@ -495,6 +569,7 @@ export const feeds = (state = initialState, action) => {
 export const feedsEpics = {
   getFeedsEpic,
   getMoreFeedsEpic,
+  getFeedPageEpic,
   getFeedOwnerEpic,
   addFeedEpic,
   deleteFeedEpic,

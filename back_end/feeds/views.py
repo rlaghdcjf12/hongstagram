@@ -1,6 +1,6 @@
 from back_end.myUser.models import User
 from back_end.myUser.serializers import MyInfoSerializer
-from rest_framework import generics,viewsets, permissions
+from rest_framework import generics, viewsets, permissions
 from rest_framework.response import Response
 from .models import Feeds
 from .serializers import FeedSerializer, AddSerializer
@@ -11,6 +11,18 @@ class FeedViewSet(viewsets.ModelViewSet):
 
     def get_queryset(self):
         return Feeds.objects.filter(owner=self.request.user).order_by("-created_at")
+
+class GetFeedPageAPI(generics.RetrieveAPIView):
+    serializer_class = FeedSerializer
+
+    def get(self, request, *args, **kwargs):
+        flagId = kwargs['pk']
+        feedPage = Feeds.objects.filter(id=flagId)
+        serializer = self.get_serializer(feedPage, many=True, context={"request": request})
+        print(serializer.data)
+        return Response({
+            "feedPage": serializer.data
+        })
 
 class LoadMoreFeeds(generics.ListAPIView):
     # permission_classes = [permissions.IsAuthenticated, ]

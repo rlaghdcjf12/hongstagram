@@ -54,7 +54,7 @@ export class ProfileContainer extends Component {
     const { 
       feeds,
       changeProfileTab, openFeedModal, getFeedOwner, imagePreview, addFeed, openSubMenu, DeletePopup, DeleteFeed,
-      currentFocus, myInfo, addFeedModal, isLoading
+      currentFocus, myInfo, addFeedModal
     } = this.props;
     const {handleChangeInput} = this;
     return (
