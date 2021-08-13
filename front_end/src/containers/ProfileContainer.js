@@ -18,7 +18,7 @@ export class ProfileContainer extends Component {
   }
   
   initialize = () => {
-    const { openFeedModal, initializeError } = this.props;
+    const { openFeedModal } = this.props;
     openFeedModal("0");
   };
 
@@ -51,6 +51,7 @@ export class ProfileContainer extends Component {
     if (scrollHeight - innerHeight - scrollTop < 100) {
       if (!this.props.isLoading && !this.props.isLast) {
         const lastId = this.props.feeds[this.props.feeds.length - 1].id;
+        console.log("lastId : ", lastId);
         getMoreFeeds({ lastId });
       }
     }
@@ -91,6 +92,7 @@ const mapStateToProps = state => ({
   currentFocus: state.feeds.currentFocus,
   addFeedModal: state.feeds.addFeedModal,
   isLoading: state.feeds.isLoading,
+  isLast: state.feeds.isLast,
 });
 
 const mapDispatchToProps = dispatch => {

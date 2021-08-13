@@ -10,7 +10,7 @@ class FeedViewSet(viewsets.ModelViewSet):
     serializer_class = FeedSerializer
 
     def get_queryset(self):
-        return Feeds.objects.filter(owner=self.request.user).order_by("-created_at")
+        return Feeds.objects.filter(owner=self.request.user).order_by("-id")
 
 class GetFeedPageAPI(generics.RetrieveAPIView):
     serializer_class = FeedSerializer

@@ -213,7 +213,8 @@ const getFeedsEpic = (action$, state$) => {
         })
         .pipe(
           map(response => {
-            const feeds = response.response;
+            var feeds = response.response;
+            console.log("feeds 1: ", feeds);
             return getFeedsSuccess({ feeds });
           }),
           catchError(error =>
@@ -384,6 +385,7 @@ const deleteFeedEpic = (action$, state$) => {
 const initialState = {
   feeds: [],
   isLoading: false,
+  isLast: false,
   error: {
     triggered: false,
     message: ""
