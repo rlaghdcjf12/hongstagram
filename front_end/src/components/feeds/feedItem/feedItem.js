@@ -10,6 +10,7 @@ const cx = classNames.bind(styles);
 
 const FeedItem = ({ feed }) => {
   let imgUrl;
+
   if(feed.image !== null){
     imgUrl = feed.image.replace("http://localhost:8000/front_end/public","")
   }

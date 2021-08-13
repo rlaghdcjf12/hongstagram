@@ -12,9 +12,15 @@ export class ProfileContainer extends Component {
   componentDidMount() {
     this.getMyInfo();
     this.getFeeds();
+    this.initialize();
 
     window.addEventListener("scroll", this.handleScroll);
   }
+  
+  initialize = () => {
+    const { openFeedModal, initializeError } = this.props;
+    openFeedModal("0");
+  };
 
   getFeeds = () => {
     const { getFeeds } = this.props;

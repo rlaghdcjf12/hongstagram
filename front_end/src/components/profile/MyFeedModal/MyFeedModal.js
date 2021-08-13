@@ -59,7 +59,7 @@ const MyFeedModal = ( {feed, currentFocus, closeFeed, openSubMenu, DeletePopup, 
                   <div className={cx("title-textBox-place")}>{feed.place}</div>
                 </div>
                 {currentFocus.SubMenuOpenFlag === "open" ? 
-                  <ModalSubMenu closeSubMenuModal={closeSubMenuModal} SubMenuBackgroundClick={SubMenuBackgroundClick}
+                  <ModalSubMenu feedId={currentFocus.openFeedModalNum} closeSubMenuModal={closeSubMenuModal} SubMenuBackgroundClick={SubMenuBackgroundClick}
                     DeletePopup={DeletePopup} DeleteFeed={DeleteFeed} handleDeleteFeedClose={handleDeleteFeedClose}
                     feed={feed} currentFocus={currentFocus}>
                   </ModalSubMenu>

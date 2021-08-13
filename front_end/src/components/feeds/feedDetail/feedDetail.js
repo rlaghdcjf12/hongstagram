@@ -6,13 +6,13 @@ import comment_img from '../../../image/comment.jpg';
 import share_img from '../../../image/share.jpg';
 import save_img from '../../../image/save.jpg';
 import emo_img from '../../../image/emoticon.jpg';
-import ModalSubMenu from '../ModalSubMenu';
+import DetailSubMenu from '../DetailSubMenu';
 
 const cx = classNames.bind(styles);
 
-const feedDetail = ( {feed, currentFocus, closeFeed, openSubMenu, DeletePopup, DeleteFeed, handleDelete} ) => {
+const feedDetail = ( {feed, currentFocus, openSubMenu, DeletePopup, DeleteFeed, handleDelete} ) => {
   let imgUrl;
-  if(feed.image !== null){
+  if(feed != 0 && feed.image !== null){
     imgUrl = feed.image.replace("http://localhost:8000/front_end/public","")
   }
 
@@ -31,7 +31,7 @@ const feedDetail = ( {feed, currentFocus, closeFeed, openSubMenu, DeletePopup, D
   }
 
   const SubMenuBackgroundClick = (e) => {
-    if(e.target.id === "ModalSubMenu"){
+    if(e.target.id === "DetailSubMenu"){
       closeSubMenuModal();
     }
   }
@@ -42,8 +42,8 @@ const feedDetail = ( {feed, currentFocus, closeFeed, openSubMenu, DeletePopup, D
   }
 
   return (
-      <div id="myFeedModal" className={cx("myFeedModal", currentFocus.openFeedModalNum === feed.id ? "" : "closed")} onClick={closeFeed}>
-        <div className={cx("myFeedPopUp")}>
+      <div id="feedDetail" className={cx("feedDetail")}>
+        <div className={cx("myFeedDetail")}>
           <div className={cx("imageSector")}>
             <img src={imgUrl} alt="feed"/>
           </div>
@@ -59,10 +59,10 @@ const feedDetail = ( {feed, currentFocus, closeFeed, openSubMenu, DeletePopup, D
                   <div className={cx("title-textBox-place")}>{feed.place}</div>
                 </div>
                 {currentFocus.SubMenuOpenFlag === "open" ? 
-                  <ModalSubMenu closeSubMenuModal={closeSubMenuModal} SubMenuBackgroundClick={SubMenuBackgroundClick}
-                    DeletePopup={DeletePopup} DeleteFeed={DeleteFeed} handleDeleteFeedClose={handleDeleteFeedClose}
-                    feed={feed} currentFocus={currentFocus}>
-                  </ModalSubMenu>
+                  <DetailSubMenu closeSubMenuModal={closeSubMenuModal} SubMenuBackgroundClick={SubMenuBackgroundClick}
+                    DeletePopup={DeletePopup} handleDeleteFeedClose={handleDeleteFeedClose}
+                    currentFocus={currentFocus}>
+                  </DetailSubMenu>
                   : <div></div>
                 }
                 <div className={cx("title-menu")} onClick={openSubMenuModal}>&middot;&middot;&middot;</div>
@@ -96,7 +96,7 @@ const feedDetail = ( {feed, currentFocus, closeFeed, openSubMenu, DeletePopup, D
                     <span className={cx("save")}><img src={save_img} alt="save"></img></span>
                   </div>
                   <div className={cx("likes_count")}><span className={cx("strong")}>한슬</span>님 <span className={cx("strong")}>외 36명</span>이 좋아합니다.</div>
-                  <div className={cx("feed-created")}>19시간 전</div>
+                  <div className={cx("feed-created")}>17시간 전</div>
                 </div>
               </div>
             </div>

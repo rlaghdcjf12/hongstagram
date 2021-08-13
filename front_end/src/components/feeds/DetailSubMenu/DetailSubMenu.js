@@ -1,21 +1,23 @@
 import React from "react";
-import styles from "./ModalSubMenu.scss";
+import styles from "./DetailSubMenu.scss";
 import classNames from "classnames/bind";
 import { Link } from "react-router-dom";
 
 const cx = classNames.bind(styles);
 
-const ModalSubMenu = ( {feedId, currentFocus, closeSubMenuModal, SubMenuBackgroundClick, DeletePopup, handleDeleteFeedClose} ) => {
+const DetailSubMenu = ( { closeSubMenuModal, SubMenuBackgroundClick, 
+  DeletePopup, handleDeleteFeedClose, currentFocus} ) => {
+
   const DeleteCheck = () => {
     DeletePopup({deletePopupFlag : "yes"});
   }
 
   return (
-      <div id="ModalSubMenu" className={cx("ModalSubMenu")} onClick={SubMenuBackgroundClick}>
+      <div id="DetailSubMenu" className={cx("DetailSubMenu")} onClick={SubMenuBackgroundClick}>
         {currentFocus.deletePopupFlag === "no" ? 
           <div className={cx("SubMenuPopUp")}>
             <div className={cx("SubMenu-HighLight", "NoEnd")} onClick={DeleteCheck}>삭제</div>
-            <div className={cx("SubMenu-Normal", "NoEnd")} onClick={closeSubMenuModal}><Link to={"/feedPage/"+feedId}>게시물로 이동</Link></div>
+            <div className={cx("SubMenu-Normal", "NoEnd")}>태그된 계정</div>
             <div className={cx("SubMenu-Normal", "NoEnd")}>공유 대상...</div>
             <div className={cx("SubMenu-Normal", "NoEnd")}>링크 복사</div>
             <div className={cx("SubMenu-Normal", "NoEnd")}>퍼가기</div>
@@ -34,4 +36,4 @@ const ModalSubMenu = ( {feedId, currentFocus, closeSubMenuModal, SubMenuBackgrou
   );
 }
 
-export default ModalSubMenu;
+export default DetailSubMenu;
