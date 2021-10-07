@@ -21,7 +21,7 @@ export class FeedPageContainer extends Component {
     return (
       <div>
         <FeedWrapper>
-          <FeedDetail feed={feedPage}  currentFocus={currentFocus} 
+          <FeedDetail feed={feedPage} currentFocus={currentFocus} 
             openSubMenu={openSubMenu} DeletePopup={DeletePopup} DeleteFeed={DeleteFeed} handleDelete={DeleteFeed}/>
         </FeedWrapper>
       </div>
